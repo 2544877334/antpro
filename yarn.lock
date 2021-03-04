@@ -2349,10 +2349,10 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-ant-design-vue@^2.0.0:
-  version "2.0.0"
-  resolved "https://registry.npm.taobao.org/ant-design-vue/download/ant-design-vue-2.0.0.tgz?cache=0&sync_timestamp=1612620390789&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fant-design-vue%2Fdownload%2Fant-design-vue-2.0.0.tgz#d30ec06938dc3b43b08a117818fab91d7b083e5f"
-  integrity sha1-0w7AaTjcO0OwihF4GPq5HXsIPl8=
+ant-design-vue@^2.0.1:
+  version "2.0.1"
+  resolved "https://registry.yarnpkg.com/ant-design-vue/-/ant-design-vue-2.0.1.tgz#3a5964523aac10fd2b16d84d651145cd2b65f1d5"
+  integrity sha512-CFIF+srTui4ZwdKPBXNoFA9/0fkSpypanQeOts0PAq1vEuMLxUoZHapDDn7wzsxZH3sYLF+mvMp8gYMRkaNn+w==
   dependencies:
     "@ant-design-vue/use" "^0.0.1-0"
     "@ant-design/icons-vue" "^6.0.0"

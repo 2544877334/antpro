@@ -50,7 +50,6 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, toRefs, PropType, inject } from 'vue';
-import { Layout } from 'ant-design-vue';
 import { useProProvider } from '../pro-provider/index';
 import { getMenuFirstChildren } from '@/utils/menu-util';
 import TopNavHeader from '../top-nav-header/index.vue';
@@ -188,7 +187,6 @@ export default defineComponent({
     };
   },
   components: {
-    [Layout.Header.name]: Layout.Header,
     TopNavHeader,
     GlobalHeader,
   },

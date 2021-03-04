@@ -70,7 +70,6 @@ import { defineComponent, reactive } from 'vue';
 import CitySelect from '@/components/city-select/index.vue';
 import InputPhone from '@/components/input-phone/index.vue';
 import { useForm } from '@ant-design-vue/use';
-import { Upload } from 'ant-design-vue';
 import { UploadOutlined } from '@ant-design/icons-vue';
 
 export default defineComponent({
@@ -110,7 +109,6 @@ export default defineComponent({
   components: {
     CitySelect,
     InputPhone,
-    [Upload.name]: Upload,
     UploadOutlined,
   },
 });

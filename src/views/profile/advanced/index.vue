@@ -167,7 +167,6 @@
 
 <script lang="ts">
 import { computed, defineComponent, inject, reactive, ref } from 'vue';
-import { Badge, Empty } from 'ant-design-vue';
 import { EllipsisOutlined, DingdingOutlined } from '@ant-design/icons-vue';
 
 const operationColumns = [
@@ -316,9 +315,6 @@ export default defineComponent({
   components: {
     EllipsisOutlined,
     DingdingOutlined,
-
-    [Badge.name]: Badge,
-    [Empty.name]: Empty,
   },
 });
 </script>

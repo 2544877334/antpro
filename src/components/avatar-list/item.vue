@@ -15,7 +15,6 @@
 
 <script lang="ts">
 import { defineComponent, PropType, inject } from 'vue';
-import { Tooltip, Avatar } from 'ant-design-vue';
 import { avatarListKey } from './list.vue';
 
 export default defineComponent({
@@ -36,10 +35,6 @@ export default defineComponent({
     return {
       parentProps,
     };
-  },
-  components: {
-    [Tooltip.name]: Tooltip,
-    [Avatar.name]: Avatar,
   },
 });
 </script>

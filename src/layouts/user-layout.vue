@@ -46,13 +46,11 @@
 
 <script lang="ts">
 import { defineComponent } from 'vue';
-import { Carousel } from 'ant-design-vue';
 import { GlobalFooter } from '@/components';
 
 export default defineComponent({
   components: {
     GlobalFooter,
-    [Carousel.name]: Carousel,
   },
 });
 </script>

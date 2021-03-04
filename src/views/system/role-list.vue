@@ -179,7 +179,6 @@
 
 <script lang="ts">
 import { defineComponent, ref } from 'vue';
-import { Badge } from 'ant-design-vue';
 import {
   PlusOutlined,
   ReloadOutlined,
@@ -284,7 +283,6 @@ export default defineComponent({
     FullscreenExitOutlined,
     Draggable,
     DragContainer,
-    [Badge.name]: Badge,
     RoleModal,
   },
 });

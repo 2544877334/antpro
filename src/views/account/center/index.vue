@@ -96,7 +96,6 @@
 
 <script lang="ts">
 import { defineComponent, ref, reactive, computed, toRefs, nextTick } from 'vue';
-import { Spin, BackTop } from 'ant-design-vue';
 import { PlusOutlined } from '@ant-design/icons-vue';
 import { GridContent } from '@/components';
 import { useStore } from 'vuex';
@@ -197,8 +196,6 @@ export default defineComponent({
     };
   },
   components: {
-    [Spin.name]: Spin,
-    [BackTop.name]: BackTop,
     GridContent,
     Applications,
     Articles,

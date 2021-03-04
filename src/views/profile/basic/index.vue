@@ -54,7 +54,6 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
-import { Badge } from 'ant-design-vue';
 import { goodsData, scheduleData } from './mockData';
 import { useFetchData, RequestData } from '@/utils/hooks/useFetchData';
 import { default as TableTotalRow } from '@/components/table/total-table';
@@ -207,9 +206,6 @@ export default defineComponent({
       context,
       context2,
     };
-  },
-  components: {
-    [Badge.name]: Badge,
   },
 });
 </script>

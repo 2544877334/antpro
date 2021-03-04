@@ -38,6 +38,10 @@ import {
   Spin,
   Drawer,
   PageHeader,
+  Carousel,
+  BackTop,
+  Upload,
+  Badge,
 } from 'ant-design-vue';
 import { createApp } from 'vue';
 import router from './router';
@@ -96,6 +100,10 @@ app
   .use(Drawer)
   .use(PageHeader)
   .use(ProProvider)
+  .use(Badge)
+  .use(Carousel)
+  .use(BackTop)
+  .use(Upload)
   .component(PageContainer.name, PageContainer)
   .component(TransformVnode.name, TransformVnode)
   .component(Authority.name, Authority);
