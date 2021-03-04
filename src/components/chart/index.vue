@@ -5,7 +5,7 @@
 <script lang="ts">
 import { defineComponent, inject, onMounted, onUnmounted, ref, watch } from 'vue';
 import echarts, { ECharts } from 'echarts';
-import debounce from 'lodash/debounce';
+import { debounce } from 'lodash-es';
 import { addListener, removeListener } from 'resize-detector';
 import dark from './dark';
 

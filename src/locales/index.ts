@@ -35,7 +35,7 @@ export function loadLanguageAsync(lang: string = defaultLang): Promise<string> {
         return import(
           /* webpackChunkName: "lang-[request]" */
           // eslint-disable-next-line comma-dangle
-          `./lang/${lang}`
+          /* @vite-ignore */ `./lang/${lang}`
         ).then(result => {
           const loadedLang = result.default;
           // set vue-i18n lang

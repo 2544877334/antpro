@@ -8,7 +8,7 @@
 import { defineComponent, watch, ref, onMounted, onUnmounted } from 'vue';
 import { addListener, removeListener } from 'resize-detector';
 import echarts, { ECharts } from 'echarts';
-import debounce from 'lodash/debounce';
+import { debounce } from 'lodash-es';
 import 'echarts-wordcloud';
 
 export default defineComponent({

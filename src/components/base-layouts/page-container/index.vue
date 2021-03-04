@@ -50,7 +50,6 @@ import {
   withCtx,
   createTextVNode,
 } from 'vue';
-import { PageHeader, Tabs } from 'ant-design-vue';
 import { useProProvider } from '../pro-provider';
 import GridContent from '@/components/base-layouts/grid-content/index.vue';
 import PageHeaderContent from './page-header-content.vue';
@@ -188,9 +187,6 @@ export default defineComponent({
   components: {
     [GridContent.name]: GridContent,
     PageHeaderContent,
-    [PageHeader.name]: PageHeader,
-    [Tabs.name]: Tabs,
-    [Tabs.TabPane.name]: Tabs.TabPane,
   },
 });
 </script>

@@ -1,8 +1,4 @@
-import { createApp } from 'vue';
-import router from './router';
-import store from './store';
-import locale from './locales';
-import App from './App.vue';
+import 'ant-design-vue/dist/antd.less';
 import {
   Layout,
   Menu,
@@ -41,12 +37,17 @@ import {
   Empty,
   Spin,
   Drawer,
+  PageHeader,
 } from 'ant-design-vue';
+import { createApp } from 'vue';
+import router from './router';
+import store from './store';
+import locale from './locales';
+import App from './App.vue';
 
 import { ProProvider, PageContainer, TransformVnode } from '@/components';
 import { useIcons } from '@/icons';
 import Authority from './utils/authority/authority.vue';
-
 import './app.less';
 import './router/router-guards';
 
@@ -93,6 +94,7 @@ app
   .use(Empty)
   .use(Spin)
   .use(Drawer)
+  .use(PageHeader)
   .use(ProProvider)
   .component(PageContainer.name, PageContainer)
   .component(TransformVnode.name, TransformVnode)
