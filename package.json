@@ -12,7 +12,8 @@
     "lint:check": "vue-cli-service lint --no-fix",
     "prettier": "prettier -c --write '**/*'",
     "pretty-quick": "pretty-quick",
-    "analyz": "vue-cli-service build --mode analyz"
+    "analyz": "vue-cli-service build --mode analyz",
+    "toJs": "node ./scripts/tsToJs.js"
   },
   "dependencies": {
     "@ant-design-vue/use": "^0.0.1-0",
