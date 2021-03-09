@@ -78,6 +78,6 @@ ${style || ''}
     }
   } else {
     execSync(`mkdir -p js/${dirs.join('/')}`);
-    fs.writeFileSync(path.join(cwd, `js/${file}`), source);
+    fs.copyFileSync(path.join(cwd, file), path.join(cwd, `js/${file}`));
   }
 });
