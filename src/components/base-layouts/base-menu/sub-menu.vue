@@ -12,7 +12,7 @@
     <template v-for="child in menu.children">
       <a-menu-item
         @mouseenter="$emit('itemHover', $event)"
-        v-if="(!menu.children || menu.meta?.hideChildrenInMenu) && !menu.meta?.hideInMenu"
+        v-if="(!child.children || child.meta?.hideChildrenInMenu) && !child.meta?.hideInMenu"
         :key="child.path"
       >
         <component
