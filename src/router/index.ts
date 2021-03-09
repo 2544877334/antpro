@@ -268,6 +268,18 @@ export const routes: MenuDataItem[] = [
         ],
       },
 
+      // jump to url
+      {
+        name: 'github',
+        path: 'https://github.com/vueComponent/ant-design-vue',
+        meta: {
+          title: 'pages.other.github',
+          icon: 'LinkOutlined',
+          target: '_blank',
+        },
+        component: () => null,
+      },
+
       // examples
       {
         name: 'examples',

@@ -55,4 +55,6 @@ export default {
   'pages.nested.menu2.title': 'Menu 2',
   'pages.nested.menu3.title': 'Menu 3',
   'pages.nested.menu3-1.title': 'Menu 3-1',
+
+  'pages.other.github': '外链',
 };

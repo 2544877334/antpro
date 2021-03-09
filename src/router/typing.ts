@@ -6,6 +6,7 @@ export interface MenuRouteMeta {
   hideInMenu?: boolean;
   icon?: string | VNodeChild | JSX.Element;
   authority?: string | string[];
+  target?: '_blank' | '_self' | '_parent' | '_top';
 }
 
 export type MenuDataItem = {

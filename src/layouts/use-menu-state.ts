@@ -51,6 +51,7 @@ const collapsedWidth = 48;
 const firstSideWidth = 140; // for leftmenu-layout
 const secondSideWidth = 160; // for leftmenu-layout
 
+const pattern = /^((\/)?(https|http|ftp|rtsp|mms)?:\/\/)[^\s]+/;
 const state = reactive<MenuState>({
   collapsed: false,
   openKeys: [],
@@ -120,12 +121,19 @@ export default function useMenuState(initialState?: MenuState): MenuStated {
   });
   watch(
     () => state.selectedKeys,
-    () => {
+    (_newVal, oldVal) => {
       if (state.selectedKeys) {
         if (isMobile.value) {
           state.collapsed = true;
         }
         const path = state.selectedKeys[state.selectedKeys.length - 1];
+        if (pattern.test(path)) {
+          const routes = router.getRoutes();
+          const { target } = routes.find(r => r.path === `/${path}`)?.meta || {};
+          state.selectedKeys = oldVal;
+          window.open(path, target);
+          return;
+        }
         if (
           !state.collapsed &&
           layoutState.layout !== 'left' &&
