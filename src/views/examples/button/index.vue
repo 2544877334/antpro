@@ -8,7 +8,7 @@
       <a-row :gutter="16">
         <a-col :sm="24" :md="12">
           <a-card title="按钮类型" class="pro-examples-button">
-            <a-button type="primary">Primary</a-button>
+            <a-button type="primary" @click="handleClick">Add Route</a-button>
             <a-button>Default</a-button>
             <a-button type="dashed">Dashed</a-button>
             <a-button type="danger">Danger</a-button>
@@ -200,7 +200,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { Component, computed, defineComponent, reactive } from 'vue';
 import {
   LeftOutlined,
   RightOutlined,
@@ -209,6 +209,9 @@ import {
   DownOutlined,
   DownloadOutlined,
 } from '@ant-design/icons-vue';
+import { useRouter } from 'vue-router';
+import { useStore } from 'vuex';
+import { SET_ROUTERS } from '@/store/modules/user/mutations';
 
 export default defineComponent({
   name: 'ButtonExample',
@@ -228,9 +231,22 @@ export default defineComponent({
     const handleSizeChange = (e: Event) => {
       state.size = (e.target as HTMLInputElement).value;
     };
+    const router = useRouter();
+    const store = useStore();
+    const handleClick = () => {
+      const newRoute = {
+        path: '/test-router',
+        name: 'TestRouter',
+        meta: { icon: 'HistoryOutlined', title: 'pages.dashboard.workplace.title' },
+        component: (): Component => import('@/views/dashboard/workplace/index.vue'),
+      };
+      router.addRoute(newRoute);
+      const allowRouters = computed(() => store.getters[`user/allowRouters`]);
+      store.commit(`user/${SET_ROUTERS}`, [...allowRouters.value, newRoute]);
+    };
     return {
       state,
-
+      handleClick,
       enterLoading,
       enterIconLoading,
       handleMenuClick,
