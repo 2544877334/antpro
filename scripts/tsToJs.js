@@ -16,6 +16,15 @@ const engine = new CLIEngine({
   baseConfig: require('../.eslintrc.js'),
 });
 
+fs.readFile('index.html', 'utf8', function (err, test) {
+  var result = test.replace(/\/src\/main.ts/g, '/src/main.js');
+  fs.writeFile('index.html', result, 'utf8', function (err) {
+    if (err) {
+      console.log(err);
+    }
+  });
+});
+
 files.forEach(file => {
   console.log('files: ', file);
   const isVue = file.endsWith('.vue');
