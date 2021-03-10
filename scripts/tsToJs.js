@@ -3,7 +3,6 @@ const fs = require('fs');
 const { transformSync } = require('@babel/core');
 const { CLIEngine } = require('eslint');
 const glob = require('glob');
-const { execSync } = require('child_process');
 const cheerio = require('cheerio');
 
 const files = glob.sync('src/**/*.@(*)');
@@ -62,7 +61,9 @@ files.forEach(file => {
     let output = report.results[0].output;
     output = output ? output.trim() : output;
     if (output) {
-      execSync(`mkdir -p js/${dirs.join('/')}`);
+      fs.mkdirSync(`js/${dirs.join('/')}`, {
+        recursive: true,
+      });
       let res = isVue
         ? `${template}
 <script>
@@ -77,7 +78,9 @@ ${style || ''}
       fs.writeFileSync(path.join(cwd, `js/${file.replace('.ts', '.js')}`), res);
     }
   } else {
-    execSync(`mkdir -p js/${dirs.join('/')}`);
+    fs.mkdirSync(`js/${dirs.join('/')}`, {
+      recursive: true,
+    });
     fs.copyFileSync(path.join(cwd, file), path.join(cwd, `js/${file}`));
   }
 });
