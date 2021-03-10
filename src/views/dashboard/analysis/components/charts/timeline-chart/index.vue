@@ -133,4 +133,6 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less" scoped src="./index.less"></style>
+<style lang="less" scoped>
+@import './index.less';
+</style>

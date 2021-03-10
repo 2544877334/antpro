@@ -74,4 +74,6 @@ export default defineComponent({
   },
 });
 </script>
-<style scoped lang="less" src="../style.less"></style>
+<style lang="less" scoped>
+@import '../style.less';
+</style>

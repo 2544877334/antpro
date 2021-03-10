@@ -48,4 +48,6 @@ export default defineComponent({
 });
 </script>
 
-<style scoped lang="less" src="./index.less"></style>
+<style lang="less" scoped>
+@import './index.less';
+</style>
