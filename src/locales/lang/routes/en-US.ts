@@ -56,5 +56,7 @@ export default {
   'pages.nested.menu3.title': 'Menu 3',
   'pages.nested.menu3-1.title': 'Menu 3-1',
 
-  'pages.other.github': 'Github',
+  'pages.jumpUrl.title': 'Jump Url',
+  'pages.jumpUrl.router.title': 'Router examples',
+  'pages.jumpUrl.github.title': 'Go Github',
 };

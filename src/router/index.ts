@@ -268,16 +268,30 @@ export const routes: MenuDataItem[] = [
         ],
       },
 
-      // jump to url
+      // jump url
       {
-        name: 'github',
-        path: 'https://github.com/vueComponent/ant-design-vue',
-        meta: {
-          title: 'pages.other.github',
-          icon: 'LinkOutlined',
-          target: '_blank',
-        },
-        component: () => null,
+        path: '/jump-url',
+        name: 'jumpUrl',
+        meta: { title: 'pages.jumpUrl.title', icon: 'LinkOutlined' },
+        component: RouteView,
+        redirect: '/jump-url/router',
+        children: [
+          {
+            path: '/jump-url/router',
+            name: 'jumpUrlExamples',
+            meta: { title: 'pages.jumpUrl.router.title' },
+            component: (): Component => import('@/views/examples/jump-url/index.vue'),
+          },
+          {
+            path: 'https://github.com/vueComponent/ant-design-vue',
+            name: 'github',
+            meta: {
+              title: 'pages.jumpUrl.github.title',
+              target: '_blank',
+            },
+            component: () => null,
+          },
+        ],
       },
 
       // examples

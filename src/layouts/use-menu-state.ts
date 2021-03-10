@@ -119,15 +119,19 @@ export default function useMenuState(initialState?: MenuState): MenuStated {
   watch([computed(() => layoutState.layout), computed(() => layoutState.splitMenus)], () => {
     state.openKeys = [];
   });
+  const query = ref({});
+  const hash = ref('');
   watch(
     () => state.selectedKeys,
-    (_newVal, oldVal) => {
+    (_newVal, oldVal = []) => {
       if (state.selectedKeys) {
         if (isMobile.value) {
           state.collapsed = true;
         }
         const path = state.selectedKeys[state.selectedKeys.length - 1];
-        if (pattern.test(path)) {
+        const isOtherUrl = pattern.test(path);
+        const isOtherUrlForOldVal = pattern.test(oldVal[oldVal?.length - 1]);
+        if (isOtherUrl) {
           const routes = router.getRoutes();
           const { target } = routes.find(r => r.path === `/${path}`)?.meta || {};
           state.selectedKeys = oldVal;
@@ -139,7 +143,8 @@ export default function useMenuState(initialState?: MenuState): MenuStated {
           layoutState.layout !== 'left' &&
           (layoutState.layout === 'side' ||
             layoutState.layout === 'mix' ||
-            layoutState.splitMenus === true)
+            layoutState.splitMenus === true) &&
+          !isOtherUrlForOldVal
         ) {
           const openKeys = getOpenKeysBySelectKey(path);
           if (xor(state.openKeys, openKeys).length) {
@@ -148,6 +153,8 @@ export default function useMenuState(initialState?: MenuState): MenuStated {
         }
         router.push({
           path: path,
+          query: query.value,
+          hash: hash.value,
         });
       }
     },
@@ -171,13 +178,21 @@ export default function useMenuState(initialState?: MenuState): MenuStated {
   const updateCollapsed = (val: boolean) => {
     state.collapsed = !val;
   };
+  let timeout = 0;
   onMounted(() => {
     watch(
-      () => route.path,
+      [() => route.path, () => route.query, () => route.hash],
       () => {
+        clearTimeout(timeout);
+        query.value = route.query;
+        hash.value = route.hash;
         updateMenuState(route.path);
         // // 更新面包屑
         updateBreadcrumb();
+        timeout = setTimeout(() => {
+          query.value = {};
+          hash.value = '';
+        });
       },
       // { immediate: true },
     );
