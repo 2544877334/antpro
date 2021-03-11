@@ -12,7 +12,7 @@ export const routes: MenuDataItem[] = [
   {
     name: 'index',
     path: '/',
-    redirect: '/dashboard/workplace',
+    redirect: '/workplace',
     component: Layout,
     children: [
       {
