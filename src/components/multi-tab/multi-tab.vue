@@ -13,7 +13,6 @@
       hide-add
       :class="{ 'ant-pro-multi-tab-wrap': true, 'ant-pro-multi-tab-wrap-fixed': fixed }"
       @change="handleActiveKeyChange"
-      @edit="handleEdit"
     >
       <template #tabBarExtraContent>
         <a-dropdown>
@@ -48,17 +47,24 @@
         class="contextmenu-wrap"
         :key="item.route.path"
         v-for="(item, index) in store.cacheList"
-        :closable="cacheListLength > 1 && !item.lock"
+        :closable="false"
       >
         <template #tab>
           <a-dropdown :trigger="['contextmenu']">
-            <span>
+            <span class="ant-pro-multi-tab-title">
               {{ t(`${item.route.meta.title}`) }}
               <reload-outlined
+                key="reload"
                 v-if="store.current === item.route.path"
                 class="ant-pro-multi-tab-reload-btn"
                 @click="handleReloadPage(item.route.path)"
                 :spin="spin"
+              />
+              <close-outlined
+                key="close"
+                v-if="cacheListLength > 1 && !item.lock"
+                class="ant-pro-multi-tab-close-btn"
+                @click="e => handleClose(e, item.route.path)"
               />
             </span>
             <template #overlay>
@@ -99,7 +105,7 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, inject } from 'vue';
-import { ReloadOutlined, EllipsisOutlined } from '@ant-design/icons-vue';
+import { ReloadOutlined, EllipsisOutlined, CloseOutlined } from '@ant-design/icons-vue';
 import { useI18n } from 'vue-i18n';
 import { injectMultiTabStore, useMultiTab } from './multi-tab-store';
 import { injectMenuState } from '@/layouts/use-menu-state';
@@ -157,10 +163,9 @@ export default defineComponent({
       closeAll();
     };
 
-    const handleEdit = (target: string, action: string) => {
-      if (action === 'remove') {
-        close(target);
-      }
+    const handleClose = (e: Event, target: string) => {
+      close(target);
+      e.stopPropagation();
     };
 
     return {
@@ -172,7 +177,7 @@ export default defineComponent({
       closeLeft,
       closeRight,
       closeOther,
-      handleEdit,
+      handleClose,
       spin,
       sideWidth,
       cacheListLength,
@@ -183,6 +188,7 @@ export default defineComponent({
   components: {
     ReloadOutlined,
     EllipsisOutlined,
+    CloseOutlined,
   },
 });
 </script>
@@ -196,6 +202,31 @@ export default defineComponent({
 }
 .ant-pro-multi-tab-wrap :deep(.ant-tabs-bar) {
   padding-left: 16px;
+  .ant-tabs-tab {
+    padding: 0;
+    > div {
+      display: flex;
+    }
+    .ant-pro-multi-tab-reload-btn {
+      margin-right: 0;
+      margin-left: 8px;
+      color: @text-color-secondary;
+      font-size: 12px;
+
+      &:hover {
+        color: @primary-color;
+      }
+    }
+    .ant-pro-multi-tab-close-btn {
+      margin-right: 0;
+      margin-left: 8px;
+      color: @text-color-secondary;
+      font-size: 12px;
+    }
+  }
+  .ant-pro-multi-tab-title {
+    padding: 0 16px;
+  }
 }
 .ant-pro-multi-tab-fixed {
   width: 100%;
@@ -216,16 +247,6 @@ export default defineComponent({
   padding: 12px;
   font-size: 16px;
   cursor: pointer;
-  &:hover {
-    color: @primary-color;
-  }
-}
-
-.ant-pro-multi-tab-reload-btn {
-  margin-left: 8px;
-  color: @text-color-secondary;
-  font-size: 12px;
-
   &:hover {
     color: @primary-color;
   }
