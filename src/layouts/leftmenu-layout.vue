@@ -135,8 +135,8 @@ export default defineComponent({
     };
     const handleSelectedKeysChange = (keys: string[]) => {
       const menu = menus.value.find(m => m.path === keys[0]);
-      const toKey = menu ? menu.redirect : keys;
-      menuState.updateSelectKeys([toKey as string]);
+      const toKey = menu && menu.redirect ? [menu.redirect] : keys;
+      menuState.updateSelectKeys(toKey);
     };
     const handleMouseLeave = () => {
       setMenuHover(false);
