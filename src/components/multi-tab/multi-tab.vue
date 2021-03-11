@@ -98,10 +98,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, computed, inject } from 'vue';
+import { defineComponent, ref, computed, inject } from 'vue';
 import { ReloadOutlined, EllipsisOutlined } from '@ant-design/icons-vue';
 import { useI18n } from 'vue-i18n';
-import { MultiTabStore, useMultiTab } from './multi-tab-store';
+import { injectMultiTabStore, useMultiTab } from './multi-tab-store';
 import { injectMenuState } from '@/layouts/use-menu-state';
 import { useRoute } from 'vue-router';
 
@@ -109,10 +109,6 @@ export default defineComponent({
   name: 'MultiTab',
   inheritAttrs: false,
   props: {
-    store: {
-      type: Object as PropType<MultiTabStore>,
-      default: () => undefined,
-    },
     fixed: {
       type: Boolean,
       default: () => false,
@@ -124,7 +120,8 @@ export default defineComponent({
   },
   setup(props) {
     const menuState = injectMenuState();
-    const cacheListLength = computed(() => (props.store ? props.store.cacheList.length : 0));
+    const store = injectMultiTabStore();
+    const cacheListLength = computed(() => (store ? store.cacheList.length : 0));
     const route = useRoute();
     const activeKey = computed(() => {
       return (
@@ -180,6 +177,7 @@ export default defineComponent({
       sideWidth,
       cacheListLength,
       route,
+      store,
     };
   },
   components: {

@@ -1,4 +1,15 @@
-import { KeepAlive, cloneVNode, reactive, createVNode, toRaw, defineComponent, watch } from 'vue';
+import {
+  KeepAlive,
+  cloneVNode,
+  reactive,
+  createVNode,
+  toRaw,
+  defineComponent,
+  watch,
+  provide,
+  inject,
+  InjectionKey,
+} from 'vue';
 import { RouteMeta, useRouter, useRoute } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { flattenChildren } from '@/utils/vnode-util';
@@ -54,27 +65,40 @@ const guid = () => {
   return ++g;
 };
 
-// 定义保留的多标签状态
-const state = reactive<MultiTabStore>({
-  cacheList: [],
-  caches: new Map<CacheKey, CacheItem>(),
-  current: '',
-  exclude: [],
-  include: [],
-  add: (item: CacheItem) => {
-    if (!state.cacheList.find(c => c.path === item.path)) {
-      state.cacheList.push(item);
-    }
-  },
-});
-const hasCache = (path: CacheKey) => {
-  return state.cacheList.find(item => item.path === path);
+const MULTI_TAB_STORE_KEY: InjectionKey<MultiTabStore> = Symbol('multi-tab-store');
+export const useMultiTabStateProvider = (
+  initCacheList: Omit<CacheItem, 'component' | 'key'>[] = [],
+) => {
+  // 定义保留的多标签状态
+  const state = reactive<MultiTabStore>({
+    cacheList: [],
+    caches: new Map<CacheKey, CacheItem>(),
+    current: '',
+    exclude: [],
+    include: [],
+    add: (item: CacheItem) => {
+      if (!state.cacheList.find(c => c.path === item.path)) {
+        state.cacheList.push(item);
+      }
+    },
+  });
+  state.cacheList.push(...initCacheList.map(item => ({ ...item, key: guid() } as CacheItem)));
+  provide(MULTI_TAB_STORE_KEY, state);
 };
+
+export const injectMultiTabStore = () => {
+  return inject(MULTI_TAB_STORE_KEY)!;
+};
+
 // 创建消费端
-export const MultiTabStoreProducer = defineComponent({
-  name: 'MultiTabStoreProducer',
+export const MultiTabStoreConsumer = defineComponent({
+  name: 'MultiTabStoreConsumer',
   setup(_props, { slots = {} }) {
     const route = useRoute();
+    const state = inject(MULTI_TAB_STORE_KEY)!;
+    const hasCache = (path: CacheKey) => {
+      return state.cacheList.find(item => item.path === path);
+    };
     watch(
       () => route.path,
       () => {
@@ -103,7 +127,6 @@ export const MultiTabStoreProducer = defineComponent({
           name,
           key: guid(),
         };
-        console.log(cacheItem);
         state.cacheList.push(cacheItem);
       }
 
@@ -117,21 +140,11 @@ export const MultiTabStoreProducer = defineComponent({
     };
   },
 });
-let initStore = false;
-export const createMultiTabStoreProducer = (
-  initCacheList: Omit<CacheItem, 'component' | 'key'>[] = [],
-) => {
-  if (initStore) {
-    return state;
-  }
-  state.cacheList.push(...initCacheList.map(item => ({ ...item, key: guid() } as CacheItem)));
-  initStore = true;
-  return state;
-};
 
 export const useMultiTab = (/*options?: Options*/): MultiTabType => {
   const router = useRouter();
   const route = useRoute();
+  const state = inject(MULTI_TAB_STORE_KEY)!;
   const clearCache = (path: CacheKey) => {
     const cacheItem =
       state.cacheList.find(item => item.path === path) || ({ name: '' } as CacheItem);

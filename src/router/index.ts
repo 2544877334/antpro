@@ -1,11 +1,13 @@
-import { Component } from 'vue';
+import { Component, defineAsyncComponent, h } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
 import { MenuDataItem } from './typing';
 import Layout from '@/layouts/index.vue';
 // import UserLayout from '@/layouts/user-layout.vue';
 import UserLayout2 from '@/layouts/user-layout2.vue';
 import RouteView from '@/layouts/route-view.vue';
+import { MultiTabStoreConsumer } from '@/components/multi-tab';
 
+const AsyncWorkplace = defineAsyncComponent(() => import('@/views/dashboard/workplace/index.vue'));
 export const routes: MenuDataItem[] = [
   {
     name: 'index',
@@ -13,6 +15,12 @@ export const routes: MenuDataItem[] = [
     redirect: '/dashboard/workplace',
     component: Layout,
     children: [
+      {
+        path: '/workplace',
+        name: 'Workplace',
+        meta: { icon: 'HistoryOutlined', title: 'pages.dashboard.workplace.title' },
+        component: h(MultiTabStoreConsumer, {}, () => h(AsyncWorkplace)),
+      },
       // dashboard
       {
         name: 'Dashboard',
@@ -21,12 +29,12 @@ export const routes: MenuDataItem[] = [
         component: RouteView,
         redirect: '/dashboard/welcome',
         children: [
-          {
-            path: '/dashboard/workplace',
-            name: 'Workplace',
-            meta: { icon: 'HistoryOutlined', title: 'pages.dashboard.workplace.title' },
-            component: (): Component => import('@/views/dashboard/workplace/index.vue'),
-          },
+          // {
+          //   path: '/dashboard/workplace',
+          //   name: 'Workplace',
+          //   meta: { icon: 'HistoryOutlined', title: 'pages.dashboard.workplace.title' },
+          //   component: (): Component => import('@/views/dashboard/workplace/index.vue'),
+          // },
           {
             path: '/dashboard/welcome',
             name: 'welcome',

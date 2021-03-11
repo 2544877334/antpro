@@ -12,12 +12,14 @@ import { localStorage } from '@/utils/local-storage';
 import useMediaQuery from '@/utils/hooks/useMediaQuery';
 import { useI18n } from 'vue-i18n';
 import useMenuState, { MenuStateSymbol } from './layouts/use-menu-state';
+import { useMultiTabStateProvider } from './components/multi-tab';
 
 export default {
   name: 'App',
   setup() {
     const store = useStore();
     const i18n = useI18n();
+    useMultiTabStateProvider();
     const colSize = useMediaQuery();
     const isMobile = computed(() => colSize.value === 'sm' || colSize.value === 'xs');
     const menuState = useMenuState({

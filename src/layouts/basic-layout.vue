@@ -56,12 +56,7 @@
             <select-lang />
           </div>
         </header-view>
-        <multi-tab
-          v-if="multiTab"
-          :store="multiTabStore"
-          :fixed="multiTabFixed"
-          :sider-width="sideWidth"
-        />
+        <multi-tab v-if="multiTab" :fixed="multiTabFixed" :sider-width="sideWidth" />
         <router-view v-slot="{ Component }">
           <transition v-if="Component" :name="transitionName">
             <wrap-content>
@@ -87,15 +82,10 @@ import { default as HeaderView } from '@/components/base-layouts/header/index.vu
 import { default as SelectLang } from '@/components/select-lang/index.vue';
 import { default as AvatarDropdown } from '@/components/avatar-dropdown.vue';
 import { default as SettingDrawer } from '@/components/setting-drawer/index.vue';
-import {
-  MultiTab,
-  MultiTabStoreProducer,
-  createMultiTabStoreProducer,
-} from '@/components/multi-tab';
+import { MultiTab } from '@/components/multi-tab';
 import { useStore } from 'vuex';
 import { injectMenuState } from './use-menu-state';
 
-const multiTabStore = createMultiTabStoreProducer();
 export default defineComponent({
   name: 'BasicLayout',
   setup() {
@@ -119,13 +109,11 @@ export default defineComponent({
       ...menuState,
       hasSideMenu,
       hasTopMenu,
-      multiTabStore,
       isMobile,
     };
   },
   components: {
     MultiTab,
-    MultiTabStoreProducer,
     WrapContent,
     SiderMenu,
     GlobalFooter,
