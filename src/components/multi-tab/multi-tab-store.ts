@@ -130,7 +130,7 @@ export const MultiTabStoreConsumer = defineComponent({
         state.cacheList.push(cacheItem);
       }
 
-      newVNode.type.displayName = name;
+      newVNode.type.name = name;
       const key = `${name}-${cacheItem.key}`;
       return createVNode(
         KeepAlive,
