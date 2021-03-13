@@ -5,7 +5,6 @@ import Layout from '@/layouts/index.vue';
 // import UserLayout from '@/layouts/user-layout.vue';
 import UserLayout2 from '@/layouts/user-layout2.vue';
 import RouteView from '@/layouts/route-view.vue';
-import { MultiTabStoreConsumer } from '@/components/multi-tab';
 
 const AsyncWorkplace = defineAsyncComponent(() => import('@/views/dashboard/workplace/index.vue'));
 export const routes: MenuDataItem[] = [
@@ -19,7 +18,7 @@ export const routes: MenuDataItem[] = [
         path: '/workplace',
         name: 'Workplace',
         meta: { icon: 'HistoryOutlined', title: 'pages.dashboard.workplace.title' },
-        component: h(MultiTabStoreConsumer, {}, () => h(AsyncWorkplace)),
+        component: h(RouteView, {}, () => h(AsyncWorkplace)),
       },
       // dashboard
       {
