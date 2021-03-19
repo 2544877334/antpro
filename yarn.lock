@@ -1153,43 +1153,43 @@
     cssnano-preset-default "^4.0.0"
     postcss "^7.0.0"
 
-"@intlify/core-base@9.0.0-rc.6":
-  version "9.0.0-rc.6"
-  resolved "https://registry.npm.taobao.org/@intlify/core-base/download/@intlify/core-base-9.0.0-rc.6.tgz?cache=0&sync_timestamp=1612957281613&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40intlify%2Fcore-base%2Fdownload%2F%40intlify%2Fcore-base-9.0.0-rc.6.tgz#e0d61d9412ae1ea3f8ec9475d4c0f005fc006c95"
-  integrity sha1-4NYdlBKuHqP47JR11MDwBfwAbJU=
+"@intlify/core-base@9.0.0":
+  version "9.0.0"
+  resolved "https://registry.npm.taobao.org/@intlify/core-base/download/@intlify/core-base-9.0.0.tgz#3de223b8532c535d022e5be58f7d56a26d2fb12f"
+  integrity sha1-PeIjuFMsU10CLlvlj31Wom0vsS8=
   dependencies:
-    "@intlify/message-compiler" "9.0.0-rc.6"
-    "@intlify/message-resolver" "9.0.0-rc.6"
-    "@intlify/runtime" "9.0.0-rc.6"
-    "@intlify/shared" "9.0.0-rc.6"
+    "@intlify/message-compiler" "9.0.0"
+    "@intlify/message-resolver" "9.0.0"
+    "@intlify/runtime" "9.0.0"
+    "@intlify/shared" "9.0.0"
 
-"@intlify/message-compiler@9.0.0-rc.6":
-  version "9.0.0-rc.6"
-  resolved "https://registry.npm.taobao.org/@intlify/message-compiler/download/@intlify/message-compiler-9.0.0-rc.6.tgz?cache=0&sync_timestamp=1612957281332&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40intlify%2Fmessage-compiler%2Fdownload%2F%40intlify%2Fmessage-compiler-9.0.0-rc.6.tgz#c15e8b6e120804e30306a6af42305c6d970714b1"
-  integrity sha1-wV6LbhIIBOMDBqavQjBcbZcHFLE=
+"@intlify/message-compiler@9.0.0":
+  version "9.0.0"
+  resolved "https://registry.npm.taobao.org/@intlify/message-compiler/download/@intlify/message-compiler-9.0.0.tgz#8a1079f8aebcde33057ce769817691ce27ad3e0d"
+  integrity sha1-ihB5+K683jMFfOdpgXaRzietPg0=
   dependencies:
-    "@intlify/message-resolver" "9.0.0-rc.6"
-    "@intlify/shared" "9.0.0-rc.6"
+    "@intlify/message-resolver" "9.0.0"
+    "@intlify/shared" "9.0.0"
     source-map "0.6.1"
 
-"@intlify/message-resolver@9.0.0-rc.6":
-  version "9.0.0-rc.6"
-  resolved "https://registry.npm.taobao.org/@intlify/message-resolver/download/@intlify/message-resolver-9.0.0-rc.6.tgz?cache=0&sync_timestamp=1612957280803&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40intlify%2Fmessage-resolver%2Fdownload%2F%40intlify%2Fmessage-resolver-9.0.0-rc.6.tgz#c4fcc5fbc2a5bb3578b897baa2307bfd782193fe"
-  integrity sha1-xPzF+8KluzV4uJe6ojB7/Xghk/4=
+"@intlify/message-resolver@9.0.0":
+  version "9.0.0"
+  resolved "https://registry.npm.taobao.org/@intlify/message-resolver/download/@intlify/message-resolver-9.0.0.tgz#0077ec24606b6486d238bdef9044e27729f4782c"
+  integrity sha1-AHfsJGBrZIbSOL3vkETidyn0eCw=
 
-"@intlify/runtime@9.0.0-rc.6":
-  version "9.0.0-rc.6"
-  resolved "https://registry.npm.taobao.org/@intlify/runtime/download/@intlify/runtime-9.0.0-rc.6.tgz?cache=0&sync_timestamp=1612957281070&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40intlify%2Fruntime%2Fdownload%2F%40intlify%2Fruntime-9.0.0-rc.6.tgz#033af22fe2d7dfcf4970f013a4f9645609907a70"
-  integrity sha1-AzryL+LX389JcPATpPlkVgmQenA=
+"@intlify/runtime@9.0.0":
+  version "9.0.0"
+  resolved "https://registry.npm.taobao.org/@intlify/runtime/download/@intlify/runtime-9.0.0.tgz#bf9415ff90c746a9be38a5c32f71cbbe9848eee8"
+  integrity sha1-v5QV/5DHRqm+OKXDL3HLvphI7ug=
   dependencies:
-    "@intlify/message-compiler" "9.0.0-rc.6"
-    "@intlify/message-resolver" "9.0.0-rc.6"
-    "@intlify/shared" "9.0.0-rc.6"
+    "@intlify/message-compiler" "9.0.0"
+    "@intlify/message-resolver" "9.0.0"
+    "@intlify/shared" "9.0.0"
 
-"@intlify/shared@9.0.0-rc.6":
-  version "9.0.0-rc.6"
-  resolved "https://registry.npm.taobao.org/@intlify/shared/download/@intlify/shared-9.0.0-rc.6.tgz?cache=0&sync_timestamp=1612957280400&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2F%40intlify%2Fshared%2Fdownload%2F%40intlify%2Fshared-9.0.0-rc.6.tgz#577cd9be261dd54472d934b2fefd2c6a8e6a23fe"
-  integrity sha1-V3zZviYd1URy2TSy/v0sao5qI/4=
+"@intlify/shared@9.0.0":
+  version "9.0.0"
+  resolved "https://registry.npm.taobao.org/@intlify/shared/download/@intlify/shared-9.0.0.tgz#d85b3b5f9033f377c5cf2202cf2459aa49948f36"
+  integrity sha1-2Fs7X5Az83fFzyICzyRZqkmUjzY=
 
 "@mrmlnc/readdir-enhanced@^2.2.1":
   version "2.2.1"
@@ -11314,13 +11314,13 @@ vue-hot-reload-api@^2.3.0:
   resolved "https://registry.npm.taobao.org/vue-hot-reload-api/download/vue-hot-reload-api-2.3.4.tgz#532955cc1eb208a3d990b3a9f9a70574657e08f2"
   integrity sha1-UylVzB6yCKPZkLOp+acFdGV+CPI=
 
-vue-i18n@~9.0.0-0:
-  version "9.0.0-rc.6"
-  resolved "https://registry.npm.taobao.org/vue-i18n/download/vue-i18n-9.0.0-rc.6.tgz?cache=0&sync_timestamp=1612957648152&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fvue-i18n%2Fdownload%2Fvue-i18n-9.0.0-rc.6.tgz#c92fcc6981ca84aee350cd8f939c226f5a1814b9"
-  integrity sha1-yS/MaYHKhK7jUM2Pk5wib1oYFLk=
+vue-i18n@~9.0.0:
+  version "9.0.0"
+  resolved "https://registry.npm.taobao.org/vue-i18n/download/vue-i18n-9.0.0.tgz#a04c41d5ed3d5a068e923517bfaa0abcbc84e174"
+  integrity sha1-oExB1e09WgaOkjUXv6oKvLyE4XQ=
   dependencies:
-    "@intlify/core-base" "9.0.0-rc.6"
-    "@intlify/shared" "9.0.0-rc.6"
+    "@intlify/core-base" "9.0.0"
+    "@intlify/shared" "9.0.0"
     "@vue/devtools-api" "^6.0.0-beta.5"
 
 "vue-loader-v16@npm:vue-loader@^16.1.0":

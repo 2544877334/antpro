@@ -33,7 +33,7 @@
     "smooth-dnd": "^0.12.1",
     "store": "^2.0.12",
     "vue": "3.0.7",
-    "vue-i18n": "~9.0.0-0",
+    "vue-i18n": "~9.0.0",
     "vue-router": "^4.0.0",
     "vuex": "~4.0.0",
     "vuex-persistedstate": "^4.0.0-beta.1"
