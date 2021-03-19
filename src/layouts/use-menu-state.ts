@@ -4,8 +4,7 @@ import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { LayoutType, MenuTheme } from '@/components/base-layouts/typing';
 import { xor } from 'lodash-es';
-import { genMenuInfo, filterMenu } from '@/utils/menu-util';
-import { routes } from '@/router';
+import { genMenuInfo } from '@/utils/menu-util';
 
 export interface MenuState {
   collapsed?: boolean;
@@ -101,9 +100,11 @@ export default function useMenuState(initialState?: MenuState): MenuStated {
     const width: number = layoutState.layout === 'left' ? firstSideWidth : sideWidth;
     return hasSideMenu.value ? (state.collapsed ? collapsedWidth : width) : undefined;
   });
-  const { menuKeyMap } = genMenuInfo(filterMenu(routes));
+  // 解决动态路由 打开页面 openKeys 错误问题
+  const allowRouters = computed(() => store.getters[`user/allowRouters`]); // genMenuInfo(filterMenu(routes)).menus;
+  const menuKeyMap = computed(() => genMenuInfo(allowRouters.value).menuKeyMap);
   const getOpenKeysBySelectKey = (key: string) => {
-    return menuKeyMap[key]?.parentKeys;
+    return menuKeyMap.value[key]?.parentKeys;
   };
   watch(
     () => state.collapsed,

@@ -31,7 +31,7 @@ export interface DynamicColumns {
   move: (index: number, targetIndex: number) => void;
 }
 
-const defaulttRowIndexColumn = {
+const defaultRowIndexColumn = {
   title: '序号',
   dataIndex: 'my-custom-show-index',
   customRender: ({ index }: any) => `${index + 1}`,
@@ -61,11 +61,10 @@ export const useTableDynamicColumns = (
     checkedList: [],
     indeterminate: true,
   });
+  const dynamicColumns = ref([...columns]);
   if (options.needRowIndex) {
-    columns.unshift(defaulttRowIndexColumn);
+    dynamicColumns.value.unshift(defaultRowIndexColumn);
   }
-  const dynamicColumns = ref(columns);
-
   const dynamicColumnItems: Ref<DynamicColumnItem[]> = ref(
     columns.map(column => {
       return {
@@ -92,6 +91,9 @@ export const useTableDynamicColumns = (
         return keys.indexOf(aKey) - keys.indexOf(bKey);
       })
       .map(item => item);
+    if (options.needRowIndex) {
+      dynamicColumns.value.unshift(defaultRowIndexColumn);
+    }
   };
 
   watch(

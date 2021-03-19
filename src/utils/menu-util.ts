@@ -1,7 +1,8 @@
 import { RouteRecordRaw } from 'vue-router';
+import type { MenuDataItem } from '@/router/typing';
 import { RouteProps } from '@/components/base-layouts/typing';
 
-export const filterMenu = (routes: RouteRecordRaw[]): RouteRecordRaw[] => {
+export const filterMenu = (routes: MenuDataItem[]): RouteRecordRaw[] => {
   return routes.find(item => item.name === 'index')?.children || [];
 };
 interface MenuMap {

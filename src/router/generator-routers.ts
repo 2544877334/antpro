@@ -2,35 +2,32 @@ import type { RouteRecordRaw } from 'vue-router';
 import type { MenuDataItem } from './typing';
 import type { RouteItem } from '@/api/user/login';
 import { getCurrentUserNav } from '@/api/user/login';
-import Layout from '@/layouts/index.vue';
-
-// 前端未找到页面路由（固定不用改）
-const notFoundRouter: MenuDataItem = {
-  path: '*',
-  redirect: '/404',
-  meta: {
-    title: 'Not Found',
-    hideInMenu: true,
-  },
-};
 
 // 根级菜单
-const rootRouter: RouteRecordRaw = {
+const rootRouter: MenuDataItem = {
   name: 'index',
   path: '/',
   redirect: '/dashboard',
   meta: {
     title: '首页',
   },
-  component: () => Layout,
-  children: [] as RouteRecordRaw[],
+  component: () => import('@/layouts/index.vue'),
+  children: [] as MenuDataItem[],
 };
+
+const defineRouteComponents: Record<string, any> = {
+  BasicLayout: () => import('@/layouts/index.vue'),
+  RouteView: () => import('@/layouts/route-view.vue'),
+  PageView: () => import('@/layouts/route-view.vue'),
+};
+
+const defineRouteComponentKeys = Object.keys(defineRouteComponents);
 
 export const generator = (
   routeMap: RouteItem[],
   parentId: string | number,
-  routeItem?: MenuDataItem,
-): MenuDataItem[] => {
+  routeItem?: RouteRecordRaw | MenuDataItem,
+) => {
   return routeMap
     .filter(item => item.parentId === parentId)
     .map(item => {
@@ -46,11 +43,14 @@ export const generator = (
           icon: icon || undefined,
           hideInMenu,
           hideChildrenInMenu,
-          target,
-          authority,
+          target: target,
+          authority: authority,
         },
         // 该路由对应页面的 组件 (动态加载 @/views/ 下面的路径文件)
-        component: () => import(/* @vite-ignore */ `@/views/${item.component}`),
+        component:
+          item.component && defineRouteComponentKeys.includes(item.component)
+            ? defineRouteComponents[item.component]
+            : () => import(/* @vite-ignore */ `@/views/${item.component}`),
       };
 
       // 为了防止出现后端返回结果不规范，处理有可能出现拼接出两个 反斜杠
@@ -63,7 +63,7 @@ export const generator = (
 
       // 子菜单，递归处理
       currentRouter.children = generator(routeMap, item.id, currentRouter);
-      if (currentRouter.children && currentRouter.children.length <= 0) {
+      if (currentRouter.children === undefined || currentRouter.children.length <= 0) {
         delete currentRouter.children;
       }
       return currentRouter;
@@ -72,12 +72,12 @@ export const generator = (
 };
 
 export const generatorDynamicRouter = () => {
-  return new Promise<RouteRecordRaw>((resolve, reject) => {
+  return new Promise<MenuDataItem>((resolve, reject) => {
     getCurrentUserNav()
       .then(menuNav => {
         // root id = 0;
-        const routes = generator(menuNav, 0, undefined);
-        routes.push(notFoundRouter);
+        const routes = generator(menuNav, 0, undefined) as MenuDataItem[];
+        // routes.push(notFoundRouter);
         rootRouter.children = routes;
         resolve(rootRouter);
       })

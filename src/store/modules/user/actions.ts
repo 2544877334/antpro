@@ -14,6 +14,7 @@ import { default as router, routes } from '@/router';
 import { filterMenu } from '@/utils/menu-util';
 import { hasAuthority, filterChildRoute } from '@/utils/authority';
 import { generatorDynamicRouter } from '@/router/generator-routers';
+import { MenuDataItem } from '@/router/typing';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
@@ -63,13 +64,14 @@ export const actions: ActionTree<UserState, RootState> = {
         ? allRoutes
         : allRoutes.filter(route => {
             // parnent route filter
-            const hasAllow = hasAuthority(route, permissionsKey!);
+            const hasAllow = hasAuthority(route as MenuDataItem, permissionsKey!);
             if (hasAllow && route.children && route.children.length > 0) {
               // current route children filter
-              route.children = filterChildRoute(route, permissionsKey!);
+              route.children = filterChildRoute(route as MenuDataItem, permissionsKey!);
             }
             return hasAllow;
           });
+      console.log('allowRoutes', allowRoutes);
       // 添加到路由表
       const {
         // eslint-disable-next-line
@@ -90,7 +92,6 @@ export const actions: ActionTree<UserState, RootState> = {
     return new Promise<RouteRecordRaw>(resolve => {
       generatorDynamicRouter()
         .then((routes: RouteRecordRaw) => {
-          console.log('generatorDynamicRouter', routes);
           const allowRoutes = routes.children || [];
           // 添加到路由表
           router.addRoute(routes);

@@ -1,5 +1,7 @@
 import { VNodeChild } from 'vue';
-import { RouteRecordRaw, RouteMeta } from 'vue-router';
+import { RouteRecordRaw, RouteMeta, RouteComponent, RouteRecordRedirectOption } from 'vue-router';
+
+type Lazy<T> = () => Promise<T>;
 
 export interface MenuRouteMeta {
   hideChildrenInMenu?: boolean;
@@ -10,6 +12,10 @@ export interface MenuRouteMeta {
 }
 
 export type MenuDataItem = {
+  path: string;
+  name?: string;
   children?: MenuDataItem[];
   meta?: MenuRouteMeta & RouteMeta;
+  redirect?: RouteRecordRedirectOption;
+  component?: RouteComponent | Lazy<RouteComponent>;
 } & RouteRecordRaw;
