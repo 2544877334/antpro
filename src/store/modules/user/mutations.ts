@@ -1,8 +1,8 @@
 import { MutationTree } from 'vuex';
 import { UserState } from './typing';
-import { state as initState } from './state';
-import ls from '@/utils/local-storage';
+import { initState } from './state';
 import { STORAGE_TOKEN_KEY } from '@/store/mutation-type';
+import ls from '@/utils/local-storage';
 
 export const SET_TOKEN = 'SET_TOKEN';
 export const SET_AVATAR = 'SET_AVATAR';
