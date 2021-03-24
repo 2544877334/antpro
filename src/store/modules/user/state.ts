@@ -9,3 +9,5 @@ export const state: UserState = {
   role: undefined,
   allowRouters: [],
 };
+
+export const initState: UserState = Object.assign({}, state);
