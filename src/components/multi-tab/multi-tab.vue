@@ -29,16 +29,14 @@
               >
                 关闭其他
               </a-menu-item>
-              <a-menu-item key="refresh" @click="handleReloadPage(undefined)">
-                刷新当前页
-              </a-menu-item>
+              <a-menu-item key="refresh" @click="handleReloadPage()">刷新当前页</a-menu-item>
             </a-menu>
           </template>
         </a-dropdown>
       </template>
       <a-tab-pane
         class="contextmenu-wrap"
-        :key="item.route.path"
+        :key="item.route.fullPath"
         v-for="(item, index) in store.cacheList"
         :closable="false"
       >

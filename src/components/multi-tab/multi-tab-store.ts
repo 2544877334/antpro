@@ -40,7 +40,6 @@ const getName = (comp: any) => {
 };
 
 export type CallerFunction = {
-  open: (path: CacheKey) => void;
   close: (path: CacheKey) => void;
   closeLeft: (selectedPath: CacheKey) => void;
   closeRight: (selectedPath: CacheKey) => void;
@@ -90,9 +89,13 @@ export const MultiTabStoreConsumer = defineComponent({
       return state.cacheList.find(item => item.path === path);
     };
     watch(
-      () => route.path,
+      () => route.fullPath,
       () => {
         state.current = route.path;
+        const index = state.cacheList.findIndex(item => item.path === route.path);
+        if (state.cacheList[index]) {
+          state.cacheList[index].route = { ...route };
+        }
       },
       { immediate: true },
     );
@@ -163,19 +166,9 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
     }
     const targetIndex = currentPageIndex === 0 ? currentPageIndex + 1 : currentPageIndex - 1;
     router
-      .replace({
-        path: state.cacheList[targetIndex].route.path,
-      })
+      .replace(state.cacheList[targetIndex].route)
       .then(() => {
         state.cacheList.splice(currentPageIndex, 1);
-      })
-      .catch();
-  };
-
-  const open = (path: CacheKey) => {
-    router
-      .push({
-        path: path,
       })
       .catch();
   };
@@ -192,19 +185,15 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
     clearCache(path);
     const cacheItemIndex = state.cacheList.findIndex(item => item.path === path);
     const cacheItem = state.cacheList[cacheItemIndex];
-
+    console.log(cacheItem);
     state.cacheList[cacheItemIndex] = { ...toRaw(cacheItem), key: guid() };
     return new Promise<void>(resolve => {
-      router
-        .replace({
-          path: (cacheItem?.route.path || path) as string,
-        })
-        .finally(() => {
-          // 模拟loading效果，加载太快，loading 不明显，主动加个延时 ，如不需要可删除延迟
-          setTimeout(() => {
-            resolve();
-          }, 900);
-        });
+      router.replace(cacheItem?.route || { path }).finally(() => {
+        // 模拟loading效果，加载太快，loading 不明显，主动加个延时 ，如不需要可删除延迟
+        setTimeout(() => {
+          resolve();
+        }, 900);
+      });
     });
   };
 
@@ -226,7 +215,7 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
     const currentIndex = state.cacheList.findIndex(item => item.path === route.path);
     if (currentIndex < index) {
       router
-        .replace({ path: selectedPath })
+        .replace(state.cacheList[index].route)
         .then(() => {
           deleteCaches(0, index);
         })
@@ -241,7 +230,7 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
     const currentIndex = state.cacheList.findIndex(item => item.path === route.path);
     if (currentIndex > index) {
       router
-        .replace({ path: selectedPath })
+        .replace(state.cacheList[index].route)
         .then(() => {
           deleteCaches(index + 1, state.cacheList.length - index - 1);
         })
@@ -254,9 +243,7 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
   const closeOther = (selectedPath: CacheKey) => {
     const index = state.cacheList.findIndex(cached => cached.path === selectedPath);
     router
-      .replace({
-        path: selectedPath,
-      })
+      .replace(state.cacheList[index].route)
       .then(() => {
         deleteCaches(index + 1, state.cacheList.length - index - 1);
         deleteCaches(0, index);
@@ -264,7 +251,7 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
       .catch();
   };
 
-  return [{ open, close, getCaches, clearCache, closeLeft, closeRight, closeOther, refresh }];
+  return [{ close, getCaches, clearCache, closeLeft, closeRight, closeOther, refresh }];
 };
 
 export default useMultiTab;

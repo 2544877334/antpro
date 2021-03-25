@@ -182,7 +182,7 @@ export default function useMenuState(initialState?: MenuState): MenuStated {
   let timeout = 0;
   onMounted(() => {
     watch(
-      [() => route.path, () => route.query, () => route.hash],
+      () => route.fullPath,
       () => {
         clearTimeout(timeout);
         query.value = route.query;
