@@ -29,12 +29,10 @@ export interface CacheItem {
 }
 
 export interface MultiTabStore {
-  caches: Map<CacheKey, CacheItem>;
   cacheList: CacheItem[];
   current: CacheKey;
   include: string[];
   exclude: string[];
-  add: (item: CacheItem) => void;
 }
 
 const getName = (comp: any) => {
@@ -44,7 +42,6 @@ const getName = (comp: any) => {
 export type CallerFunction = {
   open: (path: CacheKey) => void;
   close: (path: CacheKey) => void;
-  closeAll: () => void;
   closeLeft: (selectedPath: CacheKey) => void;
   closeRight: (selectedPath: CacheKey) => void;
   closeOther: (selectedPath: CacheKey) => void;
@@ -55,7 +52,6 @@ export type CallerFunction = {
 
 export type Options = {
   defaultHomePage?: string;
-  allowCloseAll?: boolean;
 };
 
 export type MultiTabType = [CallerFunction];
@@ -72,15 +68,9 @@ export const useMultiTabStateProvider = (
   // 定义保留的多标签状态
   const state = reactive<MultiTabStore>({
     cacheList: [],
-    caches: new Map<CacheKey, CacheItem>(),
     current: '',
     exclude: [],
     include: [],
-    add: (item: CacheItem) => {
-      if (!state.cacheList.find(c => c.path === item.path)) {
-        state.cacheList.push(item);
-      }
-    },
   });
   state.cacheList.push(...initCacheList.map(item => ({ ...item, key: guid() } as CacheItem)));
   provide(MULTI_TAB_STORE_KEY, state);
@@ -126,17 +116,20 @@ export const MultiTabStoreConsumer = defineComponent({
           route: { ...route },
           name,
           key: guid(),
+          lock: !!route.meta.lock,
         };
         state.cacheList.push(cacheItem);
       }
 
       newVNode.type.name = name;
       const key = `${name}-${cacheItem.key}`;
-      return createVNode(
-        KeepAlive,
-        { exclude: state.exclude },
-        { default: () => cloneVNode(newVNode, { key }) },
-      );
+      return route.meta.keepAlive !== false
+        ? createVNode(
+            KeepAlive,
+            { exclude: state.exclude },
+            { default: () => cloneVNode(newVNode, { key }) },
+          )
+        : cloneVNode(newVNode, { key });
     };
   },
 });
@@ -188,7 +181,7 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
   };
 
   const getCaches = () => {
-    return state.caches;
+    return state.cacheList;
   };
 
   // alias
@@ -215,18 +208,17 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
     });
   };
 
-  const closeAll = () => {
-    state.cacheList = [];
-    state.caches = new Map<CacheKey, CacheItem>();
-    // if (options?.defaultHomePage) {
-    //   open(options.defaultHomePage);
-    // }
-  };
-  const deleteCaches = (start: number, index: number) => {
-    const closed = state.cacheList.splice(start, index);
-    closed.forEach(item => {
-      state.caches.delete(item.path);
-    });
+  const deleteCaches = (start: number, num: number) => {
+    const list = state.cacheList;
+    const end = start + num;
+    const newList = [];
+    for (let i = 0; i < list.length; i++) {
+      const item = list[i];
+      if (i < start || i >= end || item.lock) {
+        newList.push(item);
+      }
+    }
+    state.cacheList = newList;
   };
 
   const closeLeft = (selectedPath: CacheKey) => {
@@ -272,9 +264,7 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
       .catch();
   };
 
-  return [
-    { open, close, getCaches, clearCache, closeAll, closeLeft, closeRight, closeOther, refresh },
-  ];
+  return [{ open, close, getCaches, clearCache, closeLeft, closeRight, closeOther, refresh }];
 };
 
 export default useMultiTab;

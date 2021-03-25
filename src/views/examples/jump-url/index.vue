@@ -4,7 +4,7 @@
       <a-row :gutter="16">
         <a-col :sm="24" :md="12">
           <a-card title="router-link">
-            <router-link :to="'/dashboard/workplace'">工作台</router-link>
+            <router-link :to="'/workplace'">工作台</router-link>
             <br />
             <router-link :to="{ path: '/dashboard/welcome' }">欢迎页</router-link>
             <br />

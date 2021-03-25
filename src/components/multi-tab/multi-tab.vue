@@ -22,13 +22,6 @@
           />
           <template #overlay>
             <a-menu>
-              <!-- <a-menu-item
-                key="close-all"
-                @click="handleCloseAll"
-                :disabled="cacheListLength === 1"
-              >
-                关闭全部
-              </a-menu-item> -->
               <a-menu-item
                 key="close-other"
                 @click="closeOther(route.path)"
@@ -90,9 +83,6 @@
                 >
                   关闭到右侧
                 </a-menu-item>
-                <!-- <a-menu-item @click="handleCloseAll" :disabled="cacheListLength === 1">
-                  关闭全部
-                </a-menu-item> -->
                 <a-menu-item @click="handleReloadPage(item.route.path)">刷新当前页</a-menu-item>
               </a-menu>
             </template>
@@ -148,7 +138,7 @@ export default defineComponent({
     const { t } = useI18n();
     const spin = ref(false);
     const [
-      { refresh, close, closeAll, closeLeft, closeRight, closeOther },
+      { refresh, close, closeLeft, closeRight, closeOther },
     ] = useMultiTab(/*{ defaultHomePage: props.defaultHomePage }*/);
 
     const handleActiveKeyChange = (key: string) => {
@@ -158,9 +148,6 @@ export default defineComponent({
       spin.value = true;
       await refresh(key);
       spin.value = false;
-    };
-    const handleCloseAll = () => {
-      closeAll();
     };
 
     const handleClose = (e: Event, target: string) => {
@@ -173,7 +160,6 @@ export default defineComponent({
       activeKey,
       handleActiveKeyChange,
       handleReloadPage,
-      handleCloseAll,
       closeLeft,
       closeRight,
       closeOther,

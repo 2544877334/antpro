@@ -10,7 +10,7 @@ const userNavDataSource = [
       show: true,
     },
     component: 'RouteView',
-    redirect: '/dashboard/workplace',
+    redirect: '/workplace',
   },
   {
     name: 'workplace',
