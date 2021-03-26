@@ -9,20 +9,17 @@ import {
   provide,
   inject,
   InjectionKey,
+  UnwrapRef,
 } from 'vue';
-import { RouteMeta, useRouter, useRoute } from 'vue-router';
+import { useRouter, useRoute, RouteLocationNormalized } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { flattenChildren } from '@/utils/vnode-util';
 
 export type CacheKey = string;
 
-export type CacheRoute = {
-  path: string;
-  meta: RouteMeta;
-} & Record<string, any>;
 export interface CacheItem {
   path: CacheKey;
-  route: CacheRoute;
+  route: RouteLocationNormalized;
   name?: string;
   key?: number;
   lock?: boolean;
@@ -63,7 +60,7 @@ const guid = () => {
 const MULTI_TAB_STORE_KEY: InjectionKey<MultiTabStore> = Symbol('multi-tab-store');
 export const useMultiTabStateProvider = (
   initCacheList: Omit<CacheItem, 'component' | 'key'>[] = [],
-) => {
+): UnwrapRef<MultiTabStore> => {
   // 定义保留的多标签状态
   const state = reactive<MultiTabStore>({
     cacheList: [],
@@ -73,6 +70,7 @@ export const useMultiTabStateProvider = (
   });
   state.cacheList.push(...initCacheList.map(item => ({ ...item, key: guid() } as CacheItem)));
   provide(MULTI_TAB_STORE_KEY, state);
+  return state;
 };
 
 export const injectMultiTabStore = () => {
@@ -125,7 +123,7 @@ export const MultiTabStoreConsumer = defineComponent({
       }
 
       newVNode.type.name = name;
-      const key = `${name}-${cacheItem.key}`;
+      const key = `${name}-${cacheItem.key}-${route.fullPath}`;
       return route.meta.keepAlive !== false
         ? createVNode(
             KeepAlive,

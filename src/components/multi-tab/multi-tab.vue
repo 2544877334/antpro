@@ -36,7 +36,7 @@
       </template>
       <a-tab-pane
         class="contextmenu-wrap"
-        :key="item.route.fullPath"
+        :key="item.route.path"
         v-for="(item, index) in store.cacheList"
         :closable="false"
       >
