@@ -35,7 +35,7 @@
             </div>
             <div class="ant-pro-table-list-toolbar-right">
               <a-space align="center">
-                <a-button type="primary">
+                <a-button type="primary" @click="modalVisible = true">
                   <plus-outlined />
                   新建
                 </a-button>
@@ -151,6 +151,7 @@
             pageSize: state.pageSize,
             total: state.total,
           }"
+          :getPopupContainer="trigger => trigger.parentNode"
           @change="handleTableChange"
         >
           <template #rowIndex="{ index }">
@@ -165,11 +166,21 @@
         </a-table>
       </a-card>
     </div>
+    <a-modal
+      title="Basic Modal"
+      :getContainer="() => elRef.$el"
+      v-model:visible="modalVisible"
+      @ok="handleModalOk"
+    >
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+      <p>Some contents...</p>
+    </a-modal>
   </page-container>
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRaw } from 'vue';
+import { defineComponent, reactive, ref, toRaw } from 'vue';
 import {
   PlusOutlined,
   ReloadOutlined,
@@ -289,6 +300,10 @@ export default defineComponent({
       reload();
     };
 
+    // modal
+    const modalVisible = ref(false);
+    const handleModalOk = () => {};
+
     return {
       statusMap,
       state,
@@ -311,6 +326,10 @@ export default defineComponent({
       handleColumnAllClick,
       reset,
       move,
+
+      // modal controls
+      modalVisible,
+      handleModalOk,
     };
   },
   components: {
