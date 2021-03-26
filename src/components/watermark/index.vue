@@ -25,11 +25,11 @@
     />
   </div>
 </template>
-  
+
 <script lang="ts">
-import type { CSSProperties } from 'vue';
+import { CSSProperties, inject } from 'vue';
 import PropTypes from 'ant-design-vue/es/_util/vue-types';
-import { defineComponent, computed, ref, toRefs, watchEffect } from 'vue'
+import { defineComponent, computed, ref, watchEffect } from 'vue';
 import { useProProvider } from '../base-layouts/pro-provider';
 
 export type WaterMarkProps = {
@@ -94,7 +94,7 @@ export default defineComponent({
     markStyle: PropTypes.object,
     markClassName: PropTypes.string,
     prefixCls: PropTypes.string.def('pro'),
-    zIndex: PropTypes.number.def(9),
+    zIndex: PropTypes.number.def(999),
     gapX: PropTypes.number.def(212),
     gapY: PropTypes.number.def(222),
     width: PropTypes.number.def(120),
@@ -102,15 +102,15 @@ export default defineComponent({
     rotate: PropTypes.number.def(-22),
     fontStyle: PropTypes.string.def('normal'),
     fontWeight: PropTypes.string.def('normal'),
-    fontColor: PropTypes.string.def('rgba(0,0,0,.15)'),
-    fontSize:PropTypes.number.def(16),
+    fontColor: PropTypes.string,
+    fontSize: PropTypes.number.def(16),
     fontFamily: PropTypes.string.def('sans-serif'),
-    offsetLeft: PropTypes.object,
-    offsetTop: PropTypes.object,
+    offsetLeft: PropTypes.number,
+    offsetTop: PropTypes.number,
     image: PropTypes.string,
     content: PropTypes.string,
   },
-  setup(props, { slots }) {
+  setup(props) {
     const { getPrefixCls } = useProProvider();
     const prefixCls = computed(() => getPrefixCls('admin-pro-water-mark'));
     const wrapperCls = computed(() => `${prefixCls.value}-wrapper`);
@@ -121,6 +121,14 @@ export default defineComponent({
       };
     });
     const base64Url = ref('');
+    const isRealDark = inject('isRealDark', ref(false));
+    const color = computed(() => {
+      if ('fontColor' in props) {
+        return props.fontColor;
+      } else {
+        return isRealDark.value ? 'rgba(255, 255, 255, .15)' : 'rgba(0,0,0,.15)';
+      }
+    });
 
     watchEffect(() => {
       if (props.disabled) {
@@ -157,7 +165,7 @@ export default defineComponent({
         } else if (props.content) {
           const markSize = Number(props.fontSize) * ratio;
           ctx.font = `${props.fontStyle} normal ${props.fontWeight} ${markSize}px/${markHeight}px ${props.fontFamily}`;
-          ctx.fillStyle = props.fontColor;
+          ctx.fillStyle = color.value;
           ctx.fillText(props.content, 0, 0);
           base64Url.value = canvas.toDataURL();
         }
@@ -166,13 +174,12 @@ export default defineComponent({
         console.error('当前环境不支持Canvas');
       }
     });
-    
+
     return {
-      prefixCls,
       wrapperCls,
       waterMakrCls,
       base64Url,
-    }
+    };
   },
-})
+});
 </script>
