@@ -57,13 +57,15 @@
           </div>
         </header-view>
         <multi-tab v-if="multiTab" :fixed="multiTabFixed" :sider-width="sideWidth" />
-        <router-view v-slot="{ Component }">
+        <water-mark content="Admin Pro" :disabled="false">
+          <router-view v-slot="{ Component }">
           <transition v-if="Component" :name="transitionName">
             <wrap-content>
               <component :is="Component"></component>
             </wrap-content>
           </transition>
-        </router-view>
+          </router-view>
+        </water-mark>
         <global-footer />
       </a-layout>
     </a-layout>
@@ -82,6 +84,7 @@ import { default as HeaderView } from '@/components/base-layouts/header/index.vu
 import { default as SelectLang } from '@/components/select-lang/index.vue';
 import { default as AvatarDropdown } from '@/components/avatar-dropdown.vue';
 import { default as SettingDrawer } from '@/components/setting-drawer/index.vue';
+import { default as WaterMark } from '@/components/watermark/index.vue';
 import { MultiTab } from '@/components/multi-tab';
 import { useStore } from 'vuex';
 import { injectMenuState } from './use-menu-state';
@@ -121,6 +124,7 @@ export default defineComponent({
     SelectLang,
     AvatarDropdown,
     SettingDrawer,
+    WaterMark,
   },
 });
 </script>
