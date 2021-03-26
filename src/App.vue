@@ -19,15 +19,18 @@ export default {
   setup() {
     const store = useStore();
     const i18n = useI18n();
-    useMultiTabStateProvider();
+    const multiTabState = useMultiTabStateProvider();
     const colSize = useMediaQuery();
     const isMobile = computed(() => colSize.value === 'sm' || colSize.value === 'xs');
-    const menuState = useMenuState({
-      collapsed: isMobile.value,
-      openKeys: [] as string[],
-      selectedKeys: [] as string[],
-      isMobile,
-    });
+    const menuState = useMenuState(
+      {
+        collapsed: isMobile.value,
+        openKeys: [] as string[],
+        selectedKeys: [] as string[],
+        isMobile,
+      },
+      multiTabState,
+    );
     const lang = localStorage.get(STORAGE_LANG_KEY, 'en-US');
     if (lang) {
       store.dispatch('app/SET_LANG', lang);

@@ -9,6 +9,8 @@ export interface MenuRouteMeta {
   icon?: string | VNodeChild | JSX.Element;
   authority?: string | string[];
   target?: '_blank' | '_self' | '_parent' | '_top';
+  keepAlive?: boolean;
+  lock?: boolean;
 }
 
 export type MenuDataItem = {

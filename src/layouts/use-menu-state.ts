@@ -1,10 +1,22 @@
-import { computed, ComputedRef, inject, onMounted, reactive, Ref, ref, toRefs, watch } from 'vue';
-import { useRoute, useRouter } from 'vue-router';
+import {
+  computed,
+  ComputedRef,
+  inject,
+  onMounted,
+  reactive,
+  Ref,
+  ref,
+  toRefs,
+  UnwrapRef,
+  watch,
+} from 'vue';
+import { RouteLocationNormalized, useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { LayoutType, MenuTheme } from '@/components/base-layouts/typing';
 import { xor } from 'lodash-es';
 import { genMenuInfo } from '@/utils/menu-util';
+import { MultiTabStore } from '@/components/multi-tab';
 
 export interface MenuState {
   collapsed?: boolean;
@@ -65,7 +77,10 @@ export const MenuStateSymbol = 'proGlobalMenuState';
 export const injectMenuState = () => {
   return inject(MenuStateSymbol, { ...toRefs(reactive({})) } as MenuStated);
 };
-export default function useMenuState(initialState?: MenuState): MenuStated {
+export default function useMenuState(
+  initialState?: MenuState,
+  multiTabState?: UnwrapRef<MultiTabStore>,
+): MenuStated {
   const { t, locale } = useI18n();
   const route = useRoute();
   const router = useRouter();
@@ -120,8 +135,12 @@ export default function useMenuState(initialState?: MenuState): MenuStated {
   watch([computed(() => layoutState.layout), computed(() => layoutState.splitMenus)], () => {
     state.openKeys = [];
   });
-  const query = ref({});
-  const hash = ref('');
+  const getRouteInfoFromMultiTab = (path: string): RouteLocationNormalized => {
+    const cacheList = multiTabState?.cacheList || [];
+    const routeInfo = cacheList.find(cache => cache.path === path)
+      ?.route as RouteLocationNormalized;
+    return routeInfo!;
+  };
   watch(
     () => state.selectedKeys,
     (_newVal, oldVal = []) => {
@@ -152,10 +171,9 @@ export default function useMenuState(initialState?: MenuState): MenuStated {
             state.openKeys = openKeys || [];
           }
         }
-        router.push({
-          path: path,
-          query: query.value,
-          hash: hash.value,
+        router.isReady().then(() => {
+          const routeInfo = getRouteInfoFromMultiTab(path);
+          router.push(routeInfo || { path });
         });
       }
     },
@@ -179,21 +197,13 @@ export default function useMenuState(initialState?: MenuState): MenuStated {
   const updateCollapsed = (val: boolean) => {
     state.collapsed = !val;
   };
-  let timeout = 0;
   onMounted(() => {
     watch(
-      [() => route.path, () => route.query, () => route.hash],
+      () => route.fullPath,
       () => {
-        clearTimeout(timeout);
-        query.value = route.query;
-        hash.value = route.hash;
         updateMenuState(route.path);
         // // 更新面包屑
         updateBreadcrumb();
-        timeout = setTimeout(() => {
-          query.value = {};
-          hash.value = '';
-        });
       },
       // { immediate: true },
     );

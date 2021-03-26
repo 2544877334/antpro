@@ -17,7 +17,7 @@ export const routes: MenuDataItem[] = [
       {
         path: '/workplace',
         name: 'Workplace',
-        meta: { icon: 'HistoryOutlined', title: 'pages.dashboard.workplace.title' },
+        meta: { icon: 'HistoryOutlined', title: 'pages.dashboard.workplace.title', lock: true },
         component: h(RouteView, {}, () => h(AsyncWorkplace)),
       },
       // dashboard
@@ -28,12 +28,6 @@ export const routes: MenuDataItem[] = [
         component: RouteView,
         redirect: '/dashboard/welcome',
         children: [
-          // {
-          //   path: '/dashboard/workplace',
-          //   name: 'Workplace',
-          //   meta: { icon: 'HistoryOutlined', title: 'pages.dashboard.workplace.title' },
-          //   component: (): Component => import('@/views/dashboard/workplace/index.vue'),
-          // },
           {
             path: '/dashboard/welcome',
             name: 'welcome',
@@ -66,7 +60,7 @@ export const routes: MenuDataItem[] = [
           {
             path: '/form/basic-form',
             name: 'basic-form',
-            meta: { title: 'form.basicform.basic.title' },
+            meta: { title: 'form.basicform.basic.title', keepAlive: false },
             component: (): Component => import('@/views/form/basic-form/index.vue'),
           },
           {

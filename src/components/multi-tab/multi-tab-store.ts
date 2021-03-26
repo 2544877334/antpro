@@ -9,32 +9,27 @@ import {
   provide,
   inject,
   InjectionKey,
+  UnwrapRef,
 } from 'vue';
-import { RouteMeta, useRouter, useRoute } from 'vue-router';
+import { useRouter, useRoute, RouteLocationNormalized } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { flattenChildren } from '@/utils/vnode-util';
 
 export type CacheKey = string;
 
-export type CacheRoute = {
-  path: string;
-  meta: RouteMeta;
-} & Record<string, any>;
 export interface CacheItem {
   path: CacheKey;
-  route: CacheRoute;
+  route: RouteLocationNormalized;
   name?: string;
   key?: number;
   lock?: boolean;
 }
 
 export interface MultiTabStore {
-  caches: Map<CacheKey, CacheItem>;
   cacheList: CacheItem[];
   current: CacheKey;
   include: string[];
   exclude: string[];
-  add: (item: CacheItem) => void;
 }
 
 const getName = (comp: any) => {
@@ -42,9 +37,7 @@ const getName = (comp: any) => {
 };
 
 export type CallerFunction = {
-  open: (path: CacheKey) => void;
   close: (path: CacheKey) => void;
-  closeAll: () => void;
   closeLeft: (selectedPath: CacheKey) => void;
   closeRight: (selectedPath: CacheKey) => void;
   closeOther: (selectedPath: CacheKey) => void;
@@ -55,7 +48,6 @@ export type CallerFunction = {
 
 export type Options = {
   defaultHomePage?: string;
-  allowCloseAll?: boolean;
 };
 
 export type MultiTabType = [CallerFunction];
@@ -68,22 +60,17 @@ const guid = () => {
 const MULTI_TAB_STORE_KEY: InjectionKey<MultiTabStore> = Symbol('multi-tab-store');
 export const useMultiTabStateProvider = (
   initCacheList: Omit<CacheItem, 'component' | 'key'>[] = [],
-) => {
+): UnwrapRef<MultiTabStore> => {
   // 定义保留的多标签状态
   const state = reactive<MultiTabStore>({
     cacheList: [],
-    caches: new Map<CacheKey, CacheItem>(),
     current: '',
     exclude: [],
     include: [],
-    add: (item: CacheItem) => {
-      if (!state.cacheList.find(c => c.path === item.path)) {
-        state.cacheList.push(item);
-      }
-    },
   });
   state.cacheList.push(...initCacheList.map(item => ({ ...item, key: guid() } as CacheItem)));
   provide(MULTI_TAB_STORE_KEY, state);
+  return state;
 };
 
 export const injectMultiTabStore = () => {
@@ -100,9 +87,13 @@ export const MultiTabStoreConsumer = defineComponent({
       return state.cacheList.find(item => item.path === path);
     };
     watch(
-      () => route.path,
+      () => route.fullPath,
       () => {
         state.current = route.path;
+        const index = state.cacheList.findIndex(item => item.path === route.path);
+        if (state.cacheList[index]) {
+          state.cacheList[index].route = { ...route };
+        }
       },
       { immediate: true },
     );
@@ -126,17 +117,20 @@ export const MultiTabStoreConsumer = defineComponent({
           route: { ...route },
           name,
           key: guid(),
+          lock: !!route.meta.lock,
         };
         state.cacheList.push(cacheItem);
       }
 
       newVNode.type.name = name;
-      const key = `${name}-${cacheItem.key}`;
-      return createVNode(
-        KeepAlive,
-        { exclude: state.exclude },
-        { default: () => cloneVNode(newVNode, { key }) },
-      );
+      const key = `${name}-${cacheItem.key}-${route.fullPath}`;
+      return route.meta.keepAlive !== false
+        ? createVNode(
+            KeepAlive,
+            { exclude: state.exclude },
+            { default: () => cloneVNode(newVNode, { key }) },
+          )
+        : cloneVNode(newVNode, { key });
     };
   },
 });
@@ -170,25 +164,15 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
     }
     const targetIndex = currentPageIndex === 0 ? currentPageIndex + 1 : currentPageIndex - 1;
     router
-      .replace({
-        path: state.cacheList[targetIndex].route.path,
-      })
+      .replace(state.cacheList[targetIndex].route)
       .then(() => {
         state.cacheList.splice(currentPageIndex, 1);
       })
       .catch();
   };
 
-  const open = (path: CacheKey) => {
-    router
-      .push({
-        path: path,
-      })
-      .catch();
-  };
-
   const getCaches = () => {
-    return state.caches;
+    return state.cacheList;
   };
 
   // alias
@@ -199,34 +183,29 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
     clearCache(path);
     const cacheItemIndex = state.cacheList.findIndex(item => item.path === path);
     const cacheItem = state.cacheList[cacheItemIndex];
-
+    console.log(cacheItem);
     state.cacheList[cacheItemIndex] = { ...toRaw(cacheItem), key: guid() };
     return new Promise<void>(resolve => {
-      router
-        .replace({
-          path: (cacheItem?.route.path || path) as string,
-        })
-        .finally(() => {
-          // 模拟loading效果，加载太快，loading 不明显，主动加个延时 ，如不需要可删除延迟
-          setTimeout(() => {
-            resolve();
-          }, 900);
-        });
+      router.replace(cacheItem?.route || { path }).finally(() => {
+        // 模拟loading效果，加载太快，loading 不明显，主动加个延时 ，如不需要可删除延迟
+        setTimeout(() => {
+          resolve();
+        }, 900);
+      });
     });
   };
 
-  const closeAll = () => {
-    state.cacheList = [];
-    state.caches = new Map<CacheKey, CacheItem>();
-    // if (options?.defaultHomePage) {
-    //   open(options.defaultHomePage);
-    // }
-  };
-  const deleteCaches = (start: number, index: number) => {
-    const closed = state.cacheList.splice(start, index);
-    closed.forEach(item => {
-      state.caches.delete(item.path);
-    });
+  const deleteCaches = (start: number, num: number) => {
+    const list = state.cacheList;
+    const end = start + num;
+    const newList = [];
+    for (let i = 0; i < list.length; i++) {
+      const item = list[i];
+      if (i < start || i >= end || item.lock) {
+        newList.push(item);
+      }
+    }
+    state.cacheList = newList;
   };
 
   const closeLeft = (selectedPath: CacheKey) => {
@@ -234,7 +213,7 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
     const currentIndex = state.cacheList.findIndex(item => item.path === route.path);
     if (currentIndex < index) {
       router
-        .replace({ path: selectedPath })
+        .replace(state.cacheList[index].route)
         .then(() => {
           deleteCaches(0, index);
         })
@@ -249,7 +228,7 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
     const currentIndex = state.cacheList.findIndex(item => item.path === route.path);
     if (currentIndex > index) {
       router
-        .replace({ path: selectedPath })
+        .replace(state.cacheList[index].route)
         .then(() => {
           deleteCaches(index + 1, state.cacheList.length - index - 1);
         })
@@ -262,9 +241,7 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
   const closeOther = (selectedPath: CacheKey) => {
     const index = state.cacheList.findIndex(cached => cached.path === selectedPath);
     router
-      .replace({
-        path: selectedPath,
-      })
+      .replace(state.cacheList[index].route)
       .then(() => {
         deleteCaches(index + 1, state.cacheList.length - index - 1);
         deleteCaches(0, index);
@@ -272,9 +249,7 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
       .catch();
   };
 
-  return [
-    { open, close, getCaches, clearCache, closeAll, closeLeft, closeRight, closeOther, refresh },
-  ];
+  return [{ close, getCaches, clearCache, closeLeft, closeRight, closeOther, refresh }];
 };
 
 export default useMultiTab;
