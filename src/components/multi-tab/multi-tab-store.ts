@@ -124,13 +124,11 @@ export const MultiTabStoreConsumer = defineComponent({
 
       newVNode.type.name = name;
       const key = `${name}-${cacheItem.key}-${route.fullPath}`;
-      return route.meta.keepAlive !== false
-        ? createVNode(
-            KeepAlive,
-            { exclude: state.exclude },
-            { default: () => cloneVNode(newVNode, { key }) },
-          )
-        : cloneVNode(newVNode, { key });
+      const exclude = [...state.exclude];
+      if (route.meta.keepAlive === false) {
+        exclude.push(cacheItem.name!);
+      }
+      return createVNode(KeepAlive, { exclude }, { default: () => cloneVNode(newVNode, { key }) });
     };
   },
 });
