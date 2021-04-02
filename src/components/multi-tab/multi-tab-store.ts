@@ -20,8 +20,7 @@ export type CacheKey = string;
 export interface CacheItem {
   path: CacheKey;
   route: RouteLocationNormalized;
-  name?: string;
-  key?: number;
+  key?: string;
   lock?: boolean;
 }
 
@@ -31,10 +30,6 @@ export interface MultiTabStore {
   include: string[];
   exclude: string[];
 }
-
-const getName = (comp: any) => {
-  return comp.displayName || comp.name;
-};
 
 export type CallerFunction = {
   close: (path: CacheKey) => void;
@@ -54,7 +49,7 @@ export type MultiTabType = [CallerFunction];
 
 let g = 1;
 const guid = () => {
-  return ++g;
+  return `CacheKey_${++g}`;
 };
 
 const MULTI_TAB_STORE_KEY: InjectionKey<MultiTabStore> = Symbol('multi-tab-store');
@@ -98,16 +93,9 @@ export const MultiTabStoreConsumer = defineComponent({
       { immediate: true },
     );
     return () => {
-      const component = flattenChildren((slots.default && slots.default()) || [])[0];
+      const component = flattenChildren((slots.default && slots.default()) || [])[0] as any;
       if (!component) {
         return null;
-      }
-      const comp = component.type;
-      let name = getName(comp);
-      const newVNode = component as any;
-      if (name === undefined && newVNode) {
-        // 没有设置组件名字
-        name = route.name;
       }
       // 是否存在 cache
       let cacheItem = hasCache(route.path);
@@ -115,20 +103,23 @@ export const MultiTabStoreConsumer = defineComponent({
         cacheItem = {
           path: route.path,
           route: { ...route },
-          name,
           key: guid(),
           lock: !!route.meta.lock,
         };
         state.cacheList.push(cacheItem);
       }
-
-      newVNode.type.name = name;
-      const key = `${name}-${cacheItem.key}-${route.fullPath}`;
       const exclude = [...state.exclude];
       if (route.meta.keepAlive === false) {
-        exclude.push(cacheItem.name!);
+        exclude.push(cacheItem.key!);
       }
-      return createVNode(KeepAlive, { exclude }, { default: () => cloneVNode(newVNode, { key }) });
+      component.type.name = cacheItem.key;
+      return createVNode(
+        KeepAlive,
+        { exclude },
+        {
+          default: () => cloneVNode(component, { key: cacheItem!.key + route.fullPath }),
+        },
+      );
     };
   },
 });
@@ -137,12 +128,14 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
   const router = useRouter();
   const route = useRoute();
   const state = inject(MULTI_TAB_STORE_KEY)!;
-  const clearCache = (path: CacheKey) => {
-    const cacheItem =
-      state.cacheList.find(item => item.path === path) || ({ name: '' } as CacheItem);
-    state.exclude = [cacheItem?.name as string];
-    setTimeout(() => {
-      state.exclude = [];
+  const clearCache = async (path: CacheKey) => {
+    const cacheItem = state.cacheList.find(item => item.path === path);
+    state.exclude = [cacheItem?.key as string];
+    new Promise<void>(resolve => {
+      setTimeout(() => {
+        state.exclude = [];
+        resolve();
+      });
     });
   };
 
@@ -178,10 +171,9 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
     if (!path) {
       path = state.current;
     }
-    clearCache(path);
+    await clearCache(path);
     const cacheItemIndex = state.cacheList.findIndex(item => item.path === path);
     const cacheItem = state.cacheList[cacheItemIndex];
-    console.log(cacheItem);
     state.cacheList[cacheItemIndex] = { ...toRaw(cacheItem), key: guid() };
     return new Promise<void>(resolve => {
       router.replace(cacheItem?.route || { path }).finally(() => {

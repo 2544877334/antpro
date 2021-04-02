@@ -60,7 +60,7 @@ export const routes: MenuDataItem[] = [
           {
             path: '/form/basic-form',
             name: 'basic-form',
-            meta: { title: 'form.basicform.basic.title', keepAlive: false },
+            meta: { title: 'form.basicform.basic.title', keepAlive: true },
             component: (): Component => import('@/views/form/basic-form/index.vue'),
           },
           {

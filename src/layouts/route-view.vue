@@ -12,7 +12,7 @@ import { defineComponent } from 'vue';
 import { MultiTabStoreConsumer } from '@/components/multi-tab';
 
 export default defineComponent({
-  name: 'RouteView',
+  name: 'CustomRouterView',
   components: {
     MultiTabStoreConsumer,
   },
