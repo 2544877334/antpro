@@ -58,11 +58,9 @@
         </header-view>
         <multi-tab v-if="multiTab" :fixed="multiTabFixed" :sider-width="sideWidth" />
         <router-view v-slot="{ Component }">
-          <transition v-if="Component" :name="transitionName">
-            <wrap-content>
-              <component :is="Component"></component>
-            </wrap-content>
-          </transition>
+          <wrap-content>
+            <component :is="Component"></component>
+          </wrap-content>
         </router-view>
         <global-footer />
       </a-layout>
