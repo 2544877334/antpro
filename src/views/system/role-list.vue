@@ -25,7 +25,15 @@
             </div>
             <div class="ant-pro-table-list-toolbar-right">
               <a-space align="center">
-                <a-button type="primary" @click="() => (modalVisible = true)">
+                <a-button
+                  type="primary"
+                  @click="
+                    () => {
+                      modalVisible = true;
+                      roleModalRef = null;
+                    }
+                  "
+                >
                   <plus-outlined />
                   新增角色
                 </a-button>

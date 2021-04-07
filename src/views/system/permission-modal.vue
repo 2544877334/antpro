@@ -9,7 +9,6 @@
     @cancel="
       () => {
         resetFields();
-        Object.assign(modelRef, initValues);
         $emit('cancel');
       }
     "
@@ -87,12 +86,13 @@ export default defineComponent({
 
     watchEffect(() => {
       if (props.model) {
-        console.log('update model', props.model);
         const raw = toRaw(props.model);
         modelRef.id = raw.id;
         modelRef.name = raw.name;
         modelRef.label = raw.label;
         modelRef.actions = raw.actions;
+      } else if (props.model === null) {
+        Object.assign(modelRef, initValues);
       }
     });
 
