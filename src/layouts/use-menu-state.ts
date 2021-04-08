@@ -153,7 +153,7 @@ export default function useMenuState(
         const isOtherUrlForOldVal = pattern.test(oldVal[oldVal?.length - 1]);
         if (isOtherUrl) {
           const routes = router.getRoutes();
-          const { target } = routes.find(r => r.path === `/${path}`)?.meta || {};
+          const { target } = routes.find(r => r.path.indexOf(path) > -1)?.meta || {};
           state.selectedKeys = oldVal;
           window.open(path, target);
           return;
