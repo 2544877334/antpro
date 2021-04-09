@@ -155,7 +155,7 @@ export default function useMenuState(
           const routes = router.getRoutes();
           const { target } = routes.find(r => r.path.indexOf(path) > -1)?.meta || {};
           state.selectedKeys = oldVal;
-          window.open(path, target);
+          window.open(path, target as string);
           return;
         }
         if (
