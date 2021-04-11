@@ -29,6 +29,7 @@
                   type="primary"
                   @click="
                     () => {
+                      editModal.model = null;
                       editModal.visible = true;
                     }
                   "
@@ -152,7 +153,8 @@
     </div>
 
     <permission-modal
-      v-bind="editModal"
+      :model="editModal.model"
+      :visible="editModal.visible"
       @cancel="
         () => {
           editModal.visible = false;
@@ -169,7 +171,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRaw } from 'vue';
+import { defineComponent, reactive } from 'vue';
 import {
   PlusOutlined,
   ReloadOutlined,
@@ -240,12 +242,13 @@ export default defineComponent({
     // edit
     const editModal = reactive({
       visible: false,
-      model: undefined,
+      model: null,
     });
     const handleOpenEdit = (record: any) => {
-      console.log('record', toRaw(record));
       editModal.visible = true;
-      editModal.model = toRaw(record);
+      editModal.model = {
+        ...record,
+      };
     };
 
     return {

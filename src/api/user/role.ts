@@ -6,7 +6,7 @@ export async function getRoles() {
   return request.get<any, PageResult<Role>>('/roles');
 }
 
-export async function getPermissions(): Promise<any> {
+export async function getPermissions(): Promise<PageResult<Permission>> {
   return request.get<any, PageResult<Permission>>('/permissions');
 }
 
