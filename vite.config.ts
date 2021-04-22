@@ -4,7 +4,8 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import path from 'path';
 import { getThemeVariables } from 'ant-design-vue/dist/theme';
 import { additionalData } from './build/themeConfig';
-import mockTarget from './build/mockServer';
+// import mockTarget from './build/mockServer';
+const mock = require('./build/mock/createMockServer');
 
 export default ({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
@@ -16,7 +17,14 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       'process.env.VUE_APP_API_BASE_URL': JSON.stringify(env.VITE_APP_API_BASE_URL),
       'process.env.VUE_APP_PUBLIC_PATH': JSON.stringify(env.VITE_APP_PUBLIC_PATH),
     },
-    plugins: [vue(), vueJsx()],
+    plugins: [
+      vue(),
+      vueJsx(),
+      mock({
+        watch: false,
+        cwd: process.cwd(),
+      }),
+    ],
     resolve: {
       alias: {
         // moment: 'moment/dist/moment.js',
@@ -49,14 +57,14 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       },
     },
     server: {
-      proxy: {
-        '/api': {
-          // backend url
-          target: env.VITE_HTTP_MOCK && env.VITE_MOCK ? mockTarget : 'https://store.antdv.com',
-          ws: false,
-          changeOrigin: true,
-        },
-      },
+      // proxy: {
+      //   '/api': {
+      //     // backend url
+      //     target: env.VITE_HTTP_MOCK && env.VITE_MOCK ? mockTarget : 'https://store.antdv.com',
+      //     ws: false,
+      //     changeOrigin: true,
+      //   },
+      // },
     },
   };
 };
