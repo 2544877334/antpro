@@ -39,10 +39,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, PropType, watchEffect } from 'vue';
+import { defineComponent, reactive, ref, PropType, watchEffect, watch } from 'vue';
 import { useForm } from '@ant-design-vue/use';
 import { Role, Permission, Action } from '@/store/modules/user/typing';
 import { getPermissions } from '@/api/user/role';
+import { cloneDeep } from 'lodash';
 
 type Tag = {
   key: string;
@@ -81,7 +82,7 @@ export default defineComponent({
       permissions: [],
     });
     const rulesRef = reactive({
-      id: [{ required: true }],
+      id: [{ required: true, type: 'any' }],
       name: [{ required: true }],
     });
     // mock role permissions
@@ -117,11 +118,17 @@ export default defineComponent({
           loading.value = false;
         });
     };
-
+    // 记录初始值
+    const initValues = reactive({});
+    watch(
+      () => props.visible,
+      () => {
+        Object.assign(initValues, cloneDeep(props.model));
+      },
+    );
     watchEffect(() => {
-      if (props.model) {
+      if (props.model && props.visible) {
         Object.assign(modelRef, props.model);
-
         // 这一步可以不用，直接传递 model.permissions 到页面进行渲染
         // 这里重新组装是为了演示结构不相同情况下可以按照下列方案组装结构
         rolePermissions.value = [];
@@ -166,6 +173,8 @@ export default defineComponent({
       selectedTags,
 
       rolePermissions,
+
+      initValues,
     };
   },
 });
