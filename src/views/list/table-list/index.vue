@@ -145,12 +145,13 @@
           :size="state.tableSize"
           :loading="state.loading"
           :columns="dynamicColumns"
-          :data-source="state.dataSource"
+          :data-source="dataSource"
           :pagination="{
             current: state.current,
             pageSize: state.pageSize,
             total: state.total,
           }"
+          :custom-row="customRow"
           :getPopupContainer="trigger => trigger.parentNode"
           @change="handleTableChange"
         >
@@ -180,7 +181,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, toRaw } from 'vue';
+import { defineComponent, reactive, ref, toRaw, toRef } from 'vue';
 import {
   PlusOutlined,
   ReloadOutlined,
@@ -195,6 +196,7 @@ import { Pagination, TableFilters, TableColumn } from '@/typing';
 import { useFetchData } from '@/utils/hooks/useFetchData';
 import { useFullscreen } from '@/utils/hooks/useFullscreen';
 import { useTableDynamicColumns } from '@/utils/hooks/useTableColumn';
+import useDraggableRow from '@/utils/hooks/useDraggableRow';
 import DragIcon from '@/components/table/drag-icon.vue';
 
 const statusMap = {
@@ -278,6 +280,9 @@ export default defineComponent({
       tableSize: 'middle', // 'default' | 'middle' | 'small'
       stripe: false,
     });
+
+    const dataSource = toRef(state, 'dataSource');
+    const { customRow } = useDraggableRow(dataSource);
     const handleTableChange = ({ current, pageSize }: Pagination, filters: TableFilters) => {
       setPageInfo({
         current,
@@ -330,6 +335,8 @@ export default defineComponent({
       // modal controls
       modalVisible,
       handleModalOk,
+      customRow,
+      dataSource,
     };
   },
   components: {
@@ -345,3 +352,12 @@ export default defineComponent({
   },
 });
 </script>
+<style>
+tr.drop-over-downward td {
+  border-bottom: 2px dashed #1890ff;
+}
+
+tr.drop-over-upward td {
+  border-top: 2px dashed #1890ff;
+}
+</style>
