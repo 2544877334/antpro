@@ -11,9 +11,10 @@ import {
   InjectionKey,
   UnwrapRef,
 } from 'vue';
-import { useRouter, useRoute, RouteLocationNormalized } from 'vue-router';
+import { useRouter, useRoute, RouteLocationNormalized, RouteRecordNormalized } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { flattenChildren } from '@/utils/vnode-util';
+import { findLast } from 'lodash-es';
 
 export type CacheKey = string;
 
@@ -22,6 +23,8 @@ export interface CacheItem {
   route: RouteLocationNormalized;
   key?: string;
   lock?: boolean;
+  tabTitle?: string;
+  tabPath?: string;
 }
 
 export interface MultiTabStore {
@@ -72,6 +75,15 @@ export const injectMultiTabStore = () => {
   return inject(MULTI_TAB_STORE_KEY)!;
 };
 
+const findMatchedRoute = (route: RouteLocationNormalized): RouteRecordNormalized => {
+  const matched: RouteRecordNormalized[] = route.matched || [];
+  return (
+    (findLast(matched, m => {
+      return m.meta && m.meta.mergeTab;
+    }) as RouteRecordNormalized) || route
+  );
+};
+
 // 创建消费端
 export const MultiTabStoreConsumer = defineComponent({
   name: 'MultiTabStoreConsumer',
@@ -79,7 +91,7 @@ export const MultiTabStoreConsumer = defineComponent({
     const route = useRoute();
     const state = inject(MULTI_TAB_STORE_KEY)!;
     const hasCache = (path: CacheKey) => {
-      return state.cacheList.find(item => item.path === path);
+      return state.cacheList.find(item => item.tabPath === path);
     };
     watch(
       () => route.fullPath,
@@ -97,13 +109,17 @@ export const MultiTabStoreConsumer = defineComponent({
       if (!component) {
         return null;
       }
+      const tabRoute = findMatchedRoute(route);
+      console.log('route', tabRoute);
       // 是否存在 cache
-      let cacheItem = hasCache(route.path);
+      let cacheItem = hasCache(tabRoute.path);
       if (!cacheItem) {
         cacheItem = {
           path: route.path,
           route: { ...route },
           key: guid(),
+          tabTitle: tabRoute?.meta?.title,
+          tabPath: tabRoute.path,
           lock: !!route.meta.lock,
         };
         state.cacheList.push(cacheItem);

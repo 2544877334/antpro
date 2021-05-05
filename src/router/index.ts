@@ -207,6 +207,7 @@ export const routes: MenuDataItem[] = [
             meta: {
               title: 'pages.account.settings.title',
               hideChildrenInMenu: true,
+              mergeTab: true,
             },
             redirect: '/account/settings/base',
             component: () => import('@/views/account/settings/index.vue'),
