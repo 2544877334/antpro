@@ -280,11 +280,11 @@ export default defineComponent({
     const rowHeight = ref<RowHeight>((_data, baseHeight) =>
       autoRowHeight.value ? undefined : baseHeight,
     );
-    const pagination = ref({
+    const pagination = computed(() => ({
       current: 1,
       pageSize: dataSource.value.length,
       showSizeChanger: true,
-    });
+    }));
     const changeAutoHeight = () => {
       autoRowHeight.value = !autoRowHeight.value;
     };

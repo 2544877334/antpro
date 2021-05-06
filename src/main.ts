@@ -45,7 +45,7 @@ import {
   Badge,
 } from 'ant-design-vue';
 import SurelyTable from '@surely-vue/table';
-import { createApp } from 'vue';
+import { createApp, Plugin } from 'vue';
 import router from './router';
 import store from './store';
 import locale from './locales';
@@ -106,7 +106,7 @@ app
   .use(Carousel)
   .use(BackTop)
   .use(Upload)
-  .use(SurelyTable as any)
+  .use(SurelyTable as Plugin)
   .component(PageContainer.name, PageContainer)
   .component(TransformVnode.name, TransformVnode)
   .component(Authority.name, Authority);
