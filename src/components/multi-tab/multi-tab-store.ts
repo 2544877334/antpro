@@ -110,7 +110,6 @@ export const MultiTabStoreConsumer = defineComponent({
         return null;
       }
       const tabRoute = findMatchedRoute(route);
-      console.log('route', tabRoute);
       // 是否存在 cache
       let cacheItem = hasCache(tabRoute.path);
       if (!cacheItem) {
@@ -123,6 +122,16 @@ export const MultiTabStoreConsumer = defineComponent({
           lock: !!route.meta.lock,
         };
         state.cacheList.push(cacheItem);
+      } else if (cacheItem.path !== route.path) {
+        // 处理 mergeTab 逻辑
+        Object.assign(cacheItem, {
+          path: route.path,
+          route: { ...route },
+          key: guid(),
+          tabTitle: tabRoute?.meta?.title,
+          tabPath: tabRoute.path,
+          lock: !!route.meta.lock,
+        });
       }
       const exclude = [...state.exclude];
       if (route.meta.keepAlive === false) {
