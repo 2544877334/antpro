@@ -9,6 +9,7 @@ export default {
   'pages.form.title': 'Form',
 
   'pages.list.title': 'List',
+  'pages.list.bigtablelist.title': 'High Performance Table',
   'pages.list.tablelist.title': 'Search Table',
   'pages.list.basiclist.title': 'Basic List',
   'pages.list.cardlist.title': 'Card List',

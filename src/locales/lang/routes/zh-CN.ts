@@ -9,6 +9,7 @@ export default {
   'pages.form.title': '表单页',
 
   'pages.list.title': '列表页',
+  'pages.list.bigtablelist.title': '高性能表格',
   'pages.list.tablelist.title': '查询表格',
   'pages.list.basiclist.title': '标准列表',
   'pages.list.cardlist.title': '卡片列表',
