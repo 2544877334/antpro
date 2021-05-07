@@ -28,11 +28,11 @@
             </a-select>
           </a-form-item>
         </a-col>
-        <a-col :xs="12" :sm="12" :md="6">
+        <!-- <a-col :xs="12" :sm="12" :md="6">
           <a-form-item label="虚拟">
             <a-switch v-model:checked="virtual" />
           </a-form-item>
-        </a-col>
+        </a-col> -->
         <a-col :xs="12" :sm="12" :md="6">
           <a-form-item label="加载中">
             <a-switch v-model:checked="loading" />
@@ -247,7 +247,7 @@ export default defineComponent({
     const virtual = ref(true);
     const loading = ref(false);
     const bordered = ref(true);
-    const length = ref(10000);
+    const length = ref(1000);
     const selectedRowKeys = ref([]);
     const expandedRowKeys = ref([]);
     const inputRef = ref();
