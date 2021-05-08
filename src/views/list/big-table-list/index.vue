@@ -280,11 +280,26 @@ export default defineComponent({
     const rowHeight = ref<RowHeight>((_data, baseHeight) =>
       autoRowHeight.value ? undefined : baseHeight,
     );
-    const pagination = computed(() => ({
+    const pageSizeOptions = ['5', '10', '50'];
+    const pagination = ref({
       current: 1,
       pageSize: dataSource.value.length,
       showSizeChanger: true,
-    }));
+      pageSizeOptions: [...pageSizeOptions],
+    });
+    watch(
+      dataSource,
+      () => {
+        pagination.value.pageSize = dataSource.value.length;
+        if (!pageSizeOptions.find(val => +val === dataSource.value.length)) {
+          pagination.value.pageSizeOptions = [
+            ...pageSizeOptions,
+            String(pagination.value.pageSize),
+          ];
+        }
+      },
+      { immediate: true },
+    );
     const changeAutoHeight = () => {
       autoRowHeight.value = !autoRowHeight.value;
     };
