@@ -1286,10 +1286,10 @@
     remark "^13.0.0"
     unist-util-find-all-after "^3.0.2"
 
-"@surely-vue/table@^1.0.0-alpha.1":
-  version "1.0.0-alpha.1"
-  resolved "https://registry.yarnpkg.com/@surely-vue/table/-/table-1.0.0-alpha.1.tgz#e9576ad4762a521261a1d1597027195c0f547de1"
-  integrity sha512-aYz0UdcqricD7e0tO9hzb8w3r68khdbmjqc725kP9LzZUU8QDYnpvNE3/1tyFKfIRjBS12ir5cnxoJZRmD9QQw==
+"@surely-vue/table@^1.0.0-alpha.3":
+  version "1.0.0-alpha.3"
+  resolved "https://registry.yarnpkg.com/@surely-vue/table/-/table-1.0.0-alpha.3.tgz#669b3b44e9f74bb19d9fccb711a4c91023a7e7f0"
+  integrity sha512-biv6/Prx73gNg3OQphfVk7prj24K8xtG498ihnvDqwh2biL3FKpCJ9vfZgLJYR6rmjuNYfdYvUyMH6ig3aImBw==
   dependencies:
     "@ant-design/icons-vue" "^6.0.1"
     "@vueuse/core" "^4.9.0"
