@@ -1,5 +1,6 @@
 <template>
   <grid-content>
+    <div id="app1"></div>
     <a-row>
       <a-col :span="24" style="border-radius: 2px">
         <a-card class="page-header-welcome">

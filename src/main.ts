@@ -1,3 +1,5 @@
+import { registerMicroApps, start } from 'qiankun';
+
 import 'ant-design-vue/dist/antd.less';
 import '@surely-vue/table/dist/index.css';
 import {
@@ -112,5 +114,15 @@ app
   .component(Authority.name, Authority);
 
 useIcons(app);
+
+registerMicroApps([
+  {
+    name: 'vue2 app', // app name registered
+    entry: '//localhost:8080',
+    container: '#app1',
+    activeRule: '/dashboard/welcome',
+  },
+]);
+start();
 
 app.mount('#app');

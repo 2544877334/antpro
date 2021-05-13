@@ -26,10 +26,10 @@ export const routes: MenuDataItem[] = [
         path: '/dashboard',
         meta: { icon: 'HeartOutlined', title: 'pages.dashboard.title' },
         component: RouteView,
-        redirect: '/dashboard/welcome',
+        redirect: '/dashboard/welcome/',
         children: [
           {
-            path: '/dashboard/welcome',
+            path: '/dashboard/welcome/:pathMatch(.*)',
             name: 'welcome',
             meta: { icon: 'HistoryOutlined', title: 'pages.dashboard.welcome.title' },
             component: (): Component => import('@/views/dashboard/workplace2/index.vue'),
@@ -446,10 +446,10 @@ export const staticRoutes: MenuDataItem[] = [
       },
     ],
   },
-  {
-    path: '/:pathMatch(.*)',
-    component: () => import('@/views/exception/404.vue'),
-  },
+  // {
+  //   path: '/:pathMatch(.*)',
+  //   component: () => import('@/views/exception/404.vue'),
+  // },
 ];
 
 const router = createRouter({
