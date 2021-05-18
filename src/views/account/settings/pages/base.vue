@@ -21,7 +21,7 @@
           </a-select>
         </a-form-item>
         <a-form-item label="Province or city">
-          <city-select />
+          <city-select v-model:province="modelRef.province" v-model:city="modelRef.city" />
         </a-form-item>
         <a-form-item label="Street Address" v-bind="validateInfos.address">
           <a-input v-model:value="modelRef.address" />
@@ -80,7 +80,8 @@ export default defineComponent({
       nickname: 'Serati Ma',
       bio: undefined,
       country: undefined,
-      province: undefined,
+      province: '110000',
+      city: '110100',
       address: undefined,
       phoneNumber: '',
     });
