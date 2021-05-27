@@ -135,9 +135,8 @@ export default defineComponent({
     );
     const { t } = useI18n();
     const spin = ref(false);
-    const [
-      { refresh, close, closeLeft, closeRight, closeOther },
-    ] = useMultiTab(/*{ defaultHomePage: props.defaultHomePage }*/);
+    const [{ refresh, close, closeLeft, closeRight, closeOther }] =
+      useMultiTab(/*{ defaultHomePage: props.defaultHomePage }*/);
 
     const handleActiveKeyChange = (key: string) => {
       menuState.selectedKeys!.value = [key];

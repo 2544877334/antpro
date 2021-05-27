@@ -117,7 +117,7 @@ export const MultiTabStoreConsumer = defineComponent({
           path: route.path,
           route: { ...route },
           key: guid(),
-          tabTitle: tabRoute?.meta?.title,
+          tabTitle: tabRoute?.meta?.title as string,
           tabPath: tabRoute.path,
           lock: !!route.meta.lock,
         };

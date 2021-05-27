@@ -239,7 +239,11 @@ export default defineComponent({
     const [elRef, screenState, { setFull, exitFull }] = useFullscreen();
 
     // 表格数据和加载
-    const { reload, setPageInfo, context: state } = useFetchData(getRoles, {
+    const {
+      reload,
+      setPageInfo,
+      context: state,
+    } = useFetchData(getRoles, {
       current: 1,
       pageSize: 10,
       tableSize: 'middle', // 'default' | 'middle' | 'small'
