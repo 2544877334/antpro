@@ -92,6 +92,7 @@ export default defineComponent({
     width: 100% !important;
   }
   .pro-components-header-notice-icon-index-container > * {
+    width: 100% !important;
     border-radius: 0 !important;
   }
 }

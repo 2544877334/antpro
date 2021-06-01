@@ -9,7 +9,11 @@
   <div v-else>
     <a-list class="list" :dataSource="list">
       <template #renderItem="{ item }">
-        <a-list-item :class="{ item: true, read: item.read }" :key="item.key">
+        <a-list-item
+          :class="{ item: true, read: item.read }"
+          :key="item.key"
+          @click="handleClick(item)"
+        >
           <a-list-item-meta class="meta">
             <template v-if="item.avatar" #avatar>
               <a-avatar v-if="typeof item.avatar === 'string'" class="avatar" :src="item.avatar" />
@@ -34,14 +38,15 @@
       </template>
     </a-list>
     <div v-if="showClear || showViewMore" class="bottomBar">
-      <div v-if="showClear" @click="emit('clear')">{{ clearText }} {{ title }}</div>
-      <div v-if="showViewMore" @click="emit('viewMore')">
+      <div v-if="showClear" @click="$emit('clear')">{{ clearText }} {{ title }}</div>
+      <div v-if="showViewMore" @click="$emit('viewMore')">
         {{ viewMoreText }}
       </div>
     </div>
   </div>
 </template>
 <script lang="ts">
+import { NoticeItem } from '@/api/user/notice';
 import { defineComponent } from 'vue';
 
 export default defineComponent({
@@ -58,8 +63,13 @@ export default defineComponent({
   },
   emits: ['itemClick', 'clear', 'viewMore'],
   slots: ['extra'],
-  setup() {
-    return {};
+  setup(_props, { emit }) {
+    const handleClick = (item: NoticeItem) => {
+      emit('itemClick', item);
+    };
+    return {
+      handleClick,
+    };
   },
 });
 </script>

@@ -1,23 +1,19 @@
 <template>
-  <notice-dropdown
-    class="action"
-    :count="currentUser && currentUser.extra && currentUser.extra.unreadCount"
-    :loading="loading"
-  >
+  <notice-dropdown class="action" :count="userInfo && userInfo.unreadCount" :loading="loading">
     <a-tabs v-model:activeKey="activeKey">
-      <template v-for="{ tabKey, title, emptyText, showViewMore } in noticesConfig" :key="tabKey">
-        <a-tab-pane v-if="tabKey" :key="tabKey" :tab="title">
+      <template v-for="{ key, title, emptyText, showViewMore } in noticesConfig" :key="key">
+        <a-tab-pane v-if="key" :key="key" :tab="title">
           <notice-list
             :title="title"
-            :count="unreadMsgs[tabKey]"
-            :list="noticeData[tabKey]"
+            :count="unreadMsgs[key]"
+            :list="noticeData[key]"
             :emptyText="emptyText"
             :showViewMore="showViewMore"
             @itemClick="changeReadState"
             clearText="Empty"
             viewMoreText="See more"
-            @clear="handleNoticeClear"
-            @viewMore="handleViewMore"
+            @clear="handleNoticeClear(title, key)"
+            @viewMore="handleViewMore(key)"
             showClear
           >
             <template #extra="notice">
@@ -36,30 +32,6 @@
         </a-tab-pane>
       </template>
     </a-tabs>
-    <!-- <notice-list
-      tabKey="notification"
-      :count="unreadMsgs.notification"
-      :list="noticeData.notification"
-      title="Notification"
-      emptyText="You have viewed all notifications"
-      showViewMore
-    />
-    <notice-list
-      tabKey="message"
-      :count="unreadMsgs.message"
-      :list="noticeData.message"
-      title="Message"
-      emptyText="You have read all messages"
-      showViewMore
-    />
-    <notice-list
-      tabKey="event"
-      title="To do"
-      emptyText="You have completed all to-dos"
-      :count="unreadMsgs.event"
-      :list="noticeData.event"
-      showViewMore
-    /> -->
   </notice-dropdown>
 </template>
 
@@ -72,8 +44,10 @@ import NoticeDropdown from './notice-dropdown.vue';
 import NoticeList from './notice-list.vue';
 import { message } from 'ant-design-vue';
 import { useStore } from 'vuex';
+import { SET_INFO } from '@/store/modules/user/mutations';
 
-// 如需要实时更新提醒通知，可以配置 realtime 打开该轮询，或者自行尝试配置 websocket 功能
+// 如需要实时更新提醒通知，可以配置 realtime 为 true 打开该轮询，或者自行尝试配置 websocket 功能
+// 注意：目前未读数量是通过 currentUSer 接口取回的，如果更改成实时，未读数量也建议更改成独立接口 或者 合并到 getNoticeData 中
 const useFetchNotice = (getNoticeData: () => Promise<void>, realtime?: boolean) => {
   let interval: number;
   onMounted(() => {
@@ -100,7 +74,7 @@ export default defineComponent({
   emits: [],
   setup() {
     const store = useStore();
-    const currentUser = computed(() => store.getters['user/currentUser']);
+    const userInfo = computed(() => store.getters['user/info']);
     const list = ref<NoticeItem[]>([]);
     const loading = ref(true);
     const activeKey = ref('notification');
@@ -112,19 +86,19 @@ export default defineComponent({
     };
     const noticesConfig = ref([
       {
-        tabKey: 'notification',
+        key: 'notification',
         title: 'Notification',
         emptyText: 'You have viewed all notifications',
         showViewMore: true,
       },
       {
-        tabKey: 'message',
+        key: 'message',
         title: 'Message',
         emptyText: 'You have read all messages',
         showViewMore: true,
       },
       {
-        tabKey: 'event',
+        key: 'event',
         title: 'To do',
         emptyText: 'You have completed all to-dos',
         showViewMore: false,
@@ -177,14 +151,22 @@ export default defineComponent({
       const index = list.value.findIndex(item => item.id === id);
       list.value[index].read = true;
       list.value = [...list.value];
+      store.commit(`user/${SET_INFO}`, {
+        totalCount: list.value.length,
+        unreadCount: list.value.filter(item => !item.read).length,
+      });
       // 你应该通过接口告诉后端更改数据库数据
     };
-    const handleViewMore = (tabKey: string) => {
-      message.info(`Click on view more ${tabKey}`);
+    const handleViewMore = (key: string) => {
+      message.info(`Click on view more ${key}`);
     };
-    const handleNoticeClear = (title: string, type: string) => {
+    const handleNoticeClear = (title: string, key: string) => {
       message.success(`Emptied ${title}`);
-      list.value = list.value.filter(item => item.type !== type);
+      list.value = list.value.filter(item => item.type !== key);
+      store.commit(`user/${SET_INFO}`, {
+        totalCount: list.value.length,
+        unreadCount: list.value.filter(item => !item.read).length,
+      });
       // 你应该通过接口告诉后端更改数据库数据
     };
     return {
@@ -198,7 +180,7 @@ export default defineComponent({
       changeReadState,
       handleNoticeClear,
       handleViewMore,
-      currentUser,
+      userInfo,
     };
   },
 });
