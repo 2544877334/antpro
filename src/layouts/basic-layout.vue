@@ -52,6 +52,7 @@
           v-model:selected-keys="selectedKeys"
         >
           <div style="text-align: right">
+            <notice-icon />
             <avatar-dropdown :current-user="currentUser" />
             <select-lang />
           </div>
@@ -80,6 +81,7 @@ import { default as HeaderView } from '@/components/base-layouts/header/index.vu
 import { default as SelectLang } from '@/components/select-lang/index.vue';
 import { default as AvatarDropdown } from '@/components/avatar-dropdown.vue';
 import { default as SettingDrawer } from '@/components/setting-drawer/index.vue';
+import { default as NoticeIcon } from '@/components/notice-icon/index.vue';
 
 import { MultiTab } from '@/components/multi-tab';
 import { useStore } from 'vuex';
@@ -120,6 +122,7 @@ export default defineComponent({
     SelectLang,
     AvatarDropdown,
     SettingDrawer,
+    NoticeIcon,
   },
 });
 </script>

@@ -3,21 +3,22 @@
     class="ant-pro-dropdown ant-pro-dropdown-action"
     placement="bottomRight"
     :trigger="['click']"
-    overlayClassName="pro-components-header-dropdown-index-container"
+    v-model:visible="visible"
+    overlayClassName="pro-components-header-notice-icon-index-container"
   >
-    <span :class="[noticeButton, { opened: visible }]">
+    <span :class="['noticeButton', { opened: visible }]">
       <a-badge :count="count" :style="{ boxShadow: 'none' }" class="badge">
-        <slots name="bell">
+        <slot name="bell">
           <bell-outlined class="icon" />
-        </slots>
+        </slot>
       </a-badge>
     </span>
     <template #overlay>
-      <a-spin :spinning="loading" :delay="300">
-        <a-tabs class="tabs">
-          <a-tab-pane tab="test" key="test"></a-tab-pane>
-        </a-tabs>
-      </a-spin>
+      <div>
+        <a-spin :spinning="loading" :delay="300">
+          <slot />
+        </a-spin>
+      </div>
     </template>
   </a-dropdown>
 </template>
@@ -27,26 +28,17 @@ import { BellOutlined } from '@ant-design/icons-vue';
 export default defineComponent({
   name: 'NoticeDropdown',
   props: {
-    // dataSource: {
-    //   type: Array as PropType<>
-    // },
     count: Number,
     loading: Boolean,
-    popupVisible: Boolean,
-    clearText: String,
-    viewMoreText: String,
-    clearClose: Boolean,
-    emptyImage: String,
   },
-  emits: ['clear', 'itemClick', 'viewMore', 'tabChange', 'update:popupVisible'],
   slots: ['bell'],
   components: {
     BellOutlined,
   },
   setup() {
-    let msg = ref('');
+    const visible = ref(false);
     return {
-      msg,
+      visible,
     };
   },
 });
@@ -72,7 +64,7 @@ export default defineComponent({
 }
 
 .tabs {
-  :global {
+  :deep {
     .ant-tabs-nav-list {
       margin: auto;
     }
@@ -83,6 +75,24 @@ export default defineComponent({
     .ant-tabs-bar {
       margin-bottom: 0;
     }
+  }
+}
+</style>
+<style lang="less">
+.pro-components-header-notice-icon-index-container > * {
+  position: relative;
+  width: 336px;
+  background-color: @popover-bg;
+  border-radius: 4px;
+  box-shadow: @shadow-1-down;
+}
+
+@media screen and (max-width: @screen-xs) {
+  .pro-components-header-notice-icon-index-container {
+    width: 100% !important;
+  }
+  .pro-components-header-notice-icon-index-container > * {
+    border-radius: 0 !important;
   }
 }
 </style>

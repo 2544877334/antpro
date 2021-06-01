@@ -99,6 +99,6 @@ const notices = [
 
 module.exports = {
   'GET /api/notices': (req, res) => {
-    res.send(notices);
+    res.json(notices);
   },
 };

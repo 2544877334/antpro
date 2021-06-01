@@ -10,7 +10,7 @@
     <a-list class="list" :dataSource="list">
       <template #renderItem="{ item }">
         <a-list-item :class="{ item: true, read: item.read }" :key="item.key">
-          <a-list-item-meta class="meta" avatar="{leftIcon}">
+          <a-list-item-meta class="meta">
             <template v-if="item.avatar" #avatar>
               <a-avatar v-if="typeof item.avatar === 'string'" class="avatar" :src="item.avatar" />
               <span v-else class="iconElement">{{ item.avatar }}</span>
@@ -18,20 +18,22 @@
             <template #title>
               <div class="title">
                 {{ item.title }}
-                <div class="extra">{{ item.extra }}</div>
+                <div class="extra">
+                  <slot name="extra" v-bind="item">{{ item.extra }}</slot>
+                </div>
               </div>
             </template>
             <template #description>
               <div>
-                <div class="description">{item.description}</div>
-                <div class="datetime">{item.datetime}</div>
+                <div class="description">{{ item.description }}</div>
+                <div class="datetime">{{ item.datetime }}</div>
               </div>
             </template>
           </a-list-item-meta>
         </a-list-item>
       </template>
     </a-list>
-    <div class="bottomBar">
+    <div v-if="showClear || showViewMore" class="bottomBar">
       <div v-if="showClear" @click="emit('clear')">{{ clearText }} {{ title }}</div>
       <div v-if="showViewMore" @click="emit('viewMore')">
         {{ viewMoreText }}
@@ -48,14 +50,14 @@ export default defineComponent({
     count: Number,
     showClear: Boolean,
     showViewMore: Boolean,
-    title: String,
-    tabKey: String,
     list: Array,
     emptyText: String,
     clearText: String,
     viewMoreText: String,
+    title: String,
   },
-  emits: ['click', 'clear', 'viewMore'],
+  emits: ['itemClick', 'clear', 'viewMore'],
+  slots: ['extra'],
   setup() {
     return {};
   },
