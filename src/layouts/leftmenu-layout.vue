@@ -31,6 +31,7 @@
           :open-keys="[]"
         >
           <div style="text-align: right">
+            <notice-icon />
             <avatar-dropdown :current-user="currentUser" />
             <select-lang />
           </div>
@@ -109,6 +110,7 @@ import { default as AvatarDropdown } from '@/components/avatar-dropdown.vue';
 import { default as SettingDrawer } from '@/components/setting-drawer/index.vue';
 import { injectMenuState } from './use-menu-state';
 import { useStore } from 'vuex';
+import { default as NoticeIcon } from '@/components/notice-icon/index.vue';
 
 export default defineComponent({
   name: 'LeftMenuLayout',
@@ -192,6 +194,7 @@ export default defineComponent({
     SelectLang,
     AvatarDropdown,
     SettingDrawer,
+    NoticeIcon,
   },
 });
 </script>

@@ -43,7 +43,7 @@ module.exports = {
     ],
 
     /* vue 项目专用 */
-    'vue/require-default-prop': 'warn',
+    'vue/require-default-prop': 'off',
     'vue/singleline-html-element-content-newline': ['off'],
     // 模板中组件名称使用 kebab-case 模式
     'vue/component-name-in-template-casing': [
