@@ -22,6 +22,7 @@ const userNavDataSource = [
       show: true,
     },
     component: 'dashboard/workplace/index.vue',
+    path: '/workplace',
   },
   {
     name: 'Analysis',

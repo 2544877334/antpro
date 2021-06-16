@@ -17,6 +17,9 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       'process.env.VUE_APP_PUBLIC_PATH': JSON.stringify(env.VITE_APP_PUBLIC_PATH),
     },
     plugins: [vue(), vueJsx()],
+    build: {
+      cssCodeSplit: false,
+    },
     resolve: {
       alias: {
         // moment: 'moment/dist/moment.js',
