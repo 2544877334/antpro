@@ -1,4 +1,5 @@
 import 'ant-design-vue/dist/antd.less';
+import '@surely-vue/table/dist/index.css';
 import {
   Layout,
   Menu,
@@ -43,6 +44,7 @@ import {
   Upload,
   Badge,
 } from 'ant-design-vue';
+import SurelyTable from '@surely-vue/table';
 import { createApp } from 'vue';
 import router from './router';
 import store from './store';
@@ -104,6 +106,7 @@ app
   .use(Carousel)
   .use(BackTop)
   .use(Upload)
+  .use(SurelyTable as any)
   .component(PageContainer.name, PageContainer)
   .component(TransformVnode.name, TransformVnode)
   .component(Authority.name, Authority);

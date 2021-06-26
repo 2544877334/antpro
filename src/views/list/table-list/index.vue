@@ -151,7 +151,8 @@
             pageSize: state.pageSize,
             total: state.total,
           }"
-          :getPopupContainer="trigger => trigger.parentNode"
+          ref="tableRef"
+          :getPopupContainer="trigger => tableRef.$el"
           @change="handleTableChange"
         >
           <template #rowIndex="{ index }">
@@ -260,6 +261,7 @@ const baseColumns: TableColumn[] = [
 export default defineComponent({
   name: 'TableList',
   setup() {
+    const tableRef = ref();
     const {
       state: columnState,
       dynamicColumns,
@@ -330,6 +332,8 @@ export default defineComponent({
       // modal controls
       modalVisible,
       handleModalOk,
+
+      tableRef,
     };
   },
   components: {

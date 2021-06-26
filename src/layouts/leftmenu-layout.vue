@@ -31,11 +31,12 @@
           :open-keys="[]"
         >
           <div style="text-align: right">
+            <notice-icon />
             <avatar-dropdown :current-user="currentUser" />
             <select-lang />
           </div>
         </header-view>
-        <a-layout>
+        <a-layout style="width: auto">
           <sider-menu
             key="menu"
             :style="{
@@ -109,6 +110,7 @@ import { default as AvatarDropdown } from '@/components/avatar-dropdown.vue';
 import { default as SettingDrawer } from '@/components/setting-drawer/index.vue';
 import { injectMenuState } from './use-menu-state';
 import { useStore } from 'vuex';
+import { default as NoticeIcon } from '@/components/notice-icon/index.vue';
 
 export default defineComponent({
   name: 'LeftMenuLayout',
@@ -129,6 +131,7 @@ export default defineComponent({
     const [menuHover, setMenuHover, cancelSetMenuHover] = useDelayReset(100);
     const hoverMenuKey = ref('');
     const handleItemHover = (item: { key: string }) => {
+      console.log('key', item);
       cancelSetMenuHover();
       menuHover.value = true;
       hoverMenuKey.value = item.key;
@@ -192,6 +195,7 @@ export default defineComponent({
     SelectLang,
     AvatarDropdown,
     SettingDrawer,
+    NoticeIcon,
   },
 });
 </script>

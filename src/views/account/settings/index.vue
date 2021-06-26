@@ -8,6 +8,7 @@
       <div class="account-settings-info-main">
         <div class="account-settings-info-left">
           <a-menu
+            :key="menuKey"
             type="inner"
             :mode="mode"
             :style="{ border: '0', width: isMobile ? '100%' : 'auto' }"
@@ -52,7 +53,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, toRefs, onMounted, watch, inject, ref, computed } from 'vue';
+import {
+  defineComponent,
+  reactive,
+  toRefs,
+  onMounted,
+  watch,
+  inject,
+  ref,
+  computed,
+  onActivated,
+} from 'vue';
 import { GridContent } from '@/components';
 import { useI18n } from 'vue-i18n';
 import { useRoute } from 'vue-router';
@@ -66,6 +77,13 @@ export default defineComponent({
       selectedKeys: string[];
     }>({
       selectedKeys: [],
+    });
+
+    // 在keepalive下，神奇的bug，用唯一 key 临时解决
+    // https://git.antdv.com/pro-vip/pro-vip/issues/48
+    const menuKey = ref(1);
+    onActivated(() => {
+      menuKey.value++;
     });
 
     const updateCurrentSelectMenu = () => {
@@ -85,6 +103,7 @@ export default defineComponent({
     });
     const isMobile = inject('isMobile', ref(false));
     return {
+      menuKey,
       t,
       isMobile,
       mode: computed(() => (isMobile.value ? 'horizontal' : 'vertical')),

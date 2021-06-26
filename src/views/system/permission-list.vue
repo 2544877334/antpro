@@ -224,7 +224,11 @@ export default defineComponent({
     } = useTableDynamicColumns(baseColumns, true);
     const [elRef, screenState, { setFull, exitFull }] = useFullscreen();
 
-    const { reload, setPageInfo, context: state } = useFetchData(getPermissions, {
+    const {
+      reload,
+      setPageInfo,
+      context: state,
+    } = useFetchData(getPermissions, {
       current: 1,
       pageSize: 10,
       tableSize: 'middle', // 'default' | 'middle' | 'small'

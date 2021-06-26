@@ -43,7 +43,7 @@
         <template #tab>
           <a-dropdown :trigger="['contextmenu']">
             <span class="ant-pro-multi-tab-title">
-              {{ t(`${item.route.meta.title}`) }}
+              {{ item.tabTitle ? t(`${item.tabTitle}`) : t(`${item.route.meta.title}`) }}
               <reload-outlined
                 key="reload"
                 v-if="store.current === item.route.path"
@@ -135,9 +135,8 @@ export default defineComponent({
     );
     const { t } = useI18n();
     const spin = ref(false);
-    const [
-      { refresh, close, closeLeft, closeRight, closeOther },
-    ] = useMultiTab(/*{ defaultHomePage: props.defaultHomePage }*/);
+    const [{ refresh, close, closeLeft, closeRight, closeOther }] =
+      useMultiTab(/*{ defaultHomePage: props.defaultHomePage }*/);
 
     const handleActiveKeyChange = (key: string) => {
       menuState.selectedKeys!.value = [key];

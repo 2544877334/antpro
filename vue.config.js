@@ -31,10 +31,7 @@ module.exports = {
   configureWebpack: {
     plugins: [
       // Ignore all locale files of moment.js
-      new IgnorePlugin({
-        resourceRegExp: /^\.\/locale\/$/,
-        contextRegExp: /moment$/,
-      }),
+      new IgnorePlugin(/^\.\/locale$/, /moment$/),
       // stylelint
       // @see https://vue-loader.vuejs.org/zh/guide/linting.html#stylelint
       // new StyleLintPlugin({
@@ -43,6 +40,10 @@ module.exports = {
     ],
   },
   chainWebpack: config => {
+    // 移除 prefetch preload 插件
+    config.plugins.delete('prefetch-app');
+    config.plugins.delete('preload-app');
+
     config.resolve.alias.set('@', resolve('./src'));
     config.resolve.alias.set('vue$', resolve('./node_modules/vue/dist/vue.esm-bundler.js'));
     config.module.rule('markdown').test(/\.md$/).use('raw-loader').loader('raw-loader').end();

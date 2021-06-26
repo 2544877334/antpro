@@ -1,12 +1,6 @@
 <template>
   <a-spin :spinning="loading" wrapperClassName="city-select-row">
-    <a-select
-      class="item"
-      labelInValue
-      v-model:value="state.province"
-      showSearch
-      @select="selectProvinceItem"
-    >
+    <a-select class="item" v-model:value="state.province" showSearch @select="selectProvinceItem">
       <a-select-option v-for="item in localProvince" :key="item.id">
         {{ item.name }}
       </a-select-option>
@@ -15,7 +9,6 @@
       class="item"
       :disabled="!state.province"
       v-model:value="state.city"
-      labelInValue
       showSearch
       @select="selectCityItem"
     >
@@ -27,9 +20,7 @@
 </template>
 
 <script lang="ts">
-import { toRaw, defineComponent, PropType, computed, reactive } from 'vue';
-import { GeographicItemType } from './typing';
-import { LabeledValue } from 'ant-design-vue/es/select';
+import { defineComponent, computed, reactive, watch } from 'vue';
 import localProvince from './geographic/province.json';
 import localCity from './geographic/city.json';
 
@@ -37,37 +28,46 @@ export default defineComponent({
   name: 'CitySelect',
   props: {
     province: {
-      type: Array as PropType<GeographicItemType[]>,
-      default: () => undefined,
+      type: String,
+      default: undefined,
     },
     city: {
-      type: Array as PropType<GeographicItemType[]>,
-      default: () => undefined,
+      type: String,
+      default: undefined,
     },
     loading: {
       type: Boolean,
       default: false,
     },
   },
-  emits: ['change'],
+  emits: ['change', 'update:province', 'update:city'],
   setup(props, { emit }) {
     const state = reactive<{
-      province?: LabeledValue;
-      city?: LabeledValue;
+      province?: string;
+      city?: string;
     }>({
       province: undefined,
       city: undefined,
     });
+    watch(
+      [() => props.province, () => props.city],
+      () => {
+        state.province = props.province;
+        state.city = props.city;
+      },
+      { immediate: true },
+    );
     const loadedCity = computed(() => {
-      return (state.province && localCity[state.province.key as string]) || [];
+      return (state.province && localCity[state.province as string]) || [];
     });
 
     const selectProvinceItem = () => {
       state.city = undefined;
-      emit('change', toRaw(state));
+      emit('update:province', state.province);
+      emit('update:city', undefined);
     };
     const selectCityItem = () => {
-      emit('change', toRaw(state));
+      emit('update:city', state.city);
     };
 
     return {

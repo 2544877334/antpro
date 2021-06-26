@@ -23,6 +23,9 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         cwd: process.cwd(),
       }),
     ],
+    build: {
+      cssCodeSplit: false,
+    },
     resolve: {
       alias: {
         // moment: 'moment/dist/moment.js',
@@ -37,10 +40,11 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         'ant-design-vue/es/locale/zh_CN',
         'store/plugins/expire',
         'ant-design-vue/es/_util/vue-types',
+        'ant-design-vue/es/form',
         'moment/locale/eu',
         'moment/locale/zh-cn',
         '@ant-design/icons-vue',
-        '@ant-design-vue/use',
+        '@surely-vue/table',
         'lodash-es',
       ],
     },

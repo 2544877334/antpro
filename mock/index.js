@@ -9,6 +9,7 @@ const dashboardWorkplace = require('./dashboard/workplace.js');
 const basicList = require('./list/basic-list.js');
 const cardList = require('./list/card-list.js');
 const permission = require('./permission/index.js');
+const notices = require('./notices.js');
 
 module.exports = {
   ...user,
@@ -22,4 +23,5 @@ module.exports = {
   ...basicList,
   ...cardList,
   ...permission,
+  ...notices,
 };

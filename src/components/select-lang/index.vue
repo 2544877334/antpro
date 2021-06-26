@@ -4,7 +4,9 @@
     <template #overlay>
       <a-menu class="ant-pro-dropdown-menu" :selected-keys="[currentLang]" @click="handleMenuClick">
         <a-menu-item v-for="locale in locales" :key="locale" :disabled="!languageSupports[locale]">
-          <span role="img" :aria-label="languageLabels[locale]">{{ languageIcons[locale] }}</span>
+          <template #icon>
+            <span role="img" :aria-label="languageLabels[locale]">{{ languageIcons[locale] }}</span>
+          </template>
           {{ languageLabels[locale] }}
         </a-menu-item>
       </a-menu>
