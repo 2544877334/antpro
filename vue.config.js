@@ -21,10 +21,9 @@ if (existsSync(resolve('./src/main.js'))) {
 }
 module.exports = {
   pages: {
-    app: {
+    index: {
       // page 的入口
       entry: isTs ? 'src/main.ts' : 'src/main.js',
-      filename: 'index.html',
     },
   },
   publicPath: process.env.VUE_APP_PUBLIC_PATH,
