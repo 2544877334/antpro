@@ -51,7 +51,7 @@ function useLoopData() {
 
   const loopData = () => {
     requestRef.value = requestAnimationFrame(() => {
-      timer.value = setTimeout(() => {
+      timer.value = window.setTimeout(() => {
         activeData.value = getActiveData();
         nextTick(() => {
           loopData();

@@ -53,7 +53,7 @@ const useFetchNotice = (getNoticeData: () => Promise<void>, realtime?: boolean) 
   onMounted(() => {
     getNoticeData();
     if (realtime) {
-      interval = setInterval(() => {
+      interval = window.setInterval(() => {
         getNoticeData();
       }, 5000);
     }

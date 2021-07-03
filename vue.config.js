@@ -28,6 +28,30 @@ module.exports = {
     },
   },
   publicPath: process.env.VUE_APP_PUBLIC_PATH,
+  pluginOptions: {
+    electronBuilder: {
+      nodeIntegration: true,
+      builderOptions: {
+        // options placed here will be merged with default configuration and passed to electron-builder
+        publish: [
+          {
+            provider: 'generic',
+            url: 'https://alicdn.antdv.com/electron',
+          },
+        ],
+        appId: 'com.antdv.pro-electron',
+        productName: 'Pro For Electron',
+        copyright: 'Copyright © 2020 Ant Design Vue',
+        mac: {
+          icon: './public/logo.png', // set Mac Icons
+          category: 'public.app-category.utilities',
+        },
+        win: {
+          icon: './public/logo.png', // set Win Icon
+        },
+      },
+    },
+  },
   configureWebpack: {
     plugins: [
       // Ignore all locale files of moment.js
@@ -48,12 +72,12 @@ module.exports = {
     config.resolve.alias.set('vue$', resolve('./node_modules/vue/dist/vue.esm-bundler.js'));
     config.module.rule('markdown').test(/\.md$/).use('raw-loader').loader('raw-loader').end();
     // if `IS_ANALYZ` env is TRUE on report bundle info
-    isAnalyz &&
-      config.plugin('webpack-report').use(BundleAnalyzerPlugin, [
-        {
-          analyzerMode: 'static',
-        },
-      ]);
+    // isAnalyz &&
+    config.plugin('webpack-report').use(BundleAnalyzerPlugin, [
+      {
+        analyzerMode: 'static',
+      },
+    ]);
   },
   css: {
     loaderOptions: {

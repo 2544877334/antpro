@@ -24,3 +24,6 @@ pnpm-debug.log*
 # ignore lock
 package-lock.json
 /js
+
+#Electron-builder output
+/dist_electron

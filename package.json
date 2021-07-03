@@ -1,20 +1,25 @@
 {
   "name": "pro-vip",
-  "version": "2.0.0",
+  "version": "2.0.2",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "vite:dev": "cross-env MOCK_SERVER_PORT=8081 vite",
-    "vite:build": "vite build",
-    "build:preview": "vue-cli-service build --mode preview",
     "lint": "vue-cli-service lint",
+    "analyz": "vue-cli-service build --mode analyz",
+    "build:preview": "vue-cli-service build --mode preview",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:serve": "vue-cli-service electron:serve",
     "lint:check": "vue-cli-service lint --no-fix",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps",
     "prettier": "prettier -c --write '**/*'",
     "pretty-quick": "pretty-quick",
-    "analyz": "vue-cli-service build --mode analyz",
-    "toJs": "node ./scripts/tsToJs.js"
+    "toJs": "node ./scripts/tsToJs.js",
+    "vite:build": "vite build",
+    "vite:dev": "cross-env MOCK_SERVER_PORT=8081 vite"
   },
+  "main": "background.js",
   "dependencies": {
     "@ant-design-vue/use": "^0.0.1-0",
     "@ant-design/icons-vue": "^6.0.0",
@@ -42,6 +47,7 @@
   "devDependencies": {
     "@babel/plugin-transform-typescript": "^7.12.1",
     "@types/echarts": "^4.6.6",
+    "@types/electron-devtools-installer": "^2.2.0",
     "@types/lodash": "^4.14.161",
     "@types/nprogress": "^0.2.0",
     "@types/numeral": "0.0.28",
@@ -64,6 +70,10 @@
     "cheerio": "^1.0.0-rc.5",
     "cross-env": "^7.0.3",
     "echarts-wordcloud": "^1.1.3",
+    "electron": "^13.0.0",
+    "electron-devtools-installer": "^3.1.0",
+    "electron-log": "^4.3.5",
+    "electron-updater": "^4.3.9",
     "eslint": "^6.0.0",
     "eslint-plugin-html": "^6.0.3",
     "eslint-plugin-prettier": "^3.1.3",
@@ -92,6 +102,7 @@
     "umi-mock-middleware": "^1.0.0",
     "vite": "^2.0.5",
     "vite-plugin-style-import": "^0.7.6",
+    "vue-cli-plugin-electron-builder": "~2.1.1",
     "vue-eslint-parser": "^7.4.0",
     "webpack-bundle-analyzer": "^3.8.0"
   },

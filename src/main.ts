@@ -45,7 +45,7 @@ import {
   Badge,
 } from 'ant-design-vue';
 import SurelyTable from '@surely-vue/table';
-import { createApp, Plugin } from 'vue';
+import { createApp } from 'vue';
 import router from './router';
 import store from './store';
 import locale from './locales';
@@ -106,7 +106,7 @@ app
   .use(Carousel)
   .use(BackTop)
   .use(Upload)
-  .use(SurelyTable as Plugin)
+  .use(SurelyTable as any)
   .component(PageContainer.name, PageContainer)
   .component(TransformVnode.name, TransformVnode)
   .component(Authority.name, Authority);
@@ -114,3 +114,9 @@ app
 useIcons(app);
 
 app.mount('#app');
+
+if (process.env.IS_ELECTRON) {
+  require('electron').ipcRenderer.on('message', (event, text) => {
+    console.log(event, text);
+  });
+}

@@ -1,5 +1,5 @@
 import { Component, defineAsyncComponent, h } from 'vue';
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHashHistory, createWebHistory } from 'vue-router';
 import { MenuDataItem } from './typing';
 import Layout from '@/layouts/index.vue';
 // import UserLayout from '@/layouts/user-layout.vue';
@@ -502,7 +502,9 @@ export const staticRoutes: MenuDataItem[] = [
 ];
 
 const router = createRouter({
-  history: createWebHistory(process.env.VUE_APP_PUBLIC_PATH),
+  history: process.env.IS_ELECTRON
+    ? createWebHashHistory()
+    : createWebHistory(process.env.VUE_APP_PUBLIC_PATH),
   routes: staticRoutes,
 });
 

@@ -15,6 +15,10 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     define: {
       'process.env.VUE_APP_API_BASE_URL': JSON.stringify(env.VITE_APP_API_BASE_URL),
       'process.env.VUE_APP_PUBLIC_PATH': JSON.stringify(env.VITE_APP_PUBLIC_PATH),
+      'process.env.VUEE_APP_ELECTRON_API_BASE_URL': JSON.stringify(
+        env.VITE_APP_ELECTRON_API_BASE_URL,
+      ),
+      'process.env.IS_ELECTRON': JSON.stringify(''),
     },
     plugins: [vue(), vueJsx()],
     build: {
