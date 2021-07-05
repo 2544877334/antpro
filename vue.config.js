@@ -72,12 +72,12 @@ module.exports = {
     config.resolve.alias.set('vue$', resolve('./node_modules/vue/dist/vue.esm-bundler.js'));
     config.module.rule('markdown').test(/\.md$/).use('raw-loader').loader('raw-loader').end();
     // if `IS_ANALYZ` env is TRUE on report bundle info
-    // isAnalyz &&
-    config.plugin('webpack-report').use(BundleAnalyzerPlugin, [
-      {
-        analyzerMode: 'static',
-      },
-    ]);
+    isAnalyz &&
+      config.plugin('webpack-report').use(BundleAnalyzerPlugin, [
+        {
+          analyzerMode: 'static',
+        },
+      ]);
   },
   css: {
     loaderOptions: {
