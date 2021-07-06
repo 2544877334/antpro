@@ -48,10 +48,7 @@ export type TableColumnCustomRender = {
 
 export type TableColumnSortDirections = 'ascend' | 'descend' | null;
 
-export type TableColumnSortOrder =
-  | TableColumnSortDirections[]
-  | boolean
-  | TableColumnSortDirections;
+export type TableColumnSortOrder = boolean | TableColumnSortDirections;
 
 export interface TableColumn {
   key?: string;
@@ -72,7 +69,7 @@ export interface TableColumn {
   customRender?: (item: TableColumnCustomRender) => any;
   sorter?: ((record: any) => any) | boolean;
   sortOrder?: TableColumnSortOrder;
-  sortDirections?: TableColumnSortDirections;
+  sortDirections?: TableColumnSortDirections[] | TableColumnSortDirections;
   width?: string | number;
   customCell?: (record: any, rowIndex: number) => VNode;
   customHeaderCell?: (column: TableColumn) => VNode;
