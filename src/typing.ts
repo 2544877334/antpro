@@ -46,9 +46,12 @@ export type TableColumnCustomRender = {
   column: TableColumn;
 };
 
-export type TableColumnSortDirections = 'ascend' | 'descend';
+export type TableColumnSortDirections = 'ascend' | 'descend' | null;
 
-export type TableColumnSortOrder = boolean | TableColumnSortDirections;
+export type TableColumnSortOrder =
+  | TableColumnSortDirections[]
+  | boolean
+  | TableColumnSortDirections;
 
 export interface TableColumn {
   key?: string;
