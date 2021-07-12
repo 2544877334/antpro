@@ -6,12 +6,7 @@
       message="确认转账后，资金将直接打入对方账户，无法退回。"
       style="margin-bottom: 24px"
     />
-    <a-form
-      class="step-form"
-      :label-col="{ span: 5 }"
-      :wrapper-col="{ span: 19 }"
-      hide-required-mark
-    >
+    <a-form class="step-form" :label-col="{ span: 5 }" :wrapper-col="{ span: 19 }">
       <a-descriptions :column="1">
         <a-descriptions-item label="转账账号">
           {{ savedStepForm.payAccount }}
@@ -57,7 +52,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, computed, toRaw } from 'vue';
-import { useForm } from '@ant-design-vue/use';
+import { useForm } from 'ant-design-vue/es/form';
 import { useStore } from 'vuex';
 // require defined typo
 import { FormState } from '../../model';

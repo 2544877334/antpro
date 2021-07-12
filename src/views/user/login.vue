@@ -119,7 +119,7 @@
 import { defineComponent, reactive, toRefs } from 'vue';
 import { getSmsCaptcha } from '@/api/user/login';
 import { message, notification } from 'ant-design-vue';
-import { useForm } from '@ant-design-vue/use';
+import { useForm } from 'ant-design-vue/es/form';
 import {
   UserOutlined,
   LockOutlined,
