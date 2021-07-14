@@ -123,11 +123,7 @@ export default defineComponent({
     const base64Url = ref('');
     const isRealDark = inject('isRealDark', ref(false));
     const color = computed(() => {
-      if ('fontColor' in props) {
-        return props.fontColor;
-      } else {
-        return isRealDark.value ? 'rgba(255, 255, 255, .15)' : 'rgba(0,0,0,.15)';
-      }
+      return props.fontColor ?? (isRealDark.value ? 'rgba(255, 255, 255, .15)' : 'rgba(0,0,0,.15)');
     });
 
     watchEffect(() => {

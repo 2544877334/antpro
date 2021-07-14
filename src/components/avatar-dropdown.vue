@@ -12,16 +12,16 @@
     <template v-slot:overlay>
       <a-menu class="ant-pro-dropdown-menu" :selected-keys="[]">
         <a-menu-item v-if="menu" key="center" @click="handleToCenter">
-          <user-outlined />
+          <template #icon><user-outlined /></template>
           个人中心
         </a-menu-item>
         <a-menu-item v-if="menu" key="settings" @click="handleToSettings">
-          <setting-outlined />
+          <template #icon><setting-outlined /></template>
           个人设置
         </a-menu-item>
         <a-menu-divider v-if="menu" />
         <a-menu-item key="logout" @click="handleLogout">
-          <logout-outlined />
+          <template #icon><logout-outlined /></template>
           退出登录
         </a-menu-item>
       </a-menu>

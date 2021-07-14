@@ -36,7 +36,7 @@
             <select-lang />
           </div>
         </header-view>
-        <a-layout>
+        <a-layout style="width: auto">
           <sider-menu
             key="menu"
             :style="{
@@ -131,6 +131,7 @@ export default defineComponent({
     const [menuHover, setMenuHover, cancelSetMenuHover] = useDelayReset(100);
     const hoverMenuKey = ref('');
     const handleItemHover = (item: { key: string }) => {
+      console.log('key', item);
       cancelSetMenuHover();
       menuHover.value = true;
       hoverMenuKey.value = item.key;
