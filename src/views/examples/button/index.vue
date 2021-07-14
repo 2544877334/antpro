@@ -253,7 +253,7 @@ export default defineComponent({
   margin-bottom: 24px;
 }
 .pro-examples-button {
-  ::v-deep(.ant-btn) {
+  :deep(.ant-btn) {
     margin-right: 8px;
     margin-bottom: 12px;
   }
@@ -270,12 +270,12 @@ export default defineComponent({
     }
   }
 
-  ::v-deep(.ant-btn-group) {
+  :deep(.ant-btn-group) {
     margin-right: 8px;
   }
 }
 .pro-examples-button-block {
-  ::v-deep(.ant-btn) {
+  :deep(.ant-btn) {
     margin-bottom: 8px;
   }
 }

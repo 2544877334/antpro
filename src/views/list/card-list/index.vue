@@ -125,10 +125,10 @@ export default defineComponent({
 @import './utils/utils.less';
 
 .card-list {
-  ::v-deep(.ant-page-header-content) {
+  :deep(.ant-page-header-content) {
     overflow: unset;
   }
-  ::v-deep(.card) {
+  :deep(.card) {
     .ant-card-meta-title {
       margin-bottom: 12px;
       & > a {
@@ -148,7 +148,7 @@ export default defineComponent({
     height: 64px;
   }
 
-  ::v-deep(.ant-list) {
+  :deep(.ant-list) {
     .ant-list-item-content-single {
       max-width: 100%;
     }

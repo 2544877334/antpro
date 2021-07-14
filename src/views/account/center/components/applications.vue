@@ -121,14 +121,14 @@ export default defineComponent({
 .filter-card-list {
   margin-bottom: -24px;
 
-  ::v-deep(.ant-card-meta-content) {
+  :deep(.ant-card-meta-content) {
     margin-top: 0;
   }
   // disabled white space
-  ::v-deep(.ant-card-meta-avatar) {
+  :deep(.ant-card-meta-avatar) {
     font-size: 0;
   }
-  ::v-deep(.ant-list) {
+  :deep(.ant-list) {
     .ant-list-item-content-single {
       max-width: 100%;
     }

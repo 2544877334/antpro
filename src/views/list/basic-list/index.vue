@@ -178,18 +178,18 @@ export default defineComponent({
 
 <style lang="less" scoped>
 .basic-list-standard-list {
-  ::v-deep(.ant-card-head-title) {
+  :deep(.ant-card-head-title) {
     padding: 24px 0;
     line-height: 32px;
   }
-  ::v-deep(.ant-input-search),
+  :deep(.ant-input-search),
   .extra-content-search {
     width: 272px;
     margin-left: 16px;
   }
 }
 .basic-list-card {
-  ::v-deep(.ant-card-extra) {
+  :deep(.ant-card-extra) {
     flex: 1;
   }
   .list-content {

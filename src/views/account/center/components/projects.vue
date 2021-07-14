@@ -79,7 +79,7 @@ export default defineComponent({
 <style lang="less" scoped>
 .cover-card-list {
   .projects-card {
-    ::v-deep(.ant-card-meta-title) {
+    :deep(.ant-card-meta-title) {
       margin-bottom: 4px;
       & > a {
         display: inline-block;
@@ -87,14 +87,14 @@ export default defineComponent({
         color: @heading-color;
       }
     }
-    ::v-deep(.ant-card-meta-description) {
+    :deep(.ant-card-meta-description) {
       height: 44px;
       overflow: hidden;
       line-height: 22px;
     }
 
     &:hover {
-      ::v-deep(.ant-card-meta-title) {
+      :deep(.ant-card-meta-title) {
         > a {
           color: @primary-color;
         }
@@ -121,7 +121,7 @@ export default defineComponent({
     margin-top: 24px;
   }
 
-  ::v-deep(.ant-list) {
+  :deep(.ant-list) {
     .ant-list-item-content-single {
       max-width: 100%;
     }

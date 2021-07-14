@@ -61,7 +61,7 @@ export default defineComponent({
     margin-top: 16px;
     color: @text-color-secondary;
     line-height: 22px;
-    & > ::v-deep(.ant-avatar) {
+    & > :deep(.ant-avatar) {
       position: relative;
       top: 1px;
       width: 20px;
