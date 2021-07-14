@@ -5,7 +5,6 @@ import path from 'path';
 import { getThemeVariables } from 'ant-design-vue/dist/theme';
 import { additionalData } from './build/themeConfig';
 import mockTarget from './build/mockServer';
-import ViteComponents, { AntDesignVueResolver } from 'vite-plugin-components';
 
 export default ({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
@@ -17,13 +16,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       'process.env.VUE_APP_API_BASE_URL': JSON.stringify(env.VITE_APP_API_BASE_URL),
       'process.env.VUE_APP_PUBLIC_PATH': JSON.stringify(env.VITE_APP_PUBLIC_PATH),
     },
-    plugins: [
-      vue(),
-      vueJsx(),
-      ViteComponents({
-        customComponentResolvers: [AntDesignVueResolver()],
-      }),
-    ],
+    plugins: [vue(), vueJsx()],
     build: {
       cssCodeSplit: false,
     },
