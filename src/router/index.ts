@@ -6,7 +6,9 @@ import Layout from '@/layouts/index.vue';
 import UserLayout2 from '@/layouts/user-layout2.vue';
 import RouteView from '@/layouts/route-view.vue';
 
-const AsyncWorkplace = defineAsyncComponent(() => import('@/views/dashboard/workplace/index.vue'));
+const AsyncWorkplace = defineAsyncComponent(
+  () => import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/workplace/index.vue'),
+);
 export const routes: MenuDataItem[] = [
   {
     name: 'index',
@@ -32,19 +34,22 @@ export const routes: MenuDataItem[] = [
             path: '/dashboard/welcome',
             name: 'welcome',
             meta: { icon: 'HistoryOutlined', title: 'pages.dashboard.welcome.title' },
-            component: (): Component => import('@/views/dashboard/workplace2/index.vue'),
+            component: (): Component =>
+              import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/workplace2/index.vue'),
           },
           {
             path: '/dashboard/analysis',
             name: 'Analysis',
             meta: { icon: 'HeartOutlined', title: 'pages.dashboard.analysis.title' },
-            component: (): Component => import('@/views/dashboard/analysis/index.vue'),
+            component: (): Component =>
+              import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/analysis/index.vue'),
           },
           {
             path: '/dashboard/monitor',
             name: 'Monitor',
             meta: { icon: 'HeartOutlined', title: 'pages.dashboard.monitor.title' },
-            component: (): Component => import('@/views/dashboard/monitor/index.vue'),
+            component: (): Component =>
+              import(/* webpackChunkName: "dashboard" */ '@/views/dashboard/monitor/index.vue'),
           },
         ],
       },
@@ -61,19 +66,22 @@ export const routes: MenuDataItem[] = [
             path: '/form/basic-form',
             name: 'basic-form',
             meta: { title: 'form.basicform.basic.title', keepAlive: true },
-            component: (): Component => import('@/views/form/basic-form/index.vue'),
+            component: (): Component =>
+              import(/* webpackChunkName: "form" */ '@/views/form/basic-form/index.vue'),
           },
           {
             path: '/form/step-form',
             name: 'step-form',
             meta: { title: 'form.stepform.basic.title' },
-            component: (): Component => import('@/views/form/step-form/index.vue'),
+            component: (): Component =>
+              import(/* webpackChunkName: "form" */ '@/views/form/step-form/index.vue'),
           },
           {
             path: '/form/advanced-form',
             name: 'advanced-form',
             meta: { title: 'form.advancedform.basic.title' },
-            component: (): Component => import('@/views/form/advance-form/index.vue'),
+            component: (): Component =>
+              import(/* webpackChunkName: "form" */ '@/views/form/advance-form/index.vue'),
           },
         ],
       },
@@ -90,25 +98,29 @@ export const routes: MenuDataItem[] = [
             path: '/list/big-table-list',
             name: 'big-table-list',
             meta: { title: 'pages.list.bigtablelist.title' },
-            component: (): Component => import('@/views/list/big-table-list/index.vue'),
+            component: (): Component =>
+              import(/* webpackChunkName: "list" */ '@/views/list/big-table-list/index.vue'),
           },
           {
             path: '/list/table-list',
             name: 'table-list',
             meta: { title: 'pages.list.tablelist.title' },
-            component: (): Component => import('@/views/list/table-list/index.vue'),
+            component: (): Component =>
+              import(/* webpackChunkName: "list" */ '@/views/list/table-list/index.vue'),
           },
           {
             path: '/list/basic-list',
             name: 'basic-list',
             meta: { title: 'pages.list.basiclist.title' },
-            component: (): Component => import('@/views/list/basic-list/index.vue'),
+            component: (): Component =>
+              import(/* webpackChunkName: "list" */ '@/views/list/basic-list/index.vue'),
           },
           {
             path: '/list/card-list',
             name: 'card-list',
             meta: { title: 'pages.list.cardlist.title' },
-            component: (): Component => import('@/views/list/card-list/index.vue'),
+            component: (): Component =>
+              import(/* webpackChunkName: "list" */ '@/views/list/card-list/index.vue'),
           },
         ],
       },
@@ -128,7 +140,8 @@ export const routes: MenuDataItem[] = [
               title: 'pages.profile.basic.title',
               // collapsedIcon: 'UnorderedListOutlined',
             },
-            component: () => import('@/views/profile/basic/index.vue'),
+            component: () =>
+              import(/* webpackChunkName: "profile" */ '@/views/profile/basic/index.vue'),
           },
           {
             path: '/profile/advanced',
@@ -137,7 +150,8 @@ export const routes: MenuDataItem[] = [
               title: 'pages.profile.advanced.title',
               // collapsedIcon: 'UnorderedListOutlined',
             },
-            component: () => import('@/views/profile/advanced/index.vue'),
+            component: () =>
+              import(/* webpackChunkName: "profile" */ '@/views/profile/advanced/index.vue'),
           },
         ],
       },
@@ -154,19 +168,22 @@ export const routes: MenuDataItem[] = [
             name: 'exception403',
             path: '/exception/403',
             meta: { title: 'pages.exception.403.title' },
-            component: () => import('@/views/exception/403.vue'),
+            component: () =>
+              import(/* webpackChunkName: "exception" */ '@/views/exception/403.vue'),
           },
           {
             name: 'exception404',
             path: '/exception/404',
             meta: { title: 'pages.exception.404.title' },
-            component: () => import('@/views/exception/404.vue'),
+            component: () =>
+              import(/* webpackChunkName: "exception" */ '@/views/exception/404.vue'),
           },
           {
             name: 'exception500',
             path: '/exception/500',
             meta: { title: 'pages.exception.500.title' },
-            component: () => import('@/views/exception/500.vue'),
+            component: () =>
+              import(/* webpackChunkName: "exception" */ '@/views/exception/500.vue'),
           },
         ],
       },
@@ -183,13 +200,13 @@ export const routes: MenuDataItem[] = [
             name: 'result-success',
             path: '/result/success',
             meta: { title: 'pages.result.success.title' },
-            component: () => import('@/views/result/success.vue'),
+            component: () => import(/* webpackChunkName: "result" */ '@/views/result/success.vue'),
           },
           {
             name: 'result-fail',
             path: '/result/fail',
             meta: { title: 'pages.result.fail.title' },
-            component: () => import('@/views/result/fail.vue'),
+            component: () => import(/* webpackChunkName: "result" */ '@/views/result/fail.vue'),
           },
         ],
       },
@@ -205,7 +222,8 @@ export const routes: MenuDataItem[] = [
             name: 'AccountCenter',
             path: '/account/center',
             meta: { title: 'pages.account.center.title' },
-            component: () => import('@/views/account/center/index.vue'),
+            component: () =>
+              import(/* webpackChunkName: "account" */ '@/views/account/center/index.vue'),
           },
           {
             name: 'AccountSettings',
@@ -216,37 +234,53 @@ export const routes: MenuDataItem[] = [
               mergeTab: true,
             },
             redirect: '/account/settings/base',
-            component: () => import('@/views/account/settings/index.vue'),
+            component: () =>
+              import(/* webpackChunkName: "account" */ '@/views/account/settings/index.vue'),
             children: [
               {
                 name: 'BaseSettings',
                 path: '/account/settings/base',
                 meta: { title: 'pages.account.settings.base.title' },
-                component: () => import('@/views/account/settings/pages/base.vue'),
+                component: () =>
+                  import(
+                    /* webpackChunkName: "account" */ '@/views/account/settings/pages/base.vue'
+                  ),
               },
               {
                 name: 'SecuritySettings',
                 path: '/account/settings/security',
                 meta: { title: 'pages.account.settings.security.title' },
-                component: () => import('@/views/account/settings/pages/security.vue'),
+                component: () =>
+                  import(
+                    /* webpackChunkName: "account" */ '@/views/account/settings/pages/security.vue'
+                  ),
               },
               {
                 name: 'CustomSettings',
                 path: '/account/settings/custom',
                 meta: { title: 'pages.account.settings.custom.title' },
-                component: () => import('@/views/account/settings/pages/custom.vue'),
+                component: () =>
+                  import(
+                    /* webpackChunkName: "account" */ '@/views/account/settings/pages/custom.vue'
+                  ),
               },
               {
                 name: 'BindingSettings',
                 path: '/account/settings/binding',
                 meta: { title: 'pages.account.settings.binding.title' },
-                component: () => import('@/views/account/settings/pages/binding.vue'),
+                component: () =>
+                  import(
+                    /* webpackChunkName: "account" */ '@/views/account/settings/pages/binding.vue'
+                  ),
               },
               {
                 name: 'NotificationSettings',
                 path: '/account/settings/notification',
                 meta: { title: 'pages.account.settings.notification.title' },
-                component: () => import('@/views/account/settings/pages/notification.vue'),
+                component: () =>
+                  import(
+                    /* webpackChunkName: "account" */ '@/views/account/settings/pages/notification.vue'
+                  ),
               },
             ],
           },
@@ -265,13 +299,15 @@ export const routes: MenuDataItem[] = [
             path: '/system/role-list',
             name: 'role-list',
             meta: { title: 'pages.system.role-list.title' },
-            component: (): Component => import('@/views/system/role-list.vue'),
+            component: (): Component =>
+              import(/* webpackChunkName: "system" */ '@/views/system/role-list.vue'),
           },
           {
             path: '/system/permission-list',
             name: 'permission-list',
             meta: { title: 'pages.system.permission-list.title' },
-            component: (): Component => import('@/views/system/permission-list.vue'),
+            component: (): Component =>
+              import(/* webpackChunkName: "system" */ '@/views/system/permission-list.vue'),
           },
         ],
       },
@@ -288,7 +324,8 @@ export const routes: MenuDataItem[] = [
             path: '/jump-url/router',
             name: 'jumpUrlExamples',
             meta: { title: 'pages.jumpUrl.router.title' },
-            component: (): Component => import('@/views/examples/jump-url/index.vue'),
+            component: (): Component =>
+              import(/* webpackChunkName: "jumpUrl" */ '@/views/examples/jump-url/index.vue'),
           },
           {
             path: 'https://github.com/vueComponent/ant-design-vue',
@@ -317,7 +354,8 @@ export const routes: MenuDataItem[] = [
               title: 'pages.examples.button.title',
               // collapsedIcon: 'AppstoreAddOutlined',
             },
-            component: () => import('@/views/examples/button/index.vue'),
+            component: () =>
+              import(/* webpackChunkName: "examples" */ '@/views/examples/button/index.vue'),
           },
           {
             name: 'InputExample',
@@ -326,7 +364,8 @@ export const routes: MenuDataItem[] = [
               title: 'pages.examples.input.title',
               // collapsedIcon: 'AppstoreAddOutlined',
             },
-            component: () => import('@/views/examples/input/index.vue'),
+            component: () =>
+              import(/* webpackChunkName: "examples" */ '@/views/examples/input/index.vue'),
           },
           {
             name: 'RateExample',
@@ -335,7 +374,8 @@ export const routes: MenuDataItem[] = [
               title: 'pages.examples.rate.title',
               // collapsedIcon: 'AppstoreAddOutlined',
             },
-            component: () => import('@/views/examples/rate/index.vue'),
+            component: () =>
+              import(/* webpackChunkName: "examples" */ '@/views/examples/rate/index.vue'),
           },
           {
             name: 'PermissionExample',
@@ -344,7 +384,8 @@ export const routes: MenuDataItem[] = [
               title: 'pages.examples.authority.title',
               // collapsedIcon: 'AppstoreAddOutlined',
             },
-            component: () => import('@/views/examples/authority/index.vue'),
+            component: () =>
+              import(/* webpackChunkName: "examples" */ '@/views/examples/authority/index.vue'),
           },
         ],
       },
@@ -360,27 +401,33 @@ export const routes: MenuDataItem[] = [
             name: 'nested-menu1',
             path: '/nested/menu1',
             meta: { title: 'pages.nested.menu1.title' },
-            component: () => import('@/views/examples/nested/menu1.vue'),
+            component: () =>
+              import(/* webpackChunkName: "nested" */ '@/views/examples/nested/menu1.vue'),
             redirect: '/nested/menu1/menu1-1',
             children: [
               {
                 name: 'nested-menu1-1',
                 path: '/nested/menu1/menu1-1',
                 meta: { title: 'pages.nested.menu1-1.title', authority: 'nested-menu1' },
-                component: () => import('@/views/examples/nested/menu1-1.vue'),
+                component: () =>
+                  import(/* webpackChunkName: "nested" */ '@/views/examples/nested/menu1-1.vue'),
               },
               {
                 name: 'nested-menu1-2',
                 path: '/nested/menu1/menu1-2',
                 meta: { title: 'pages.nested.menu1-2.title' },
                 redirect: '/nested/menu1/menu1-2/menu1-2-1',
-                component: () => import('@/views/examples/nested/menu1-2.vue'),
+                component: () =>
+                  import(/* webpackChunkName: "nested" */ '@/views/examples/nested/menu1-2.vue'),
                 children: [
                   {
                     name: 'nested-menu1-2-1',
                     path: '/nested/menu1/menu1-2/menu1-2-1',
                     meta: { title: 'pages.nested.menu1-2-1.title' },
-                    component: () => import('@/views/examples/nested/menu1-2-1.vue'),
+                    component: () =>
+                      import(
+                        /* webpackChunkName: "nested" */ '@/views/examples/nested/menu1-2-1.vue'
+                      ),
                   },
                 ],
               },
@@ -390,20 +437,21 @@ export const routes: MenuDataItem[] = [
             name: 'nested-menu2',
             path: '/nested/menu2',
             meta: { title: 'pages.nested.menu2.title' },
-            component: import('@/views/examples/nested/menu2.vue'),
+            component: import(/* webpackChunkName: "nested" */ '@/views/examples/nested/menu2.vue'),
           },
           {
             name: 'nested-menu3',
             path: '/nested/menu3',
             meta: { title: 'pages.nested.menu3.title', hideChildrenInMenu: true },
             redirect: '/nested/menu3/menu3-1',
-            component: import('@/views/examples/nested/menu3.vue'),
+            component: import(/* webpackChunkName: "nested" */ '@/views/examples/nested/menu3.vue'),
             children: [
               {
                 name: 'nested-menu3-1',
                 path: '/nested/menu3/menu3-1',
                 meta: { title: 'pages.nested.menu3-1.title' },
-                component: () => import('@/views/examples/nested/menu3-1.vue'),
+                component: () =>
+                  import(/* webpackChunkName: "nested" */ '@/views/examples/nested/menu3-1.vue'),
               },
             ],
           },
@@ -418,7 +466,8 @@ export const staticRoutes: MenuDataItem[] = [
     path: '/test',
     name: 'test',
     meta: { title: 'form.basicform.basic.title' },
-    component: (): Component => import('@/views/form/basic-form/index.vue'),
+    component: (): Component =>
+      import(/* webpackChunkName: "other" */ '@/views/form/basic-form/index.vue'),
   },
   {
     path: '/user',
@@ -430,25 +479,25 @@ export const staticRoutes: MenuDataItem[] = [
         path: '/user/login',
         name: 'login',
         meta: { title: 'pages.login.accountLogin.tab' },
-        component: () => import('@/views/user/login.vue'),
+        component: () => import(/* webpackChunkName: "user" */ '@/views/user/login.vue'),
       },
       {
         path: '/user/register',
         name: 'register',
         meta: { title: 'pages.login.registerAccount' },
-        component: () => import('@/views/user/register.vue'),
+        component: () => import(/* webpackChunkName: "user" */ '@/views/user/register.vue'),
       },
       {
         path: '/user/register-result',
         name: 'register-result',
         meta: { title: 'pages.login.registerAccount' },
-        component: () => import('@/views/user/register-result.vue'),
+        component: () => import(/* webpackChunkName: "user" */ '@/views/user/register-result.vue'),
       },
     ],
   },
   {
     path: '/:pathMatch(.*)',
-    component: () => import('@/views/exception/404.vue'),
+    component: () => import(/* webpackChunkName: "exception" */ '@/views/exception/404.vue'),
   },
 ];
 

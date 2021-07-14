@@ -39,7 +39,7 @@
 import { computed, defineComponent, onMounted, ref, onBeforeUnmount } from 'vue';
 import { NoticeItem, queryNotices } from '@/api/user/notice';
 import moment from 'moment';
-import { groupBy } from 'lodash';
+import { groupBy } from 'lodash-es';
 import NoticeDropdown from './notice-dropdown.vue';
 import NoticeList from './notice-list.vue';
 import { message } from 'ant-design-vue';
