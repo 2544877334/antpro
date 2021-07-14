@@ -64,17 +64,14 @@ export default defineComponent({
 }
 
 .tabs {
-  :deep {
-    .ant-tabs-nav-list {
-      margin: auto;
-    }
-
-    .ant-tabs-nav-scroll {
-      text-align: center;
-    }
-    .ant-tabs-bar {
-      margin-bottom: 0;
-    }
+  :deep(.ant-tabs-nav-list) {
+    margin: auto;
+  }
+  :deep(.ant-tabs-nav-scroll) {
+    text-align: center;
+  }
+  :deep(.ant-tabs-bar) {
+    margin-bottom: 0;
   }
 }
 </style>

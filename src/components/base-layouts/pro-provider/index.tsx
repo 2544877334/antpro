@@ -1,3 +1,4 @@
+import { withInstall } from '@/utils/withInstall';
 import {
   reactive,
   readonly,
@@ -9,6 +10,7 @@ import {
   PropType,
   SetupContext,
   InjectionKey,
+  defineComponent,
 } from 'vue';
 import { ContentWidth } from '../typing';
 
@@ -37,7 +39,7 @@ export const defaultProProviderProps: ProProviderData = {
 
 export const injectProConfigKey: InjectionKey<ProProviderData> = Symbol();
 
-const ProProvider = {
+const ProProvider = defineComponent({
   name: 'ProProvider',
   props: {
     prefixCls: {
@@ -53,7 +55,7 @@ const ProProvider = {
       default: (t: string): string => t,
     },
   },
-  setup(props: ProProviderProps, { slots }: SetupContext): RenderFunction | void {
+  setup(props, { slots }: SetupContext): RenderFunction | void {
     const { prefixCls, i18n, contentWidth } = toRefs(props);
     const getPrefixCls = (suffixCls?: string, customizePrefixCls?: string): string => {
       if (customizePrefixCls) return customizePrefixCls;
@@ -73,10 +75,10 @@ const ProProvider = {
   install(app: App): void {
     app.component(ProProvider.name, ProProvider);
   },
-};
+});
 
 export const useProProvider = () => {
   return inject(injectProConfigKey, defaultProProviderProps);
 };
 
-export default ProProvider;
+export default withInstall(ProProvider);
