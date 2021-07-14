@@ -59,6 +59,15 @@ function parseMockData(config) {
   }, []);
 }
 function getMatchMock(url) {
+  // return (
+  //   mockconfig.mockList.findIndex(whiteUrl => {
+  //     if (Object.prototype.toString.call(whiteUrl) == '[object RegExp]') {
+  //       // return whiteUrl.test(url)
+  //     } else {
+  //       return url.indexOf(whiteUrl) != -1
+  //     }
+  //   }) != -1
+  // )
   return (
     _mockconfig.mockUrlList.findIndex(whiteUrl => {
       // return url.indexOf(whiteUrl) != -1
@@ -74,9 +83,8 @@ function mockHandle(handler) {
   if (Object.prototype.toString.call(handler) == '[object Function]') {
     return handler;
   }
-  return (_req, res) => {
-    res.write(JSON.stringify(handler));
-    res.end();
+  return () => {
+    return handler;
   };
 }
 

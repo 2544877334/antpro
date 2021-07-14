@@ -4,6 +4,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import path from 'path';
 import { getThemeVariables } from 'ant-design-vue/dist/theme';
 import { additionalData } from './build/themeConfig';
+// import mockTarget from './build/mockServer';
 const mock = require('./build/mock/createMockServer');
 
 export default ({ mode }: ConfigEnv): UserConfig => {
@@ -20,6 +21,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       vue(),
       vueJsx(),
       mock({
+        watch: false,
         cwd: process.cwd(),
       }),
     ],
@@ -58,23 +60,15 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         },
       },
     },
-    server:
-      env.VITE_HTTP_MOCK && env.VITE_MOCK
-        ? {}
-        : {
-            proxy: {
-              // 如果你需要使用正则mock数据，可以使用代理的方式，
-              // mock插件内不再做支持，因为mock url尽可能唯一，方便定位数据来排查问题，正则很容易"覆盖"真正想要的匹配数据
-              '^/api/currentUser/*': {
-                target: '/api/currentUser',
-              },
-              '/api': {
-                // backend url
-                target: 'https://store.antdv.com',
-                ws: false,
-                changeOrigin: true,
-              },
-            },
-          },
+    server: {
+      // proxy: {
+      //   '/api': {
+      //     // backend url
+      //     target: env.VITE_HTTP_MOCK && env.VITE_MOCK ? mockTarget : 'https://store.antdv.com',
+      //     ws: false,
+      //     changeOrigin: true,
+      //   },
+      // },
+    },
   };
 };

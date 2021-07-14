@@ -66,7 +66,7 @@ module.exports = {
   },
 
   'POST /api/login/account': (req, res) => {
-    const { password, username } = req.body;
+    const { password, username, type } = req.body;
 
     if (!usernames.includes(username) || !passwords.includes(password)) {
       res.status(400).send({

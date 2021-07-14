@@ -1,7 +1,6 @@
 const { initMock, getMatchMock } = require('./getMockData');
 const { winPath } = require('./utils');
 const { join } = require('path');
-const bodyParser = require('body-parser');
 const chokidar = require('chokidar');
 const signale = require('signale');
 const { configBabelRegister } = require('./registerBabel');
@@ -17,7 +16,7 @@ function getPaths(cwd) {
   };
 }
 
-module.exports = function (options = { watch: false, cwd: process.cwd() }) {
+module.exports = function (options = { watch: true, cwd: process.cwd() }) {
   const { absMockPath, absMockConfigPath } = getPaths(options.cwd);
   const paths = [absMockPath, absMockConfigPath];
   // vite热更新时关闭上一个进程
@@ -68,17 +67,11 @@ module.exports = function (options = { watch: false, cwd: process.cwd() }) {
         let matchMock = getMatchMock(req.url);
         if (mockconfig.enable && matchMock) {
           res.setHeader('Content-Type', 'application/json;charset=utf-8');
-          res.send = obj => {
-            res.write(JSON.stringify(obj));
-            res.end();
-          };
-          matchMock.handler(req, res, next);
+          return matchMock.handler(req, res, next);
         } else {
-          next();
+          return next();
         }
       };
-      app.use(bodyParser.urlencoded());
-      app.use(bodyParser.json());
       app.use(middleware);
     },
   };
