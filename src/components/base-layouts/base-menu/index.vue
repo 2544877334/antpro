@@ -17,18 +17,20 @@
         :by="customItem"
         :opt="menu"
       >
-        <a-menu-item @mouseenter="$emit('itemHover', $event)" :key="menu.path">
-          <component
-            v-if="menu.meta.icon !== undefined"
-            :is="menu.meta.icon"
-            :key="menu.meta.icon"
-          />
-          <component
-            v-else-if="collapsed && menu.meta.collapsedIcon !== undefined"
-            :is="menu.meta.collapsedIcon"
-            :key="menu.meta.collapsedIcon"
-          />
-          <span>{{ (i18n && i18n(menu.meta.title)) || menu.meta.title }}</span>
+        <a-menu-item @mouseenter="$emit('itemHover', { key: menu.path })" :key="menu.path">
+          <template #icon>
+            <component
+              v-if="menu.meta.icon !== undefined"
+              :is="menu.meta.icon"
+              :key="menu.meta.icon"
+            />
+            <component
+              v-else-if="collapsed && menu.meta.collapsedIcon !== undefined"
+              :is="menu.meta.collapsedIcon"
+              :key="menu.meta.collapsedIcon"
+            />
+          </template>
+          {{ (i18n && i18n(menu.meta.title)) || menu.meta.title }}
         </a-menu-item>
       </transform-vnode>
       <sub-menu

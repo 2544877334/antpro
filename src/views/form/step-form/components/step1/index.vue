@@ -5,7 +5,6 @@
       class="step-form"
       :label-col="{ span: 5 }"
       :wrapper-col="{ span: 19 }"
-      hide-required-mark
     >
       <a-form-item label="付款账户" v-bind="validateInfos.payAccount">
         <a-select v-model:value="modelRef.payAccount" placeholder="ant-design@alipay.com">
@@ -51,7 +50,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRaw } from 'vue';
-import { useForm } from '@ant-design-vue/use';
+import { useForm } from 'ant-design-vue/es/form';
 import { useStore } from 'vuex';
 import ReceiverAccount, { ReceiverAccountType } from '../receiver-account.vue';
 import { FormState } from '../../model';
@@ -87,6 +86,7 @@ export default defineComponent({
       payAccount: [{ required: true, message: '请选择付款账户' }],
       receiverAccount: [
         {
+          required: true,
           validator: receiverAccount,
           trigger: 'change',
         },

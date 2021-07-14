@@ -4,7 +4,7 @@
       {{ t('form.basicform.basic.description') }}
     </template>
     <a-card :bordered="false">
-      <a-form hide-required-mark :label-col="labelCol" :wrapper-col="wrapperCol">
+      <a-form :label-col="labelCol" :wrapper-col="wrapperCol">
         <a-form-item :label="t('form.basicform.title.label')" v-bind="validateInfos.title">
           <a-input
             v-model:value="modelRef.title"
@@ -132,7 +132,7 @@ import { useI18n } from 'vue-i18n';
 import { localStorage } from '@/utils/local-storage';
 import { InfoCircleOutlined } from '@ant-design/icons-vue';
 import { useRoute } from 'vue-router';
-import { useForm } from '@ant-design-vue/use';
+import { useForm } from 'ant-design-vue/es/form';
 import { message } from 'ant-design-vue';
 import { ResponseBody } from '@/api/typing';
 import { saveBasicFormData, BasicFormResponse } from '@/api/form/basic-form';

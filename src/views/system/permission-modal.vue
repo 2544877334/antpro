@@ -37,7 +37,7 @@
 </template>
 
 <script lang="ts">
-import { useForm } from '@ant-design-vue/use';
+import { useForm } from 'ant-design-vue/es/form';
 import { defineComponent, ref, reactive, toRaw, watchEffect, PropType } from 'vue';
 import { message } from 'ant-design-vue';
 import { addPermission, updatePermission } from '@/api/user/role';
