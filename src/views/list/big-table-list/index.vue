@@ -21,7 +21,7 @@
         </a-col>
         <a-col :xs="12" :sm="12" :md="6">
           <a-form-item label="大小">
-            <a-select v-model:value="size">
+            <a-select v-model:value="size" style="width: 100px">
               <a-select-option value="small">紧凑</a-select-option>
               <a-select-option value="default">默认</a-select-option>
               <a-select-option value="middle">中等</a-select-option>
@@ -50,7 +50,7 @@
         </a-col>
         <a-col :xs="12" :sm="12" :md="6">
           <a-form-item label="选择">
-            <a-select v-model:value="rowSelection.type">
+            <a-select v-model:value="rowSelection.type" style="width: 100px">
               <a-select-option value="radio">单选</a-select-option>
               <a-select-option value="checkbox">多选</a-select-option>
             </a-select>

@@ -4,24 +4,24 @@
       <div class="ant-pro-table-search">
         <a-form layout="horizontal">
           <a-row :gutter="16" type="flex" justify="start">
-            <a-col :xs="24" :sm="24" :md="12">
+            <a-col :xs="24" :sm="24" :md="12" :lg="7">
               <a-form-item label="规则名称">
                 <a-input v-model:value="queryParam.ruleName" placeholder="please enter" />
               </a-form-item>
             </a-col>
-            <a-col :xs="24" :sm="24" :md="12">
+            <a-col :xs="24" :sm="24" :md="12" :lg="7">
               <a-form-item label="描述">
                 <a-input v-model:value="queryParam.desc" placeholder="please enter" />
               </a-form-item>
             </a-col>
-            <a-col :xs="24" :sm="24" :md="12">
+            <a-col :xs="24" :sm="24" :md="12" :lg="7">
               <a-form-item label="服务调用次数">
                 <a-input v-model:value="queryParam.callNo" placeholder="please enter" />
               </a-form-item>
             </a-col>
-            <a-col :xs="24" :sm="24" :md="12">
+            <a-col :xs="24" :sm="24" :md="12" :lg="3">
               <a-form-item>
-                <a-button @click="handleSearch">搜索</a-button>
+                <a-button @click="handleSearch" type="primary">搜索</a-button>
               </a-form-item>
             </a-col>
           </a-row>
