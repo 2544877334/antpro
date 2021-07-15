@@ -34,9 +34,6 @@
       <sub-menu v-else :menu="child" :key="child.path" :i18n="i18n" :collapsed="collapsed" />
     </template>
   </a-sub-menu>
-  <a-sub-menu v-else>
-    <a-menu-item></a-menu-item>
-  </a-sub-menu>
 </template>
 
 <script lang="ts">
