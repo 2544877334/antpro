@@ -437,14 +437,16 @@ export const routes: MenuDataItem[] = [
             name: 'nested-menu2',
             path: '/nested/menu2',
             meta: { title: 'pages.nested.menu2.title' },
-            component: import(/* webpackChunkName: "nested" */ '@/views/examples/nested/menu2.vue'),
+            component: () =>
+              import(/* webpackChunkName: "nested" */ '@/views/examples/nested/menu2.vue'),
           },
           {
             name: 'nested-menu3',
             path: '/nested/menu3',
             meta: { title: 'pages.nested.menu3.title', hideChildrenInMenu: true },
             redirect: '/nested/menu3/menu3-1',
-            component: import(/* webpackChunkName: "nested" */ '@/views/examples/nested/menu3.vue'),
+            component: () =>
+              import(/* webpackChunkName: "nested" */ '@/views/examples/nested/menu3.vue'),
             children: [
               {
                 name: 'nested-menu3-1',
