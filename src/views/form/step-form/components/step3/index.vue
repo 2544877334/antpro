@@ -71,7 +71,7 @@ export default defineComponent({
 
 .information {
   line-height: 22px;
-  ::v-deep(&.ant-row:not(:last-child)) {
+  :deep(&.ant-row:not(:last-child)) {
     margin-bottom: 24px;
   }
 

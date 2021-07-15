@@ -5,7 +5,9 @@
       <a-menu class="ant-pro-dropdown-menu" :selected-keys="[currentLang]" @click="handleMenuClick">
         <a-menu-item v-for="locale in locales" :key="locale" :disabled="!languageSupports[locale]">
           <template #icon>
-            <span role="img" :aria-label="languageLabels[locale]">{{ languageIcons[locale] }}</span>
+            <span role="img" :aria-label="languageLabels[locale]" style="margin-right: 8px">
+              {{ languageIcons[locale] }}
+            </span>
           </template>
           {{ languageLabels[locale] }}
         </a-menu-item>

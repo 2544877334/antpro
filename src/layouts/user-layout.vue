@@ -116,7 +116,7 @@ export default defineComponent({
       margin: 0 auto;
       background: #ffffff;
 
-      ::v-deep(.slick-active) {
+      :deep(.slick-active) {
         .dot {
           background-color: #999999;
         }

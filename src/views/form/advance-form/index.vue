@@ -145,7 +145,7 @@ export default defineComponent({
 .antd-pro-pages-form-advanced-form-style-card {
   margin-bottom: 24px;
 
-  ::v-deep(.@{ant-prefix}-form-item-control-wrapper) {
+  :deep(.@{ant-prefix}-form-item-control-wrapper) {
     width: 100%;
   }
 }
@@ -153,7 +153,7 @@ export default defineComponent({
   margin-bottom: 24px;
 }
 .popover-wrapper {
-  ::v-deep(.antd-pro-pages-forms-style-errorPopover .ant-popover-inner-content) {
+  :deep(.antd-pro-pages-forms-style-errorPopover .ant-popover-inner-content) {
     min-width: 256px;
     max-height: 290px;
     padding: 0;

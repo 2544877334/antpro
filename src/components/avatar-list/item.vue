@@ -47,7 +47,7 @@ export default defineComponent({
   margin-left: -8px;
   font-size: @font-size-base;
 
-  ::v-deep(.ant-avatar) {
+  :deep(.ant-avatar) {
     border: 1px solid @border-color-base;
   }
 }
@@ -66,7 +66,7 @@ export default defineComponent({
   width: 20px;
   height: 20px;
 
-  ::v-deep(.ant-avatar) {
+  :deep(.ant-avatar) {
     width: 20px;
     height: 20px;
     line-height: 20px;

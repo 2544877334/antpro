@@ -128,14 +128,7 @@ export default defineComponent({
     // 当未设置 back props 或未监听 @back，不显示 back
     // props 的 back 事件优先级高于 @back，需要注意
     const onBack = props.back || attrs.onBack;
-    const handleBack =
-      (onBack &&
-        ((): void => {
-          // this.$emit('back')
-          // call props back func
-          onBack();
-        })) ||
-      undefined;
+    const handleBack = onBack || undefined;
     const handleTabChange = (activeKey: string): void => {
       emit('tab-change', activeKey);
       emit('update:tab-active-key', activeKey);
