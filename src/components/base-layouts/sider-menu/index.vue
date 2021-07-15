@@ -66,10 +66,12 @@
             :title="null"
             @click="handleCollapse"
           >
-            <slot name="collapsedButton">
-              <menu-unfold-outlined v-if="collapsed" />
-              <menu-fold-outlined v-else />
-            </slot>
+            <template #icon>
+              <slot name="collapsedButton">
+                <menu-unfold-outlined v-if="collapsed" />
+                <menu-fold-outlined v-else />
+              </slot>
+            </template>
           </a-menu-item>
         </a-menu>
       </div>
