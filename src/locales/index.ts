@@ -12,6 +12,9 @@ const loadedLanguages = ref<string[]>([defaultLang]);
 const i18n = createI18n({
   missingWarn: false,
   fallbackWarn: false,
+  // 如果不需要国际化，可以打开如下两个配置，取消控制台的警告
+  // silentTranslationWarn: true,
+  // silentFallbackWarn: true,
   locale: defaultLang,
   messages: {
     ['en-US']: enUS as any,
