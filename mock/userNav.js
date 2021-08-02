@@ -21,7 +21,7 @@ const userNavDataSource = [
       title: 'pages.dashboard.workplace.title',
       show: true,
     },
-    component: 'dashboard/workplace/index.vue',
+    component: 'dashboard/workplace/index',
     path: '/workplace',
   },
   {
@@ -33,7 +33,7 @@ const userNavDataSource = [
       title: 'pages.dashboard.analysis.title',
       show: true,
     },
-    component: 'dashboard/analysis/index.vue',
+    component: 'dashboard/analysis/index',
     path: '/dashboard/analysis',
   },
 ];

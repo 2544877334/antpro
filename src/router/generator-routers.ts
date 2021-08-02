@@ -50,7 +50,7 @@ export const generator = (
         component:
           item.component && defineRouteComponentKeys.includes(item.component)
             ? defineRouteComponents[item.component]
-            : () => import(/* @vite-ignore */ `@/views/${item.component}`),
+            : () => import(/* @vite-ignore */ `../views/${item.component}.vue`),
       };
 
       // 为了防止出现后端返回结果不规范，处理有可能出现拼接出两个 反斜杠
