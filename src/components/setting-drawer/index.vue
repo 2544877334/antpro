@@ -15,7 +15,7 @@
     </template>
 
     <div :class="`${prefixCls}-content`">
-      <body-wrapper key="pageStyle" :title="locale('app.setting.pagestyle')">
+      <body-wrapper key="pageStyle" :title="t('app.setting.pagestyle')">
         <block-checkbox
           :value="value.navTheme"
           :list="themeList.themeList"
@@ -25,7 +25,7 @@
 
       <a-divider />
 
-      <body-wrapper key="mode" :title="locale('app.setting.navigationmode')">
+      <body-wrapper key="mode" :title="t('app.setting.navigationmode')">
         <block-checkbox
           :value="value.layout"
           @change="val => handleChange('layout', val)"
@@ -43,10 +43,10 @@
 
       <a-divider />
 
-      <body-wrapper :title="locale('app.setting.othersettings')">
+      <body-wrapper :title="t('app.setting.othersettings')">
         <a-list :split="false">
           <a-list-item>
-            <span style="opacity: 1">{{ locale('app.setting.transitionname') }}</span>
+            <span style="opacity: 1">{{ t('app.setting.transitionname') }}</span>
             <template #actions>
               <a-select
                 size="small"
@@ -65,7 +65,7 @@
 
           <a-tooltip>
             <a-list-item>
-              <span style="opacity: 1">{{ locale('app.setting.multitab') }}</span>
+              <span style="opacity: 1">{{ t('app.setting.multitab') }}</span>
               <template #actions>
                 <a-switch
                   size="small"
@@ -76,10 +76,10 @@
             </a-list-item>
           </a-tooltip>
 
-          <a-tooltip placement="left" :title="locale('app.setting.multitab.fixed.hit')">
+          <a-tooltip placement="left" :title="t('app.setting.multitab.fixed.hit')">
             <a-list-item>
               <span :style="{ opacity: !value.multiTab ? '0.5' : '1' }">
-                {{ locale('app.setting.multitab.fixed') }}
+                {{ t('app.setting.multitab.fixed') }}
               </span>
               <template #actions>
                 <a-switch
@@ -93,7 +93,7 @@
           </a-tooltip>
 
           <a-list-item>
-            <span style="opacity: 0.5">{{ locale('app.setting.weakmode') }}</span>
+            <span style="opacity: 0.5">{{ t('app.setting.weakmode') }}</span>
             <template #actions>
               <a-switch size="small" :checked="false" :disabled="true" />
             </template>
@@ -125,6 +125,7 @@ import {
 import BodyWrapper from './body-wrapper.vue';
 import BlockCheckbox from './block-checkbox.vue';
 import LayoutChange from './layout-change.vue';
+import { useI18n } from 'vue-i18n';
 
 const iconStyle = {
   color: '#fff',
@@ -168,22 +169,22 @@ export const vueSettingProps = {
   hideCopyButton: PropTypes.bool.def(false),
 };
 
-const getThemeList = (locale: (s: string) => string) => {
+const getThemeList = (t: (s: string) => string) => {
   // @ts-ignoe
   // const list: ThemeConfig[] = window.antdv_pro_plugin_ant_themeVar || [];
   const list: ThemeConfig[] = [];
   const themeList: ThemeItem[] = [
     {
       key: 'light',
-      title: locale('app.setting.pagestyle.light'),
+      title: t('app.setting.pagestyle.light'),
     },
     {
       key: 'dark',
-      title: locale('app.setting.pagestyle.dark'),
+      title: t('app.setting.pagestyle.dark'),
     },
     {
       key: 'realDark',
-      title: locale('app.setting.pagestyle.realdark'),
+      title: t('app.setting.pagestyle.realdark'),
     },
   ];
 
@@ -207,7 +208,7 @@ const getThemeList = (locale: (s: string) => string) => {
     themeList.push({
       key: 'realDark',
       url: 'https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg',
-      title: locale('app.setting.pagestyle.realdark'),
+      title: t('app.setting.pagestyle.realdark'),
     });
   }
   // insert  theme color List
@@ -244,17 +245,15 @@ export default defineComponent({
     //   required: true,
     // },
     getContainer: PropTypes.func,
-    i18n: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]).def(false),
   },
   emits: ['change'],
-  setup(props) {
-    const { getPrefixCls, i18n } = useProProvider();
-    const locale = props.i18n || i18n;
+  setup() {
+    const { getPrefixCls } = useProProvider();
     const prefixCls = getPrefixCls('setting-drawer');
     const visible = ref(false);
-    const themeList = getThemeList(locale);
+    const { t } = useI18n();
+    const themeList = getThemeList(t);
     const store = useStore();
-
     const value = reactive({
       layout: computed(() => store.getters['app/layout']),
       navTheme: computed(() => store.getters['app/navTheme']),
@@ -321,8 +320,8 @@ export default defineComponent({
     };
 
     return {
+      t,
       value,
-      locale,
       prefixCls,
       iconStyle,
       themeList,

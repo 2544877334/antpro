@@ -18,13 +18,11 @@ const defaultPrefixCls = 'ant-pro';
 
 export interface ProProviderProps {
   prefixCls: string;
-  i18n: (t: string) => string;
   contentWidth: ContentWidth;
 }
 
 export interface ProProviderData {
   getPrefixCls: (suffixCls?: string, customizePrefixCls?: string) => string;
-  i18n: (t: string) => string;
   contentWidth: ContentWidth;
 }
 
@@ -33,7 +31,6 @@ export const defaultProProviderProps: ProProviderData = {
     if (customizePrefixCls) return customizePrefixCls;
     return `${defaultPrefixCls}-${suffixCls}`;
   },
-  i18n: (t: string): string => t,
   contentWidth: 'Fluid',
 };
 
@@ -50,20 +47,15 @@ const ProProvider = defineComponent({
       type: String as PropType<ContentWidth>,
       default: 'Fluid',
     },
-    i18n: {
-      type: Function as PropType<(t: string) => string>,
-      default: (t: string): string => t,
-    },
   },
   setup(props, { slots }: SetupContext): RenderFunction | void {
-    const { prefixCls, i18n, contentWidth } = toRefs(props);
+    const { prefixCls, contentWidth } = toRefs(props);
     const getPrefixCls = (suffixCls?: string, customizePrefixCls?: string): string => {
       if (customizePrefixCls) return customizePrefixCls;
       return suffixCls ? `${prefixCls.value}-${suffixCls}` : prefixCls.value;
     };
 
     const proConfigProvider = reactive({
-      i18n,
       contentWidth,
       getPrefixCls,
     });

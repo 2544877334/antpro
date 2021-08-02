@@ -1,5 +1,5 @@
 <template>
-  <pro-provider :i18n="t" :content-width="contentWidth">
+  <pro-provider :content-width="contentWidth">
     <a-layout class="ant-pro-basicLayout">
       <template v-if="isMobile">
         <a-drawer

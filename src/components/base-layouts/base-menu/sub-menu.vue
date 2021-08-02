@@ -9,7 +9,7 @@
       />
     </template>
     <template #title>
-      {{ i18n(menu.meta.title) }}
+      {{ t(menu.meta.title) }}
     </template>
     <template v-for="child in menu.children">
       <a-menu-item
@@ -29,15 +29,16 @@
             :key="child.meta.collapsedIcon"
           />
         </template>
-        {{ i18n(child.meta.title) }}
+        {{ t(child.meta.title) }}
       </a-menu-item>
-      <sub-menu v-else :menu="child" :key="child.path" :i18n="i18n" :collapsed="collapsed" />
+      <sub-menu v-else :menu="child" :key="child.path" :collapsed="collapsed" />
     </template>
   </a-sub-menu>
 </template>
 
 <script lang="ts">
 import { defineComponent } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { RouteProps } from '../typing';
 
 export interface SubMenuProps {
@@ -48,10 +49,6 @@ export default defineComponent({
   name: 'SubMenu',
   emits: ['itemHover'],
   props: {
-    i18n: {
-      type: Function,
-      default: (t: any): any => t,
-    },
     menu: {
       type: Object,
       required: true,
@@ -60,6 +57,12 @@ export default defineComponent({
       type: Boolean,
       default: false,
     },
+  },
+  setup() {
+    const { t } = useI18n();
+    return {
+      t,
+    };
   },
 });
 </script>

@@ -120,7 +120,7 @@ export default defineComponent({
   emits: ['update:openKeys', 'update:selectedKeys', 'update:collapsed'],
   // inheritAttrs: true,
   setup(props, { emit }) {
-    const { i18n, getPrefixCls } = useProProvider();
+    const { getPrefixCls } = useProProvider();
     const {
       prefixCls: propPrefixCls,
       collapsed,
@@ -169,7 +169,6 @@ export default defineComponent({
       emit('update:collapsed', collapsed);
     };
     return {
-      i18n,
       classNames,
       width,
       right,

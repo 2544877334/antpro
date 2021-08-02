@@ -19,6 +19,7 @@
 <script lang="ts">
 import PropTypes from 'ant-design-vue/es/_util/vue-types';
 import { computed, defineComponent } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { useProProvider } from '../base-layouts/pro-provider';
 import LayoutBlock from './layout-block.vue';
 
@@ -26,33 +27,30 @@ export default defineComponent({
   props: {
     value: PropTypes.string,
     list: PropTypes.array,
-    i18n: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]).def(false),
   },
   emits: ['change'],
   setup(props, { emit }) {
-    const { i18n, getPrefixCls } = useProProvider();
+    const { getPrefixCls } = useProProvider();
     const prefixCls = getPrefixCls('setting-drawer-block-checbox');
-    const locale = computed(() => {
-      return props.i18n || i18n;
-    });
+    const { t } = useI18n();
     const items = computed(() => {
       return (
         props.list || [
           {
             key: 'side',
-            title: locale.value('app.setting.layout.side'),
+            title: t('app.setting.layout.side'),
           },
           {
             key: 'top',
-            title: locale.value('app.setting.layout.top'),
+            title: t('app.setting.layout.top'),
           },
           {
             key: 'mix',
-            title: locale.value('app.setting.layout.mix'),
+            title: t('app.setting.layout.mix'),
           },
           {
             key: 'left',
-            title: locale.value('app.setting.layout.leftmenu'),
+            title: t('app.setting.layout.leftmenu'),
           },
         ]
       );

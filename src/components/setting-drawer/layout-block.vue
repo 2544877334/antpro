@@ -53,7 +53,7 @@ export default defineComponent({
   },
   inheritAttrs: false,
   setup(props) {
-    const { i18n: locale, getPrefixCls } = useProProvider();
+    const { getPrefixCls } = useProProvider();
     const baseClassName = getPrefixCls('checkbox-item');
 
     const disableStyle = {
@@ -71,7 +71,6 @@ export default defineComponent({
       baseClassName,
       className,
       disableStyle,
-      locale,
     };
   },
 });

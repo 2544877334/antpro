@@ -30,7 +30,7 @@
               :key="menu.meta.collapsedIcon"
             />
           </template>
-          {{ (i18n && i18n(menu.meta.title)) || menu.meta.title }}
+          {{ t(menu.meta.title) }}
         </a-menu-item>
       </transform-vnode>
       <sub-menu
@@ -38,7 +38,6 @@
         @itemHover="$emit('itemHover', $event)"
         v-else-if="menu.children"
         :menu="menu"
-        :i18n="i18n"
         :collapsed="collapsed"
       />
     </template>
@@ -47,6 +46,7 @@
 
 <script lang="ts">
 import { defineComponent, computed, ref, ComputedRef, PropType } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { RouteProps } from '../typing';
 import SubMenu from './sub-menu.vue';
 
@@ -92,18 +92,10 @@ export const BaseMenuProps = {
 
 export default defineComponent({
   name: 'BaseMenu',
-  props: Object.assign(
-    {},
-    {
-      i18n: {
-        type: Function,
-        default: (t: string): string => t,
-      },
-    },
-    BaseMenuProps,
-  ),
+  props: { ...BaseMenuProps },
   emits: ['update:openKeys', 'update:selectedKeys', 'mouseenter', 'mouseleave', 'itemHover'],
   setup(props, { emit }) {
+    const { t } = useI18n();
     const isInline = props.mode === 'inline';
     const dynamicProps = ref({
       inlineCollapsed: isInline ? props.collapsed : undefined,
@@ -124,6 +116,7 @@ export default defineComponent({
       emit('update:selectedKeys', ctx.selectedKeys);
     };
     return {
+      t,
       isInline,
       dynamicProps,
       handleOpenChange,

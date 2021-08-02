@@ -1,5 +1,5 @@
 <template>
-  <pro-provider :i18n="t" :content-width="contentWidth">
+  <pro-provider :content-width="contentWidth">
     <a-layout class="ant-pro-leftmenu-layout">
       <sider-menu
         theme="dark"
@@ -98,7 +98,6 @@
 
 <script lang="ts">
 import { defineComponent, ref, computed, watch, cloneVNode, VNode } from 'vue';
-import { useI18n } from 'vue-i18n';
 import { genMenuInfo, getMenuFirstChildren } from '@/utils/menu-util';
 import useDelayReset from '@/utils/hooks/useDelayReset';
 import { default as WrapContent } from '@/components/base-layouts/wrap-content/index.vue';
@@ -116,7 +115,6 @@ export default defineComponent({
   name: 'LeftMenuLayout',
   setup() {
     const store = useStore();
-    const { t } = useI18n();
     const currentUser = computed(() => store.getters['user/currentUser']);
 
     // gen menus
@@ -170,7 +168,6 @@ export default defineComponent({
     };
 
     return {
-      t,
       menus,
       mainMenus,
       collapsedFirst: ref(false),
