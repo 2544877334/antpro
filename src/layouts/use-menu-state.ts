@@ -172,8 +172,10 @@ export default function useMenuState(
           }
         }
         router.isReady().then(() => {
-          const routeInfo = getRouteInfoFromMultiTab(path);
-          router.push(routeInfo || { path });
+          const routeInfo = getRouteInfoFromMultiTab(path) || { path };
+          if (routeInfo.fullPath !== route.fullPath) {
+            router.push(routeInfo);
+          }
         });
       }
     },
@@ -187,7 +189,8 @@ export default function useMenuState(
     breadcrumb.value = route.matched.concat().map(r => {
       return {
         path: r.path,
-        breadcrumbName: r.path === '/' ? t('pages.home') : t(`${r.meta.title}`),
+        breadcrumbName:
+          r.path === '/' ? t('pages.home') : r.meta.title !== undefined ? t(`${r.meta.title}`) : '',
       };
     });
   };
