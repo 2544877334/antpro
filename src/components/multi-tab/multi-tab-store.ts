@@ -14,13 +14,13 @@ import {
 import { useRouter, useRoute, RouteLocationNormalized, RouteRecordNormalized } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { flattenChildren } from '@/utils/vnode-util';
-import { findLast } from 'lodash-es';
+import { findLast, omit } from 'lodash-es';
 
 export type CacheKey = string;
 
 export interface CacheItem {
   path: CacheKey;
-  route: RouteLocationNormalized;
+  route: Omit<RouteLocationNormalized, 'matched'>;
   key?: string;
   lock?: boolean;
   tabTitle?: string;
@@ -35,13 +35,13 @@ export interface MultiTabStore {
 }
 
 export type CallerFunction = {
-  close: (path: CacheKey) => void;
-  closeLeft: (selectedPath: CacheKey) => void;
-  closeRight: (selectedPath: CacheKey) => void;
-  closeOther: (selectedPath: CacheKey) => void;
-  getCaches: () => void;
-  clearCache: (path: CacheKey) => void;
-  refresh: (path?: CacheKey | undefined) => void;
+  close: (path: CacheKey) => void; // 关闭指定路径标签
+  closeLeft: (selectedPath: CacheKey) => void; // 关闭指定路径左侧标签
+  closeRight: (selectedPath: CacheKey) => void; // 关闭指定路径右侧标签
+  closeOther: (selectedPath: CacheKey) => void; // // 关闭除指定路径之外的标签
+  getCaches: () => void; // 获取缓存列表
+  clearCache: (path: CacheKey) => void; // 清空缓存
+  refresh: (path?: CacheKey | undefined) => void; // 刷新指定路径
 };
 
 export type Options = {
@@ -99,7 +99,7 @@ export const MultiTabStoreConsumer = defineComponent({
         state.current = route.path;
         const index = state.cacheList.findIndex(item => item.path === route.path);
         if (state.cacheList[index]) {
-          state.cacheList[index].route = { ...route };
+          state.cacheList[index].route = { ...omit(route, ['matched']) };
         }
       },
       { immediate: true },
@@ -115,7 +115,7 @@ export const MultiTabStoreConsumer = defineComponent({
       if (!cacheItem) {
         cacheItem = {
           path: route.path,
-          route: { ...route },
+          route: { ...omit(route, ['matched']) },
           key: guid(),
           tabTitle: tabRoute?.meta?.title as string,
           tabPath: tabRoute.path,
@@ -126,7 +126,7 @@ export const MultiTabStoreConsumer = defineComponent({
         // 处理 mergeTab 逻辑
         Object.assign(cacheItem, {
           path: route.path,
-          route: { ...route },
+          route: { ...omit(route, ['matched']) },
           key: guid(),
           tabTitle: tabRoute?.meta?.title,
           tabPath: tabRoute.path,
