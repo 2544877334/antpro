@@ -1,4 +1,4 @@
-import { reactive, onMounted } from 'vue';
+import { reactive, onMounted, UnwrapRef } from 'vue';
 
 export interface PageInfo {
   current: number;
@@ -7,7 +7,7 @@ export interface PageInfo {
   [key: string]: any;
 }
 
-export interface RequestData<T> {
+export interface ReponseData<T> {
   data: T[];
   success?: boolean;
   total?: number;
@@ -22,7 +22,7 @@ export type RequestParams =
     }
   | undefined;
 
-export interface UseFetchDataAction<T extends RequestData<any>> {
+export interface UseFetchDataAction<T extends ReponseData<any>> {
   stripe: (record: any, index: number) => string | undefined;
   cancel: () => void;
   reload: () => Promise<void>;
@@ -32,10 +32,10 @@ export interface UseFetchDataAction<T extends RequestData<any>> {
   setPageInfo: (pageInfo: Partial<PageInfo>) => void;
 }
 
-export interface Context<T> {
+export interface Context<T extends ReponseData<any>> {
   current: number;
   pageSize: number;
-  dataSource: T[];
+  dataSource: T['data'];
   loading: boolean;
   total: number;
   requestParams?: {
@@ -54,7 +54,7 @@ export const defaultContext: Context<any> = {
 };
 
 // 如果请求数据中，没有分页，仅单列表数据，可以使用该方法进行包装，免去重复写请求方法
-export const wrap = <T>(req: () => Promise<T[]>): (() => Promise<RequestData<T>>) => {
+export const wrap = <T>(req: () => Promise<T[]>): (() => Promise<ReponseData<T>>) => {
   return () =>
     req().then(res => {
       const data = res;
@@ -66,13 +66,13 @@ export const wrap = <T>(req: () => Promise<T[]>): (() => Promise<RequestData<T>>
     });
 };
 
-export const useFetchData = <T extends RequestData<any>>(
+export const useFetchData = <T extends ReponseData<any>>(
   getData: (params?: RequestParams) => Promise<T>,
   context?: {
     stripe?: boolean;
     current?: number;
     pageSize?: number;
-    dataSource?: T[];
+    dataSource?: T['data'];
     loading?: boolean;
     [key: string]: any;
   },
@@ -108,7 +108,7 @@ export const useFetchData = <T extends RequestData<any>>(
       const { data, success, total: dataTotal = 0 } = await getData(params);
       state.loading = false;
       if (success !== false) {
-        state.dataSource = data;
+        state.dataSource = data as UnwrapRef<T['data']>;
         state.total = dataTotal;
       }
     } catch (e) {

@@ -55,7 +55,7 @@
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
 import { goodsData, scheduleData } from './mockData';
-import { useFetchData, RequestData } from '@/utils/hooks/useFetchData';
+import { useFetchData, ReponseData } from '@/utils/hooks/useFetchData';
 import { default as TableTotalRow } from '@/components/table/total-table';
 import { useI18n } from 'vue-i18n';
 
@@ -172,7 +172,7 @@ const scheduleColumns = [
 export default defineComponent({
   setup() {
     const { t } = useI18n();
-    const { context } = useFetchData<RequestData<ListItem>>(() => {
+    const { context } = useFetchData<ReponseData<ListItem>>(() => {
       return new Promise(resolve => {
         resolve({
           data: goodsData,
@@ -180,7 +180,7 @@ export default defineComponent({
         });
       });
     });
-    const { context: context2 } = useFetchData<RequestData<ListItem2>>(() => {
+    const { context: context2 } = useFetchData<ReponseData<ListItem2>>(() => {
       return new Promise(resolve => {
         resolve({
           data: scheduleData,
