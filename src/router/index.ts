@@ -95,13 +95,6 @@ export const routes: MenuDataItem[] = [
         redirect: '/list/table-list',
         children: [
           {
-            path: '/list/big-table-list',
-            name: 'big-table-list',
-            meta: { title: 'pages.list.bigtablelist.title' },
-            component: (): Component =>
-              import(/* webpackChunkName: "list" */ '@/views/list/big-table-list/index.vue'),
-          },
-          {
             path: '/list/table-list',
             name: 'table-list',
             meta: { title: 'pages.list.tablelist.title' },
