@@ -4,7 +4,7 @@ import vueJsx from '@vitejs/plugin-vue-jsx';
 import path from 'path';
 import { getThemeVariables } from 'ant-design-vue/dist/theme';
 import { additionalData } from './build/themeConfig';
-import mockTarget from './build/mockServer';
+import createMockServer from './build/mockServer';
 
 export default ({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
@@ -62,10 +62,12 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       },
     },
     server: {
+      host: true,
       proxy: {
         '/api': {
           // backend url
-          target: env.VITE_HTTP_MOCK && env.VITE_MOCK ? mockTarget : 'https://store.antdv.com',
+          target:
+            env.VITE_HTTP_MOCK && env.VITE_MOCK ? createMockServer() : 'https://store.antdv.com',
           ws: false,
           changeOrigin: true,
         },
