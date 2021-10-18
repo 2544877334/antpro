@@ -37,6 +37,7 @@ export function loadLanguageAsync(lang: string = defaultLang): Promise<string> {
       if (!loadedLanguages.value.includes(lang)) {
         return import(
           /* webpackChunkName: "lang-[request]" */
+          /* 根据所用文件后缀(ts、js、vue)，自行添加后缀 */
           // eslint-disable-next-line comma-dangle
           /* @vite-ignore */ `./lang/${lang}`
         ).then(result => {

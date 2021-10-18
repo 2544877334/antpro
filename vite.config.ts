@@ -19,6 +19,16 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     plugins: [vue(), vueJsx()],
     build: {
       cssCodeSplit: false,
+      chunkSizeWarningLimit: 2048,
+      rollupOptions: {
+        output: {
+          manualChunks: {
+            vue: ['vue', 'vuex', 'vue-router'],
+            antdv: ['ant-design-vue', '@ant-design/icons-vue'],
+            moment: ['moment'],
+          },
+        },
+      },
     },
     resolve: {
       alias: {
@@ -38,7 +48,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         'moment/locale/eu',
         'moment/locale/zh-cn',
         '@ant-design/icons-vue',
-        '@surely-vue/table',
         'lodash-es',
       ],
     },
