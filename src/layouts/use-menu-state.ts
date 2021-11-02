@@ -19,9 +19,9 @@ import { genMenuInfo } from '@/utils/menu-util';
 import { MultiTabStore } from '@/components/multi-tab';
 
 export interface MenuState {
-  collapsed?: boolean;
-  selectedKeys?: string[];
-  openKeys?: string[];
+  collapsed: boolean;
+  selectedKeys: string[];
+  openKeys: string[];
   current?: string;
   isMobile?: Ref<boolean>;
 }
@@ -34,6 +34,7 @@ type LayoutState = {
   transitionName: Ref<string>;
   multiTab: Ref<boolean>;
   multiTabFixed: Ref<boolean>;
+  fixedHeader: Ref<boolean>;
 };
 interface MenuStated extends LayoutState {
   hasSideMenu: ComputedRef<boolean>;
@@ -50,6 +51,7 @@ interface MenuStated extends LayoutState {
   selectedKeys: Ref<string[]> | undefined;
   openKeys: Ref<string[]> | undefined;
   updateSelectKeys: (keys: string[]) => void;
+  updateCollapsed: (s: boolean) => void;
 }
 
 export interface BreadcrumbItem {
@@ -70,17 +72,19 @@ const state = reactive<MenuState>({
   current: undefined,
 });
 
-let res: MenuStated | null = null;
+let res: (MenuStated & LayoutState & { isMobile: Ref<boolean>; collapsedWidth: number }) | null =
+  null;
 // 用 symbol 类型是最好的，但由于热更新会导致 symbol 更新，导致获取不到正确的 provide 值
 export const MenuStateSymbol = 'proGlobalMenuState';
 
 export const injectMenuState = () => {
-  return inject(MenuStateSymbol, { ...toRefs(reactive({})) } as MenuStated);
+  return inject(MenuStateSymbol, { ...toRefs(reactive({})) } as MenuStated &
+    LayoutState & { isMobile: Ref<boolean>; collapsedWidth: number });
 };
 export default function useMenuState(
   initialState?: MenuState,
   multiTabState?: UnwrapRef<MultiTabStore>,
-): MenuStated {
+) {
   const { t, locale } = useI18n();
   const route = useRoute();
   const router = useRouter();
@@ -172,7 +176,7 @@ export default function useMenuState(
           }
         }
         router.isReady().then(() => {
-          const routeInfo = getRouteInfoFromMultiTab(path) || { path };
+          const routeInfo = getRouteInfoFromMultiTab(path) || ({ path } as RouteLocationNormalized);
           if (routeInfo.fullPath !== route.fullPath) {
             router.push(routeInfo);
           }
@@ -229,6 +233,6 @@ export default function useMenuState(
     collapsedWidth,
     updateSelectKeys,
     updateCollapsed,
-  } as MenuStated;
+  };
   return res;
 }

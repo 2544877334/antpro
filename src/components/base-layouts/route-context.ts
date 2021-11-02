@@ -5,7 +5,8 @@ import {
   PropType,
   SetupContext,
   InjectionKey,
-  readonly,
+  computed,
+  ComputedRef,
 } from 'vue';
 import { RouteProps } from './typing';
 import { PureSettings } from './defaultSettings';
@@ -59,10 +60,13 @@ export const routeContextProps = {
 
 export const defaultRouteContext: RouteContextType = {};
 
-export const contextKey: InjectionKey<RouteContextType> = Symbol();
+export const contextKey: InjectionKey<ComputedRef<RouteContextType>> = Symbol();
 
 export const useContext = () => {
-  return inject(contextKey, defaultRouteContext);
+  return inject(
+    contextKey,
+    computed(() => defaultRouteContext),
+  );
 };
 
 export const RouteContextProvider = defineComponent({
@@ -77,7 +81,10 @@ export const RouteContextProvider = defineComponent({
     // const routeContext = reactive({
     //   ...toRefs(props.value),
     // });
-    provide(contextKey, readonly(props.value));
+    provide(
+      contextKey,
+      computed(() => props.value),
+    );
 
     return () => slots.default?.();
   },

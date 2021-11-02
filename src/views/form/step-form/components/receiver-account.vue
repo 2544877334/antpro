@@ -49,7 +49,7 @@ export default defineComponent({
   },
   emits: ['update:modelValue'],
   setup(props, { emit }) {
-    const value = computed({
+    const value = computed<ReceiverAccountType>({
       get() {
         return props.modelValue;
       },

@@ -75,7 +75,9 @@ export const injectMultiTabStore = () => {
   return inject(MULTI_TAB_STORE_KEY)!;
 };
 
-const findMatchedRoute = (route: RouteLocationNormalized): RouteRecordNormalized => {
+const findMatchedRoute = (
+  route: RouteLocationNormalized,
+): RouteRecordNormalized | RouteLocationNormalized => {
   const matched: RouteRecordNormalized[] = route.matched || [];
   return (
     (findLast(matched, m => {
@@ -213,7 +215,7 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
   const deleteCaches = (start: number, num: number) => {
     const list = state.cacheList;
     const end = start + num;
-    const newList = [];
+    const newList: CacheItem[] = [];
     for (let i = 0; i < list.length; i++) {
       const item = list[i];
       if (i < start || i >= end || item.lock) {

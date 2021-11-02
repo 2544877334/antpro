@@ -13,10 +13,10 @@ export default defineComponent({
       default: undefined,
     },
   },
-  setup(props, ctx) {
+  setup(props, { slots }) {
     return () => {
-      const children = ctx && ctx.slots && ctx.slots.default ? ctx.slots.default()[0] : null;
-      return props.by ? props.by(children, props.opt) : children;
+      const children = slots.default?.()[0] || null;
+      return props.by ? (props.by as any)(children, props.opt) : children;
     };
   },
 });

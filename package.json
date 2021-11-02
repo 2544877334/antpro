@@ -13,7 +13,8 @@
     "prettier": "prettier -c --write '**/*'",
     "pretty-quick": "pretty-quick",
     "analyz": "vue-cli-service build --mode analyz",
-    "toJs": "node ./scripts/tsToJs.js"
+    "toJs": "node ./scripts/tsToJs.js",
+    "tsc": "tsc --noEmit"
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.0.0",

@@ -73,7 +73,7 @@
           </a-tooltip>
         </template>
         <template #footer>
-          <div style="whitespace: nowrap; overflow: hidden">
+          <div style="white-space: nowrap; overflow: hidden">
             <trend flag="up" style="margin-right: 16px">
               {{ t('dashboard.analysis.week') }}
               <span class="trendText">12%</span>

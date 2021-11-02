@@ -1,10 +1,10 @@
 <template>
   <div class="chart">
     <div>
-      <h4 v-if="$slots.title" style="marginbottom: 20px">
+      <h4 v-if="$slots.title" style="margin-bottom: 20px">
         <slot name="title" />
       </h4>
-      <h4 v-else-if="title" style="marginbottom: 20px">
+      <h4 v-else-if="title" style="margin-bottom: 20px">
         {{ title }}
       </h4>
       <chart :option="chartOption" :style="{ height: chartHeight }" />

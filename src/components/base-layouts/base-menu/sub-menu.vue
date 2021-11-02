@@ -31,7 +31,9 @@
         </template>
         {{ t(child.meta.title) }}
       </a-menu-item>
-      <sub-menu v-else :menu="child" :key="child.path" :collapsed="collapsed" />
+      <template v-else>
+        <sub-menu :menu="child" :key="child.path" :collapsed="collapsed" />
+      </template>
     </template>
   </a-sub-menu>
 </template>

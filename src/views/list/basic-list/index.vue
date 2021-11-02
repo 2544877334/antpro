@@ -162,9 +162,16 @@ export default defineComponent({
       },
     });
 
+    const showEditModal = item => {
+      console.log(item);
+    };
+    const editAndDelete = (key, item) => {
+      console.log(key, item);
+    };
     return {
       moment,
-
+      showEditModal,
+      editAndDelete,
       options,
       context,
     };

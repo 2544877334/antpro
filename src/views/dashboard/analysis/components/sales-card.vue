@@ -112,15 +112,11 @@ export default defineComponent({
     },
     isActive: {
       type: Function as PropType<(type: any) => void>,
-      default: () => {
-        return undefined;
-      },
+      default: () => {},
     },
     selectDate: {
       type: Function as PropType<(type: any) => void>,
-      default: () => {
-        return undefined;
-      },
+      default: () => {},
     },
     handleRangePickerChange: {
       type: Function,

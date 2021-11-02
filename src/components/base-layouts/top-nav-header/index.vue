@@ -32,10 +32,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, toRefs } from 'vue';
+import { defineComponent, computed, toRefs, PropType } from 'vue';
 import { useProProvider } from '../pro-provider/index';
 import BaseMenu from '@/components/base-layouts/base-menu/index.vue';
 import RightContent from '../top-nav-header/right-content.vue';
+import { RouteProps } from '../typing';
 
 export default defineComponent({
   props: {
@@ -58,8 +59,8 @@ export default defineComponent({
 
     // menu
     menus: {
-      type: Array,
-      default: (): Array<any> => [],
+      type: Array as PropType<RouteProps[]>,
+      default: () => [],
     },
     openKeys: {
       type: Array,

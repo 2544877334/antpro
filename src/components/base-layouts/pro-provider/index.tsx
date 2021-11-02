@@ -49,10 +49,10 @@ const ProProvider = defineComponent({
     },
   },
   setup(props, { slots }: SetupContext): RenderFunction | void {
-    const { prefixCls, contentWidth } = toRefs(props);
-    const getPrefixCls = (suffixCls?: string, customizePrefixCls?: string): string => {
+    const { contentWidth } = toRefs(props);
+    const getPrefixCls = (suffixCls = '', customizePrefixCls?: string) => {
       if (customizePrefixCls) return customizePrefixCls;
-      return suffixCls ? `${prefixCls.value}-${suffixCls}` : prefixCls.value;
+      return suffixCls ? `${props.prefixCls}-${suffixCls}` : props.prefixCls;
     };
 
     const proConfigProvider = reactive({

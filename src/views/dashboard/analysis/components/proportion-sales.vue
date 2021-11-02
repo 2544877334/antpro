@@ -25,7 +25,7 @@
       </div>
     </template>
     <div>
-      <h4 style="margintop: 8px; marginbottom: 32px">
+      <h4 style="margin-top: 8px; margin-bottom: 32px">
         {{ t('dashboard.analysis.sales') }}
       </h4>
       <pie :data="salesPieData" :height="248" />

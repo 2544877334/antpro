@@ -10,7 +10,7 @@ export interface PaginationItem {
 export interface Pagination {
   current: number;
   pageSize: number;
-  total: number;
+  total?: number;
   disabled?: boolean;
   hideOnSinglePage?: boolean;
   itemRender?: (item: PaginationItem) => VNodeChild;

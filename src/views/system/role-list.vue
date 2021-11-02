@@ -43,7 +43,7 @@
               </div>
               <div class="ant-pro-table-list-toolbar-setting-item">
                 <a-tooltip title="刷新">
-                  <reload-outlined @click="handleTableChange" />
+                  <reload-outlined @click="() => handleTableChange({ current: 1, pageSize: 10 })" />
                 </a-tooltip>
               </div>
               <div class="ant-pro-table-list-toolbar-setting-item">
@@ -142,9 +142,6 @@
           }"
           @change="handleTableChange"
         >
-          <template #status="{ text }">
-            <a-badge :status="statusMap[text].status" :text="statusMap[text].text" />
-          </template>
           <template #expandedRowRender="{ record }">
             <div class="table-role-permission-card">
               <a-row :gutter="12">
@@ -203,6 +200,7 @@ import { useFullscreen } from '@/utils/hooks/useFullscreen';
 import { useTableDynamicColumns } from '@/utils/hooks/useTableColumn';
 import DragIcon from '@/components/table/drag-icon.vue';
 import RoleModal from './role-modal.vue';
+import { Role } from '@/store/modules/user/typing';
 
 const baseColumns: TableColumn[] = [
   {
@@ -226,7 +224,7 @@ const baseColumns: TableColumn[] = [
 export default defineComponent({
   name: 'RoleList',
   setup() {
-    const roleModalRef = ref({});
+    const roleModalRef = ref<Role>({} as Role);
     const {
       state: columnState,
       dynamicColumns,
@@ -248,7 +246,7 @@ export default defineComponent({
       pageSize: 10,
       tableSize: 'middle', // 'default' | 'middle' | 'small'
     });
-    const handleTableChange = ({ current, pageSize }: Pagination, filters: TableFilters) => {
+    const handleTableChange = ({ current, pageSize }: Pagination, filters?: TableFilters) => {
       setPageInfo({
         current,
         pageSize,

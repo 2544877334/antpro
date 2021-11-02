@@ -1,5 +1,5 @@
 <template>
-  <a-card :loading="loading" class="offlineCard" :bordered="false" style="margintop: 32px">
+  <a-card :loading="loading" class="offlineCard" :bordered="false" style="margin-top: 32px">
     <a-tabs :active-key="activeKey" @change="handleTabChange">
       <a-tab-pane v-for="shop in offlineData" :key="shop.name">
         <template #tab>
@@ -35,7 +35,8 @@ import { defineComponent, PropType } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { TimelineChart } from './charts';
 import NumberInfo from './number-info/index.vue';
-import { OfflineDataItem, OfflineChartDataItem } from '@/api/dashboard/analysis';
+import { OfflineDataItem } from '@/api/dashboard/analysis';
+import { TimelineItem } from './charts/timeline-chart/index.vue';
 
 export default defineComponent({
   props: {
@@ -52,11 +53,11 @@ export default defineComponent({
       default: () => [],
     },
     offlineChartData: {
-      type: Array as PropType<OfflineChartDataItem[]>,
+      type: Array as PropType<TimelineItem[]>,
       default: () => [],
     },
     handleTabChange: {
-      type: Function as PropType<(e: Event) => void>,
+      type: Function as PropType<(e: string) => void>,
       required: true,
     },
   },

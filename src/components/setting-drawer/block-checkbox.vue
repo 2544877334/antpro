@@ -17,23 +17,23 @@
 </template>
 
 <script lang="ts">
-import PropTypes from 'ant-design-vue/es/_util/vue-types';
-import { computed, defineComponent } from 'vue';
+import { computed, defineComponent, PropType } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useProProvider } from '../base-layouts/pro-provider';
+import { ThemeItem } from './index.vue';
 import LayoutBlock from './layout-block.vue';
 
 export default defineComponent({
   props: {
-    value: PropTypes.string,
-    list: PropTypes.array,
+    value: String,
+    list: { type: Array as PropType<ThemeItem[]> },
   },
   emits: ['change'],
   setup(props, { emit }) {
     const { getPrefixCls } = useProProvider();
     const prefixCls = getPrefixCls('setting-drawer-block-checbox');
     const { t } = useI18n();
-    const items = computed(() => {
+    const items = computed<ThemeItem[]>(() => {
       return (
         props.list || [
           {

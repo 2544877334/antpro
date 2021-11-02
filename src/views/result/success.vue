@@ -37,11 +37,11 @@
                   {{ item.name }}
                   <template v-if="index === projectInfo.current">
                     <a href="">
-                      <dingding-outlined style="margin-left: 8, color: #00A0E9" />
+                      <dingding-outlined style="margin-left: 8px; color: #00a0e9" />
                       催一下
                     </a>
                   </template>
-                  <dingding-outlined v-else style="margin-left: 8, color: #00A0E9" />
+                  <dingding-outlined v-else style="margin-left: 8px; color: #00a0e9" />
                 </div>
                 <div v-if="item.operateTime">{{ item.operateTime }}</div>
               </div>

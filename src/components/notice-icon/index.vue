@@ -66,7 +66,7 @@ const useFetchNotice = (getNoticeData: () => Promise<void>, realtime?: boolean) 
 
 export default defineComponent({
   name: 'NoticeIcon',
-  props: {},
+  // props: {},
   components: {
     NoticeDropdown,
     NoticeList,

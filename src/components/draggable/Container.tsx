@@ -40,7 +40,7 @@ interface ContainerProps {
   onDropReady: (params: DropResult) => void;
 }
 
-const Container = defineComponent<ContainerProps>({
+const Container = defineComponent<Partial<ContainerProps>>({
   name: 'Container',
   emits: ['drop', 'dragStart', 'dragEnd', 'dragEnter', 'dragLeave', 'dropReady'],
   setup(props, { slots }) {

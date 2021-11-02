@@ -43,7 +43,7 @@
               </div>
               <div class="ant-pro-table-list-toolbar-setting-item">
                 <a-tooltip title="刷新">
-                  <reload-outlined @click="handleTableChange" />
+                  <reload-outlined @click="() => handleTableChange({ current: 1, pageSize: 10 })" />
                 </a-tooltip>
               </div>
               <div class="ant-pro-table-list-toolbar-setting-item">
@@ -233,7 +233,7 @@ export default defineComponent({
       pageSize: 10,
       tableSize: 'middle', // 'default' | 'middle' | 'small'
     });
-    const handleTableChange = ({ current, pageSize }: Pagination, filters: TableFilters) => {
+    const handleTableChange = ({ current, pageSize }: Pagination, filters?: TableFilters) => {
       setPageInfo({
         current,
         pageSize,

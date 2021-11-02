@@ -9,26 +9,26 @@
       <slot name="dropdownGroup" />
     </template>
     <a-row :gutter="68" type="flex">
-      <a-col :sm="12" :xs="24" style="marginbottom: 24px">
+      <a-col :sm="12" :xs="24" style="margin-bottom: 24px">
         <number-info :gap="8" :total="numeral(12321).format('0,0')" status="up" :sub-total="17.1">
           <template #subTitle>
             <span>
               {{ t('dashboard.analysis.search-users') }}
               <a-tooltip :title="t('dashboard.analysis.introduce')">
-                <info-circle-outlined style="marginleft: 8px" />
+                <info-circle-outlined style="margin-left: 8px" />
               </a-tooltip>
             </span>
           </template>
         </number-info>
         <mini-area line :height="45" :data="visitData2" />
       </a-col>
-      <a-col :sm="12" :xs="24" style="marginbottom: 24px">
+      <a-col :sm="12" :xs="24" style="margin-bottom: 24px">
         <number-info :total="2.7" status="down" :sub-total="26.2" :gap="8">
           <template #subTitle>
             <span>
               {{ t('dashboard.analysis.per-capita-search') }}
               <a-tooltip :title="t('dashboard.analysis.introduce')">
-                <info-circle-outlined style="marginleft: 8px" />
+                <info-circle-outlined style="margin-left: 8px" />
               </a-tooltip>
             </span>
           </template>
@@ -52,7 +52,7 @@
 
       <template #rangeRender="{ text, record }">
         <trend :flag="record.status === 1 ? 'down' : 'up'">
-          <span style="marginright: 4px">{{ text }}%</span>
+          <span style="margin-right: 4px">{{ text }}%</span>
         </trend>
       </template>
     </a-table>

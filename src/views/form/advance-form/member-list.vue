@@ -135,7 +135,7 @@ export default defineComponent({
     const handleSubmit = (e: Event) => {
       e.preventDefault();
     };
-    const handleChange = (value: string, key: string, column: 'name' | 'workId' | 'department') => {
+    const handleChange = (value: string, key: string, column: string) => {
       const newData: DataFields[] = [...state.dataSource];
       const target = newData.find(item => key === item.key);
       if (target) {

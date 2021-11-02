@@ -33,13 +33,14 @@
           {{ t(menu.meta.title) }}
         </a-menu-item>
       </transform-vnode>
-      <sub-menu
-        :key="menu.path"
-        @itemHover="$emit('itemHover', $event)"
-        v-else-if="menu.children"
-        :menu="menu"
-        :collapsed="collapsed"
-      />
+      <template v-else-if="menu.children">
+        <sub-menu
+          :key="menu.path"
+          @itemHover="$emit('itemHover', $event)"
+          :menu="menu"
+          :collapsed="collapsed"
+        />
+      </template>
     </template>
   </a-menu>
 </template>
@@ -60,7 +61,7 @@ export const BaseMenuProps = {
     default: false,
   },
   menus: {
-    type: Object as PropType<RouteProps[]>,
+    type: Array as PropType<RouteProps[]>,
     required: true,
   },
   // top-nav-header: horizontal

@@ -26,7 +26,7 @@
           <span :style="{ marginRight: '8px' }">{{ permission.label || permission.name }}:</span>
           <template v-for="tag in tags" :key="tag.key">
             <a-checkable-tag
-              :checked="permission.actions.indexOf(tag.key) > -1"
+              :checked="isChecked(permission.actions, tag)"
               @change="checked => handleChange(permission.actions, tag, checked)"
             >
               {{ tag.describe }}
@@ -175,6 +175,10 @@ export default defineComponent({
       rolePermissions,
 
       initValues,
+
+      isChecked: (actions: Action[], tag: Tag) => {
+        return actions.indexOf(tag.key as Action) > -1;
+      },
     };
   },
 });

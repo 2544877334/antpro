@@ -126,6 +126,7 @@ import BodyWrapper from './body-wrapper.vue';
 import BlockCheckbox from './block-checkbox.vue';
 import LayoutChange from './layout-change.vue';
 import { useI18n } from 'vue-i18n';
+import { LayoutBlockTheme } from './layout-block.vue';
 
 const iconStyle = {
   color: '#fff',
@@ -134,7 +135,7 @@ const iconStyle = {
 
 export interface ThemeItem {
   disabled?: boolean;
-  key: string;
+  key: LayoutBlockTheme;
   url?: string;
   title: string;
 }
@@ -287,10 +288,10 @@ export default defineComponent({
       store.commit(`app/${SET_LAYOUT}`, val);
     };
 
-    const handleChange = (type: string, val: string) => {
+    const handleChange = (type: string, val: string | boolean) => {
       console.log('change', type, val);
       if (type === 'layout') {
-        updateLayoutSetting(val);
+        updateLayoutSetting(val as string);
       } else if (type === 'theme') {
         store.commit(`app/${SET_NAV_THEME}`, val);
       } else if (type === 'splitmenus') {
