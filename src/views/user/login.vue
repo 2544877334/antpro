@@ -152,7 +152,7 @@ export default defineComponent({
       smsSendBtn: false,
     });
 
-    const handleUsernameOrEmail = (rule: any, value: any) => {
+    const handleUsernameOrEmail = (_rule: any, value: any) => {
       return new Promise(resolve => {
         const regex = /^([a-zA-Z0-9_-])+@([a-zA-Z0-9_-])+((\.[a-zA-Z0-9_-]{2,3}){1,2})$/;
         if (regex.test(value)) {

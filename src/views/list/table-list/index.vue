@@ -152,7 +152,7 @@
             total: state.total,
           }"
           ref="tableRef"
-          :getPopupContainer="trigger => tableRef.$el"
+          :getPopupContainer="_trigger => tableRef.$el"
           @change="handleTableChange"
         >
           <template #rowIndex="{ index }">

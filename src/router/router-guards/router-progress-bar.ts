@@ -4,7 +4,7 @@ import 'nprogress/nprogress.css';
 
 NProgress.configure({ showSpinner: true }); // NProgress Configuration
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((_to, _from, next) => {
   NProgress.start(); // start progress bar
   next();
 });

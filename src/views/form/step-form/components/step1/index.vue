@@ -71,7 +71,7 @@ export default defineComponent({
       amount: savedStepForm.amount,
     });
 
-    const receiverAccount = (rule: any, value: ReceiverAccountType) => {
+    const receiverAccount = (_rule: any, value: ReceiverAccountType) => {
       return new Promise<string | void>((resolve, reject) => {
         const checkValue = toRaw(value);
         if (checkValue && checkValue.number) {

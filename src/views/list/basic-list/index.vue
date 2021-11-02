@@ -156,7 +156,7 @@ export default defineComponent({
         context.pageSize = pageSize;
         reload();
       },
-      onShowSizeChange: (current: number, size: number) => {
+      onShowSizeChange: (_current: number, size: number) => {
         context.pageSize = size;
         reload();
       },

@@ -70,7 +70,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const validateDomain = (rule: any, value: string) => {
+    const validateDomain = (_rule: any, value: string) => {
       return new Promise<void>((resolve, reject) => {
         const regex = /^user-(.*)$/;
         if (!regex.test(value)) {

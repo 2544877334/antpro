@@ -146,7 +146,7 @@ export default defineComponent({
       password: [
         { required: true, message: '至少6位密码，区分大小写' },
         {
-          validator: (rule: any, value: any) => {
+          validator: (_rule: any, value: any) => {
             return new Promise((resolve, reject) => {
               let level = 0;
 
@@ -182,7 +182,7 @@ export default defineComponent({
       password2: [
         { required: true, message: '至少6位密码，区分大小写' },
         {
-          validator: (rule: any, value: string) => {
+          validator: (_rule: any, value: string) => {
             return new Promise((resolve, reject) => {
               const password = modelRef.password;
               if (value === undefined) {

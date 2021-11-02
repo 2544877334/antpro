@@ -79,7 +79,7 @@ export default defineComponent({
     splitMenus: PropTypes.bool,
     layout: PropTypes.oneOf(['side', 'top', 'mix', 'left']),
   },
-  setup(props, { emit }) {
+  setup(_props, { emit }) {
     const { t } = useI18n();
     const handleChange = (type: string, value: string) => {
       emit('change', { type, value });

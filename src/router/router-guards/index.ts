@@ -4,7 +4,7 @@ import localStorage from '@/utils/local-storage';
 import { allowList, loginRoutePath } from '../define-meta';
 import { STORAGE_TOKEN_KEY } from '@/store/mutation-type';
 // eslint-disable-next-line
-import { GENERATE_ROUTES, GENERATE_ROUTES_DYNAMIC, GET_INFO } from '@/store/modules/user/actions';
+import { GENERATE_ROUTES, GET_INFO } from '@/store/modules/user/actions';
 
 router.beforeEach(async to => {
   const userToken = localStorage.get(STORAGE_TOKEN_KEY);
