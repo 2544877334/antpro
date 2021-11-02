@@ -38,10 +38,11 @@
 
 <script lang="ts">
 import { useForm } from 'ant-design-vue/es/form';
-import { defineComponent, ref, reactive, toRaw, watchEffect, PropType } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, ref, reactive, toRaw, watchEffect } from 'vue';
 import { message } from 'ant-design-vue';
 import { addPermission, updatePermission } from '@/api/user/role';
-import { Action, Permission } from '@/store/modules/user/typing';
+import type { Action, Permission } from '@/store/modules/user/typing';
 
 const formLayout = {
   labelCol: {

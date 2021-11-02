@@ -1,4 +1,5 @@
-import moment, { Moment } from 'moment';
+import type { Moment } from 'moment';
+import moment from 'moment';
 
 export function fixedZero(val: number) {
   return val * 1 < 10 ? `0${val}` : val;

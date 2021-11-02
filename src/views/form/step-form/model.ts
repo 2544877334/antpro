@@ -1,7 +1,7 @@
-import { Module, GetterTree } from 'vuex';
-import { PayType } from './typing';
+import type { Module, GetterTree } from 'vuex';
+import type { PayType } from './typing';
 import { fakeSubmitForm } from '@/api/form/step-form';
-import { RootState } from '@/store/root-state';
+import type { RootState } from '@/store/root-state';
 
 export interface FormState {
   payAccount: string | undefined;

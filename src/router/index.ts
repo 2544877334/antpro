@@ -1,6 +1,7 @@
-import { Component, defineAsyncComponent, h } from 'vue';
+import type { Component } from 'vue';
+import { defineAsyncComponent, h } from 'vue';
 import { createRouter, createWebHistory } from 'vue-router';
-import { MenuDataItem } from './typing';
+import type { MenuDataItem } from './typing';
 import Layout from '@/layouts/index.vue';
 // import UserLayout from '@/layouts/user-layout.vue';
 import UserLayout2 from '@/layouts/user-layout2.vue';

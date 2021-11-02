@@ -9,11 +9,19 @@ module.exports = {
     '@vue/typescript/recommended',
     '@vue/prettier',
     '@vue/prettier/@typescript-eslint',
+    'plugin:import/recommended',
+    'plugin:import/typescript',
   ],
+  plugins: ['import'],
   parserOptions: {
     ecmaVersion: 2020,
   },
   rules: {
+    'import/no-named-as-default': 'off',
+    'import/namespace': [2, { allowComputed: true }],
+    'import/no-named-as-default-member': 'off',
+    'import/no-unresolved': [2, { ignore: ['^@'] }],
+    '@typescript-eslint/consistent-type-imports': 'error',
     // enUS: all rules docs https://eslint.org/docs/rules/
     // zhCN: 所有规则文档 https://eslint.bootcss.com/docs/rules/
     // 基础规则 全部 ES 项目通用

@@ -1,4 +1,4 @@
-import { VNodeChild, VNode } from 'vue';
+import type { VNodeChild, VNode } from 'vue';
 
 /* Table */
 export interface PaginationItem {

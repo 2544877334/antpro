@@ -60,14 +60,15 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, PropType } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, reactive } from 'vue';
 import { InfoCircleOutlined } from '@ant-design/icons-vue';
 import { useI18n } from 'vue-i18n';
 import { MiniArea } from './charts';
 import NumberInfo from './number-info/index.vue';
 import Trend from './trend/index.vue';
 
-import { SearchDataItem, VisitDataItem } from '@/api/dashboard/analysis';
+import type { SearchDataItem, VisitDataItem } from '@/api/dashboard/analysis';
 
 import numeral from 'numeral';
 

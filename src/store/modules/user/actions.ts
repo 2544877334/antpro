@@ -1,20 +1,15 @@
-import { ActionTree } from 'vuex';
+import type { ActionTree } from 'vuex';
 import type { RouteRecordRaw } from 'vue-router';
-import { Role, UserState } from './typing';
-import { RootState } from '@/store/root-state';
+import type { Role, UserState } from './typing';
+import type { RootState } from '@/store/root-state';
 import { RESET_CURRENT_USER, SET_INFO, SET_ROUTERS, SET_TOKEN } from './mutations';
-import {
-  LoginParams,
-  postAccountLogin,
-  getCurrentUser,
-  postLogout,
-  UserInfo,
-} from '@/api/user/login';
+import type { LoginParams, UserInfo } from '@/api/user/login';
+import { postAccountLogin, getCurrentUser, postLogout } from '@/api/user/login';
 import { default as router, routes } from '@/router';
 import { filterMenu } from '@/utils/menu-util';
 import { hasAuthority, filterChildRoute } from '@/utils/authority';
 import { generatorDynamicRouter } from '@/router/generator-routers';
-import { MenuDataItem } from '@/router/typing';
+import type { MenuDataItem } from '@/router/typing';
 
 export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';

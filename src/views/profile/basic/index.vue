@@ -55,7 +55,8 @@
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
 import { goodsData, scheduleData } from './mockData';
-import { useFetchData, ReponseData } from '@/utils/hooks/useFetchData';
+import type { ReponseData } from '@/utils/hooks/useFetchData';
+import { useFetchData } from '@/utils/hooks/useFetchData';
 import { default as TableTotalRow } from '@/components/table/total-table';
 import { useI18n } from 'vue-i18n';
 

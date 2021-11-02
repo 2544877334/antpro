@@ -1,5 +1,10 @@
-import { VNodeChild } from 'vue';
-import { RouteRecordRaw, RouteMeta, RouteComponent, RouteRecordRedirectOption } from 'vue-router';
+import type { VNodeChild } from 'vue';
+import type {
+  RouteRecordRaw,
+  RouteMeta,
+  RouteComponent,
+  RouteRecordRedirectOption,
+} from 'vue-router';
 
 type Lazy<T> = () => Promise<T>;
 

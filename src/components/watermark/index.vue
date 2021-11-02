@@ -27,9 +27,9 @@
 </template>
 
 <script lang="ts">
-import { CSSProperties, inject } from 'vue';
+import { inject, defineComponent, computed, ref, watchEffect } from 'vue';
+import type { CSSProperties } from 'vue';
 import PropTypes from 'ant-design-vue/es/_util/vue-types';
-import { defineComponent, computed, ref, watchEffect } from 'vue';
 import { useProProvider } from '../base-layouts/pro-provider';
 
 export type WaterMarkProps = {

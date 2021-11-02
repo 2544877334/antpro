@@ -12,18 +12,10 @@
 </template>
 
 <script lang="ts">
-import {
-  defineComponent,
-  provide,
-  reactive,
-  ref,
-  InjectionKey,
-  CSSProperties,
-  PropType,
-  readonly,
-} from 'vue';
+import type { InjectionKey, CSSProperties, PropType } from 'vue';
+import { defineComponent, provide, reactive, ref, readonly } from 'vue';
 import { filterEmpty } from '@/utils/vnode-util';
-import { SizeType } from '@/components/avatar-list/typing';
+import type { SizeType } from '@/components/avatar-list/typing';
 import AvatarListItem from './item.vue';
 
 export interface AvatarItemInjectData {

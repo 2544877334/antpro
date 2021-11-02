@@ -98,7 +98,7 @@ import { message, notification } from 'ant-design-vue';
 import { MailOutlined } from '@ant-design/icons-vue';
 import { getSmsCaptcha } from '@/api/user/login';
 import { postRegister } from '@/api/user/register';
-import { AxiosError } from 'axios';
+import type { AxiosError } from 'axios';
 import { useRouter } from 'vue-router';
 
 const levelNames: Record<number, string> = {

@@ -60,13 +60,13 @@ declare module '*.module.sass' {
 }
 
 declare module 'ant-design-vue/es/locale/*' {
-  import { Locale } from 'ant-design-vue/es/locale-provider';
+  import type { Locale } from 'ant-design-vue/es/locale-provider';
   const locale: Locale & { readonly [key: string]: string };
   export default locale;
 }
 
 declare module 'moment/locale/*' {
-  import { LocaleSpecification } from 'moment';
+  import type { LocaleSpecification } from 'moment';
   const locale: LocaleSpecification & { readonly [key: string]: string };
   export default locale;
 }

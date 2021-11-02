@@ -1,22 +1,13 @@
-import {
-  computed,
-  ComputedRef,
-  inject,
-  onMounted,
-  reactive,
-  Ref,
-  ref,
-  toRefs,
-  UnwrapRef,
-  watch,
-} from 'vue';
-import { RouteLocationNormalized, useRoute, useRouter } from 'vue-router';
+import type { ComputedRef, Ref, UnwrapRef } from 'vue';
+import { computed, inject, onMounted, reactive, ref, toRefs, watch } from 'vue';
+import type { RouteLocationNormalized } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
-import { LayoutType, MenuTheme } from '@/components/base-layouts/typing';
+import type { LayoutType, MenuTheme } from '@/components/base-layouts/typing';
 import { xor } from 'lodash-es';
 import { genMenuInfo } from '@/utils/menu-util';
-import { MultiTabStore } from '@/components/multi-tab';
+import type { MultiTabStore } from '@/components/multi-tab';
 
 export interface MenuState {
   collapsed: boolean;

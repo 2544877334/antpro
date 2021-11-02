@@ -49,12 +49,13 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, toRefs, PropType, inject } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, ref, computed, toRefs, inject } from 'vue';
 import { useProProvider } from '../pro-provider/index';
 import { getMenuFirstChildren } from '@/utils/menu-util';
 import TopNavHeader from '../top-nav-header/index.vue';
 import GlobalHeader from '../global-header/index.vue';
-import { RouteProps } from '@/components/base-layouts/typing';
+import type { RouteProps } from '@/components/base-layouts/typing';
 
 export default defineComponent({
   name: 'HeaderView',

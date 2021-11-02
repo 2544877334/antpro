@@ -91,13 +91,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent } from 'vue';
 import { InfoCircleOutlined } from '@ant-design/icons-vue';
 import { ChartCard, Field, MiniProgress, MiniBar, MiniArea } from './charts';
 import Yuan from './yuan.vue';
 import Trend from './trend/index.vue';
 import numeral from 'numeral';
-import { VisitDataItem } from '@/api/dashboard/analysis';
+import type { VisitDataItem } from '@/api/dashboard/analysis';
 import { useI18n } from 'vue-i18n';
 
 const gridLayout = {

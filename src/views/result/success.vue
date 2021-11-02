@@ -66,7 +66,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, inject, PropType, ref } from 'vue';
+import type { PropType } from 'vue';
+import { computed, defineComponent, inject, ref } from 'vue';
 import { DingdingOutlined } from '@ant-design/icons-vue';
 
 export interface Operator {

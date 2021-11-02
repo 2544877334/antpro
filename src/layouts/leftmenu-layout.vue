@@ -97,7 +97,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, watch, cloneVNode, VNode } from 'vue';
+import type { VNode } from 'vue';
+import { defineComponent, ref, computed, watch, cloneVNode } from 'vue';
 import { genMenuInfo, getMenuFirstChildren } from '@/utils/menu-util';
 import useDelayReset from '@/utils/hooks/useDelayReset';
 import { default as WrapContent } from '@/components/base-layouts/wrap-content/index.vue';

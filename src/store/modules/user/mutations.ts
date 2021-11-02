@@ -1,5 +1,5 @@
-import { MutationTree } from 'vuex';
-import { UserState } from './typing';
+import type { MutationTree } from 'vuex';
+import type { UserState } from './typing';
 import { initState } from './state';
 import { STORAGE_TOKEN_KEY } from '@/store/mutation-type';
 import ls from '@/utils/local-storage';

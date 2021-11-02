@@ -1,5 +1,6 @@
-import axios, { AxiosRequestConfig, AxiosResponse, AxiosError } from 'axios';
-import { ResponseBody } from '@/api/typing';
+import type { AxiosRequestConfig, AxiosError } from 'axios';
+import axios, { AxiosResponse } from 'axios';
+import type { ResponseBody } from '@/api/typing';
 import { localStorage } from '@/utils/local-storage';
 import { STORAGE_TOKEN_KEY } from '@/store/mutation-type';
 import { notification } from 'ant-design-vue';

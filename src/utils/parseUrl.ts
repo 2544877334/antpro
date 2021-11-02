@@ -1,4 +1,5 @@
-import { LocationQuery, parseQuery } from 'vue-router';
+import type { LocationQuery } from 'vue-router';
+import { parseQuery } from 'vue-router';
 
 export interface LocationNormalized {
   path: string;

@@ -13,8 +13,10 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType, ref, onMounted, watch, inject } from 'vue';
-import { Chart, RadarIndicatorItem } from '@/components';
+import type { PropType } from 'vue';
+import { computed, defineComponent, ref, onMounted, watch, inject } from 'vue';
+import type { RadarIndicatorItem } from '@/components';
+import { Chart } from '@/components';
 
 export interface RadarDataType {
   label: string;

@@ -1,5 +1,6 @@
-import { ref, reactive, Ref, watch } from 'vue';
-import { TableColumn } from '@/typing';
+import type { Ref } from 'vue';
+import { ref, reactive, watch } from 'vue';
+import type { TableColumn } from '@/typing';
 
 export type TableOptions =
   | {

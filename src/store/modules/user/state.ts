@@ -1,4 +1,4 @@
-import { UserState } from './typing';
+import type { UserState } from './typing';
 
 export const state: UserState = {
   token: '',

@@ -7,9 +7,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, onMounted, PropType, ref, watch } from 'vue';
-import { Chart, SeriesDataItem } from '@/components';
-import { EChartOption } from 'echarts';
+import type { PropType } from 'vue';
+import { computed, defineComponent, onMounted, ref, watch } from 'vue';
+import type { SeriesDataItem } from '@/components';
+import { Chart } from '@/components';
+import type { EChartOption } from 'echarts';
 
 type PieDataType = number[] | number[][] | EChartOption.SeriesPie.DataObject[];
 

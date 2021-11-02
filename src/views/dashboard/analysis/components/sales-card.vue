@@ -93,11 +93,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, watch, PropType, onMounted } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, reactive, watch, onMounted } from 'vue';
 import { Bar } from './charts';
 import { useI18n } from 'vue-i18n';
 import numeral from 'numeral';
-import { SalesDataItem } from '@/api/dashboard/analysis';
+import type { SalesDataItem } from '@/api/dashboard/analysis';
 
 export interface RankingDataItem {
   title: string;

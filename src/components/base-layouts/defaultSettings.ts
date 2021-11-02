@@ -1,4 +1,4 @@
-import { ContentWidth, LayoutType, MenuTheme } from './typing';
+import type { ContentWidth, LayoutType, MenuTheme } from './typing';
 
 export interface ProSettings {
   footerRender?: boolean;

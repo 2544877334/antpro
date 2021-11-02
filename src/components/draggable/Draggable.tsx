@@ -1,5 +1,5 @@
 import { constants } from 'smooth-dnd';
-import { FunctionalComponent, HTMLAttributes } from 'vue';
+import type { FunctionalComponent, HTMLAttributes } from 'vue';
 
 interface DraggableProps extends HTMLAttributes {
   tag?: string;

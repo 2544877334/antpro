@@ -39,9 +39,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, PropType, watchEffect, watch } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, reactive, ref, watchEffect, watch } from 'vue';
 import { useForm } from 'ant-design-vue/es/form';
-import { Role, Permission, Action } from '@/store/modules/user/typing';
+import type { Role, Permission, Action } from '@/store/modules/user/typing';
 import { getPermissions } from '@/api/user/role';
 import { cloneDeep } from 'lodash';
 

@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import { CSSProperties } from '@vue/runtime-dom';
+import type { CSSProperties } from '@vue/runtime-dom';
 
 export type NoticeIconData = {
   avatar?: string;

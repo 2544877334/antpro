@@ -1,6 +1,6 @@
-import { GetterTree } from 'vuex';
-import { AppState } from './state';
-import { RootState } from '@/store/root-state';
+import type { GetterTree } from 'vuex';
+import type { AppState } from './state';
+import type { RootState } from '@/store/root-state';
 
 export const getters: GetterTree<AppState, RootState> = {
   lang: state => state.lang,

@@ -1,4 +1,5 @@
-import { Fragment, isVNode, VNode } from 'vue';
+import type { VNode } from 'vue';
+import { Fragment, isVNode } from 'vue';
 
 export function isEmptyElement(c: VNode) {
   return (

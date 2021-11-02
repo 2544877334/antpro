@@ -79,13 +79,14 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, toRefs, PropType } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, computed, toRefs } from 'vue';
 import { useProProvider } from '../pro-provider/index';
 import BaseMenu, { BaseMenuProps } from '../base-menu/index.vue';
 import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue';
 import { findMenuChildren } from '@/utils/menu-util';
 import { useRoute } from 'vue-router';
-import { LayoutType } from '../typing';
+import type { LayoutType } from '../typing';
 
 const SiderMenuProps = Object.assign({}, BaseMenuProps, {
   prefixCls: {

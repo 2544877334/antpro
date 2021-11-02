@@ -81,7 +81,7 @@ import ProportionSales from './components/proportion-sales.vue';
 import OfflineData from './components/offline-data.vue';
 
 import { useAnalysisData } from '@/api/dashboard/analysis';
-import { Moment } from 'moment';
+import type { Moment } from 'moment';
 
 export default defineComponent({
   setup() {

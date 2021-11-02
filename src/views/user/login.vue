@@ -129,7 +129,7 @@ import {
   TaobaoCircleOutlined,
   WeiboCircleOutlined,
 } from '@ant-design/icons-vue';
-import { AxiosError } from 'axios';
+import type { AxiosError } from 'axios';
 import { useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { LOGIN } from '@/store/modules/user/actions';

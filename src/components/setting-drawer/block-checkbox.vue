@@ -17,10 +17,11 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue';
+import type { PropType } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { useProProvider } from '../base-layouts/pro-provider';
-import { ThemeItem } from './index.vue';
+import type { ThemeItem } from './index.vue';
 import LayoutBlock from './layout-block.vue';
 
 export default defineComponent({

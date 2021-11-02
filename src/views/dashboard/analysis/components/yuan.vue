@@ -3,7 +3,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent } from 'vue';
 import numeral from 'numeral';
 
 export default defineComponent({

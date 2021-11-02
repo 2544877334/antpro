@@ -109,7 +109,7 @@ import PropTypes from 'ant-design-vue/es/_util/vue-types';
 import { defineComponent, computed, reactive, ref } from 'vue';
 import { useProProvider } from '../base-layouts/pro-provider';
 import { CloseOutlined, SettingOutlined } from '@ant-design/icons-vue';
-import { ContentWidth } from '../base-layouts/typing';
+import type { ContentWidth } from '../base-layouts/typing';
 import { useStore } from 'vuex';
 import {
   SET_CONTENT_WIDTH,
@@ -126,7 +126,7 @@ import BodyWrapper from './body-wrapper.vue';
 import BlockCheckbox from './block-checkbox.vue';
 import LayoutChange from './layout-change.vue';
 import { useI18n } from 'vue-i18n';
-import { LayoutBlockTheme } from './layout-block.vue';
+import type { LayoutBlockTheme } from './layout-block.vue';
 
 const iconStyle = {
   color: '#fff',

@@ -1,4 +1,5 @@
-import { reactive, onMounted, UnwrapRef } from 'vue';
+import type { UnwrapRef } from 'vue';
+import { reactive, onMounted } from 'vue';
 
 export interface PageInfo {
   current: number;

@@ -27,7 +27,8 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, PropType } from 'vue';
+import type { PropType } from 'vue';
+import { computed, defineComponent } from 'vue';
 import { useProProvider } from '../base-layouts/pro-provider';
 
 export type LayoutBlockTheme = 'light' | 'dark' | 'realDark' | 'side' | 'top' | 'mix' | 'left';

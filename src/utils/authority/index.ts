@@ -1,5 +1,5 @@
 // import { Permission } from '@/store/modules/user/typing';
-import { MenuDataItem } from '@/router/typing';
+import type { MenuDataItem } from '@/router/typing';
 
 export const filterChildRoute = (route: MenuDataItem, permissions: string[]) =>
   route.children

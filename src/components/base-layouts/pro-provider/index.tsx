@@ -1,18 +1,7 @@
 import { withInstall } from '@/utils/withInstall';
-import {
-  reactive,
-  readonly,
-  provide,
-  inject,
-  toRefs,
-  RenderFunction,
-  App,
-  PropType,
-  SetupContext,
-  InjectionKey,
-  defineComponent,
-} from 'vue';
-import { ContentWidth } from '../typing';
+import type { RenderFunction, App, PropType, SetupContext, InjectionKey } from 'vue';
+import { reactive, readonly, provide, inject, toRefs, defineComponent } from 'vue';
+import type { ContentWidth } from '../typing';
 
 const defaultPrefixCls = 'ant-pro';
 

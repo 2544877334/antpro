@@ -1,5 +1,5 @@
 import request from '@/utils/request';
-import { ResponseBody } from '../typing';
+import type { ResponseBody } from '../typing';
 
 export interface BasicFormData {
   title?: string;

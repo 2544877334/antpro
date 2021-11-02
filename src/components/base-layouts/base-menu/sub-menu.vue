@@ -41,7 +41,7 @@
 <script lang="ts">
 import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { RouteProps } from '../typing';
+import type { RouteProps } from '../typing';
 
 export interface SubMenuProps {
   menu: RouteProps;

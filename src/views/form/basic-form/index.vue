@@ -134,8 +134,9 @@ import { InfoCircleOutlined } from '@ant-design/icons-vue';
 import { useRoute } from 'vue-router';
 import { useForm } from 'ant-design-vue/es/form';
 import { message } from 'ant-design-vue';
-import { ResponseBody } from '@/api/typing';
-import { saveBasicFormData, BasicFormResponse } from '@/api/form/basic-form';
+import type { ResponseBody } from '@/api/typing';
+import type { BasicFormResponse } from '@/api/form/basic-form';
+import { saveBasicFormData } from '@/api/form/basic-form';
 
 const LOCAL_SAVE_BASIC_FORM_DATA_KEY = 'LOCAL_SAVE_BASIC_FORM_DATA';
 

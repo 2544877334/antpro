@@ -37,7 +37,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, onMounted, ref, onBeforeUnmount } from 'vue';
-import { NoticeItem, queryNotices } from '@/api/user/notice';
+import type { NoticeItem } from '@/api/user/notice';
+import { queryNotices } from '@/api/user/notice';
 import moment from 'moment';
 import { groupBy } from 'lodash-es';
 import NoticeDropdown from './notice-dropdown.vue';

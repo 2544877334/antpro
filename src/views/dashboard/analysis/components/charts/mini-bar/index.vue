@@ -7,8 +7,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, PropType, computed, watch, onMounted } from 'vue';
-import { Chart, SeriesDataItem } from '@/components';
+import type { PropType } from 'vue';
+import { defineComponent, ref, computed, watch, onMounted } from 'vue';
+import type { SeriesDataItem } from '@/components';
+import { Chart } from '@/components';
 import '../../index.less';
 
 export default defineComponent({

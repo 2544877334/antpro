@@ -44,7 +44,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, toRaw, RendererElement } from 'vue';
+import type { RendererElement } from 'vue';
+import { defineComponent, reactive, ref, toRaw } from 'vue';
 import { CloseCircleOutlined } from '@ant-design/icons-vue';
 import { useI18n } from 'vue-i18n';
 import scrollIntoView from 'scroll-into-view-if-needed';
@@ -52,7 +53,7 @@ import RepositoryForm from './repository-form.vue';
 import TaskForm from './task-form.vue';
 import MemberList from './member-list.vue';
 import FooterToolbar from '@/components/base-layouts/footer-toolbar/index.vue';
-import { validateInfos } from 'ant-design-vue/es/form/useForm';
+import type { validateInfos } from 'ant-design-vue/es/form/useForm';
 
 export interface ErrorItem {
   key: string;

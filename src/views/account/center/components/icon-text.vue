@@ -8,7 +8,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent } from 'vue';
 import { StarTwoTone, LikeOutlined, MessageFilled } from '@ant-design/icons-vue';
 
 export type IconType = 'star' | 'like' | 'message';

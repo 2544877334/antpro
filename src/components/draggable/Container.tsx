@@ -1,13 +1,12 @@
 /* eslint-disable curly */
-import {
-  smoothDnD,
-  dropHandlers,
+import type {
   DragStartParams,
   DropResult,
   ContainerOptions,
   DragEndParams,
   DropPlaceholderOptions,
 } from 'smooth-dnd';
+import { smoothDnD, dropHandlers } from 'smooth-dnd';
 import { defineComponent, onMounted, onUpdated, onUnmounted, ref, reactive } from 'vue';
 
 smoothDnD.dropHandler = dropHandlers.reactDropHandler().handler;

@@ -14,7 +14,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, inject } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, inject } from 'vue';
 import { avatarListKey } from './list.vue';
 
 export default defineComponent({

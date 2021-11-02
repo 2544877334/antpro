@@ -9,7 +9,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent } from 'vue';
 import { CaretDownOutlined, CaretUpOutlined } from '@ant-design/icons-vue';
 
 export default defineComponent({

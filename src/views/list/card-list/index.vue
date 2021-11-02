@@ -83,7 +83,7 @@
 import { defineComponent, inject, reactive, ref, toRefs } from 'vue';
 import { PlusOutlined } from '@ant-design/icons-vue';
 import { useI18n } from 'vue-i18n';
-import { CardListItemDataType } from './typing';
+import type { CardListItemDataType } from './typing';
 import { useFetchData } from '@/utils/hooks/useFetchData';
 import { queryFakeList } from '@/api/list/card-list';
 

@@ -8,7 +8,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref, computed, PropType, watch, onMounted } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, ref, computed, watch, onMounted } from 'vue';
 import { Chart } from '@/components';
 import moment from 'moment';
 

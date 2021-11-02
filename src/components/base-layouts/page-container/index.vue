@@ -40,16 +40,8 @@
   </div>
 </template>
 <script lang="ts">
-import {
-  defineComponent,
-  h,
-  ref,
-  toRefs,
-  PropType,
-  VNodeChild,
-  withCtx,
-  createTextVNode,
-} from 'vue';
+import type { PropType, VNodeChild } from 'vue';
+import { defineComponent, h, ref, toRefs, withCtx, createTextVNode } from 'vue';
 import { useProProvider } from '../pro-provider';
 import GridContent from '@/components/base-layouts/grid-content/index.vue';
 import PageHeaderContent from './page-header-content.vue';

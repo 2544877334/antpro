@@ -9,8 +9,9 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType, CSSProperties } from 'vue';
-import { PayType } from '../typing';
+import type { PropType, CSSProperties } from 'vue';
+import { defineComponent, computed } from 'vue';
+import type { PayType } from '../typing';
 
 export interface ReceiverAccountType {
   type: PayType | string;

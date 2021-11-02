@@ -1,4 +1,4 @@
-import { PureSettings } from '@/components/base-layouts/defaultSettings';
+import type { PureSettings } from '@/components/base-layouts/defaultSettings';
 
 export interface AppState extends PureSettings {
   lang: string;

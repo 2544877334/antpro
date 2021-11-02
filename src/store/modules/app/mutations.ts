@@ -1,6 +1,6 @@
-import { MutationTree } from 'vuex';
-import { AppState } from './state';
-import { ContentWidth, LayoutType, MenuTheme } from '@/components/base-layouts/typing';
+import type { MutationTree } from 'vuex';
+import type { AppState } from './state';
+import type { ContentWidth, LayoutType, MenuTheme } from '@/components/base-layouts/typing';
 
 export const SET_LANG = 'SET_LANG';
 export const SET_DEVICE = 'SET_DEVICE';

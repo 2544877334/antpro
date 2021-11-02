@@ -19,7 +19,7 @@
 <script lang="ts">
 import { defineComponent, computed } from 'vue';
 import { useStore } from 'vuex';
-import { AppState } from '@/store/modules/app/state';
+import type { AppState } from '@/store/modules/app/state';
 import { locales } from '@/locales';
 import { GlobalOutlined } from '@ant-design/icons-vue';
 

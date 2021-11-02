@@ -1,3 +1,4 @@
+import type { InjectionKey, UnwrapRef } from 'vue';
 import {
   KeepAlive,
   cloneVNode,
@@ -8,10 +9,9 @@ import {
   watch,
   provide,
   inject,
-  InjectionKey,
-  UnwrapRef,
 } from 'vue';
-import { useRouter, useRoute, RouteLocationNormalized, RouteRecordNormalized } from 'vue-router';
+import type { RouteLocationNormalized, RouteRecordNormalized } from 'vue-router';
+import { useRouter, useRoute } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { flattenChildren } from '@/utils/vnode-util';
 import { findLast, omit } from 'lodash-es';

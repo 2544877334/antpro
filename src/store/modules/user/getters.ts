@@ -1,6 +1,6 @@
-import { GetterTree } from 'vuex';
-import { UserState } from './typing';
-import { RootState } from '@/store/root-state';
+import type { GetterTree } from 'vuex';
+import type { UserState } from './typing';
+import type { RootState } from '@/store/root-state';
 
 export const getters: GetterTree<UserState, RootState> = {
   role: state => state.role,

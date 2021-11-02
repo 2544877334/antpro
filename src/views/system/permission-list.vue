@@ -182,7 +182,7 @@ import {
 } from '@ant-design/icons-vue';
 import { Container as DragContainer, Draggable } from '@/components/draggable';
 import { getPermissions } from '@/api/user/role';
-import { Pagination, TableFilters, TableColumn } from '@/typing';
+import type { Pagination, TableFilters, TableColumn } from '@/typing';
 import { useFetchData } from '@/utils/hooks/useFetchData';
 import { useFullscreen } from '@/utils/hooks/useFullscreen';
 import { useTableDynamicColumns } from '@/utils/hooks/useTableColumn';

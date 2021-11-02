@@ -24,7 +24,7 @@
 <script lang="ts">
 import { computed, defineComponent, onUnmounted } from 'vue';
 import { useStore } from 'vuex';
-import { FormState } from '@/views/form/step-form/model';
+import type { FormState } from '@/views/form/step-form/model';
 
 export default defineComponent({
   emits: ['finish'],

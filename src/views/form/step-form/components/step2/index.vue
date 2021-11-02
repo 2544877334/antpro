@@ -55,7 +55,7 @@ import { defineComponent, reactive, computed, toRaw } from 'vue';
 import { useForm } from 'ant-design-vue/es/form';
 import { useStore } from 'vuex';
 // require defined typo
-import { FormState } from '../../model';
+import type { FormState } from '../../model';
 
 export default defineComponent({
   emits: ['next-step', 'prev'],

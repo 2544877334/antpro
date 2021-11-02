@@ -1,15 +1,7 @@
-import {
-  defineComponent,
-  provide,
-  inject,
-  PropType,
-  SetupContext,
-  InjectionKey,
-  computed,
-  ComputedRef,
-} from 'vue';
-import { RouteProps } from './typing';
-import { PureSettings } from './defaultSettings';
+import type { PropType, SetupContext, InjectionKey, ComputedRef } from 'vue';
+import { defineComponent, provide, inject, computed } from 'vue';
+import type { RouteProps } from './typing';
+import type { PureSettings } from './defaultSettings';
 
 export interface RouteContextType extends Partial<PureSettings> {
   breadcrumb?: any;

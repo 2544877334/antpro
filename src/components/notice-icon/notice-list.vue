@@ -46,7 +46,7 @@
   </div>
 </template>
 <script lang="ts">
-import { NoticeItem } from '@/api/user/notice';
+import type { NoticeItem } from '@/api/user/notice';
 import { defineComponent } from 'vue';
 
 export default defineComponent({

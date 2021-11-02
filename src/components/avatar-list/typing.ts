@@ -1,4 +1,4 @@
-import { CSSProperties, VNodeChild } from 'vue';
+import type { CSSProperties, VNodeChild } from 'vue';
 
 export declare type SizeType = number | 'small' | 'default' | 'large';
 

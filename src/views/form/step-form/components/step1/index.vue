@@ -52,8 +52,9 @@
 import { defineComponent, reactive, toRaw } from 'vue';
 import { useForm } from 'ant-design-vue/es/form';
 import { useStore } from 'vuex';
-import ReceiverAccount, { ReceiverAccountType } from '../receiver-account.vue';
-import { FormState } from '../../model';
+import type { ReceiverAccountType } from '../receiver-account.vue';
+import ReceiverAccount from '../receiver-account.vue';
+import type { FormState } from '../../model';
 
 export default defineComponent({
   emits: ['next-step'],

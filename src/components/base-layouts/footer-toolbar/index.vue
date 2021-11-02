@@ -10,7 +10,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, PropType, VNodeChild, inject, ref } from 'vue';
+import type { PropType, VNodeChild } from 'vue';
+import { defineComponent, computed, inject, ref } from 'vue';
 import { useProProvider } from '@/components/base-layouts/pro-provider';
 import { injectMenuState } from '@/layouts/use-menu-state';
 

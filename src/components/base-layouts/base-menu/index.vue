@@ -46,9 +46,10 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, ComputedRef, PropType } from 'vue';
+import type { ComputedRef, PropType } from 'vue';
+import { defineComponent, computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { RouteProps } from '../typing';
+import type { RouteProps } from '../typing';
 import SubMenu from './sub-menu.vue';
 
 export function useRootSubmenuKeys(menus: RouteProps[]): ComputedRef<string[]> {

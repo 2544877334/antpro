@@ -4,9 +4,10 @@
 </template>
 
 <script lang="ts">
-import { Permission, Role } from '@/store/modules/user/typing';
+import type { Permission, Role } from '@/store/modules/user/typing';
 import { isArray } from 'lodash-es';
-import { computed, ref, defineComponent, PropType, VNodeChild } from 'vue';
+import type { PropType, VNodeChild } from 'vue';
+import { computed, ref, defineComponent } from 'vue';
 import { useStore } from 'vuex';
 
 export type AuthorityType = string | string[] | ((authority: Permission[]) => boolean);
