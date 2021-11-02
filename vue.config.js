@@ -21,17 +21,19 @@ if (existsSync(resolve('./src/main.js'))) {
 }
 module.exports = {
   pages: {
-    app: {
+    index: {
       // page 的入口
       entry: isTs ? 'src/main.ts' : 'src/main.js',
-      filename: 'index.html',
     },
   },
   publicPath: process.env.VUE_APP_PUBLIC_PATH,
   configureWebpack: {
     plugins: [
       // Ignore all locale files of moment.js
-      new IgnorePlugin(/^\.\/locale$/, /moment$/),
+      new IgnorePlugin({
+        resourceRegExp: /^\.\/locale$/,
+        contextRegExp: /moment$/,
+      }),
       // stylelint
       // @see https://vue-loader.vuejs.org/zh/guide/linting.html#stylelint
       // new StyleLintPlugin({
@@ -71,7 +73,7 @@ module.exports = {
   devServer: {
     port: 8000,
     // mock serve
-    before: app => {
+    onBeforeSetupMiddleware: ({ app }) => {
       if (process.env.MOCK !== 'none' && process.env.HTTP_MOCK !== 'none') {
         app.use(createMockMiddleware());
       }
@@ -97,5 +99,5 @@ module.exports = {
   // Type: boolean | 'warning' | 'default' | 'error'
   lintOnSave: 'warning',
   // babel-loader no-ignore node_modules/*
-  transpileDependencies: [],
+  transpileDependencies: true,
 };
