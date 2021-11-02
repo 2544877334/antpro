@@ -9,12 +9,14 @@ import {
   watch,
   provide,
   inject,
+  computed,
 } from 'vue';
 import type { RouteLocationNormalized, RouteRecordNormalized } from 'vue-router';
 import { useRouter, useRoute } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { flattenChildren } from '@/utils/vnode-util';
 import { findLast, omit } from 'lodash-es';
+import { useStore } from 'vuex';
 
 export type CacheKey = string;
 
@@ -92,6 +94,8 @@ export const MultiTabStoreConsumer = defineComponent({
   setup(_props, { slots = {} }) {
     const route = useRoute();
     const state = inject(MULTI_TAB_STORE_KEY)!;
+    const store = useStore();
+    const multiTab = computed(() => store.getters['app/multiTab']);
     const hasCache = (path: CacheKey) => {
       return state.cacheList.find(item => item.tabPath === path);
     };
@@ -107,6 +111,7 @@ export const MultiTabStoreConsumer = defineComponent({
       { immediate: true },
     );
     return () => {
+      if (!multiTab.value) return slots.default?.()[0];
       const component = flattenChildren((slots.default && slots.default()) || [])[0] as any;
       if (!component) {
         return null;
