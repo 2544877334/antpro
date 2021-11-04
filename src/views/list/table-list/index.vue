@@ -99,7 +99,7 @@
                         :indeterminate="columnState.indeterminate"
                         @change="handleColumnAllClick"
                       >
-                        列展示
+                        列展示 / 排序
                       </a-checkbox>
                       <a @click="reset">重置</a>
                     </div>

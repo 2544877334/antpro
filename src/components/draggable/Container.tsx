@@ -74,7 +74,7 @@ const Container = defineComponent<Partial<ContainerProps>>({
 Container.props = {
   behaviour: String,
   groupName: String,
-  orientation: String,
+  orientation: { type: String, default: 'vertical' },
   dragHandleSelector: String,
   nonDragAreaSelector: String,
   dragBeginDelay: Number,
