@@ -13,6 +13,7 @@ import useMediaQuery from '@/utils/hooks/useMediaQuery';
 import { useI18n } from 'vue-i18n';
 import useMenuState, { MenuStateSymbol } from './layouts/use-menu-state';
 import { useMultiTabStateProvider } from './components/multi-tab';
+import { defaultLang } from './locales';
 
 export default {
   name: 'App',
@@ -31,7 +32,7 @@ export default {
       },
       multiTabState,
     );
-    const lang = localStorage.get(STORAGE_LANG_KEY, 'en-US');
+    const lang = localStorage.get(STORAGE_LANG_KEY, defaultLang);
     if (lang) {
       store.dispatch('app/SET_LANG', lang);
     }
