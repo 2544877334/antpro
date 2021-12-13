@@ -111,8 +111,8 @@ export const MultiTabStoreConsumer = defineComponent({
       { immediate: true },
     );
     return () => {
-      if (!multiTab.value) return slots.default?.()[0];
       const component = flattenChildren((slots.default && slots.default()) || [])[0] as any;
+      if (!multiTab.value) return component;
       if (!component) {
         return null;
       }
