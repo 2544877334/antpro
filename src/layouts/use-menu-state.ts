@@ -8,6 +8,7 @@ import type { LayoutType, MenuTheme } from '@/components/base-layouts/typing';
 import { xor } from 'lodash-es';
 import { genMenuInfo } from '@/utils/menu-util';
 import type { MultiTabStore } from '@/components/multi-tab';
+import { loginRoutePath } from '@/router/define-meta';
 
 export interface MenuState {
   collapsed: boolean;
@@ -199,9 +200,11 @@ export default function useMenuState(
     watch(
       () => route.fullPath,
       () => {
-        updateMenuState(route.path);
-        // // 更新面包屑
-        updateBreadcrumb();
+        if (route.path !== loginRoutePath) {
+          updateMenuState(route.path);
+          // // 更新面包屑
+          updateBreadcrumb();
+        }
       },
       // { immediate: true },
     );

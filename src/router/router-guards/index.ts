@@ -19,6 +19,8 @@ router.beforeEach(async to => {
       return {
         path: loginRoutePath,
         replace: true,
+        // 登录后跳转到之前页面，如不需要，直接删除 query 即可
+        query: { redirect: encodeURIComponent(to.fullPath) },
       };
     }
     return to;

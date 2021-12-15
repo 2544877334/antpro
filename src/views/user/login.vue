@@ -130,7 +130,7 @@ import {
   WeiboCircleOutlined,
 } from '@ant-design/icons-vue';
 import type { AxiosError } from 'axios';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { LOGIN } from '@/store/modules/user/actions';
 
@@ -138,6 +138,7 @@ export default defineComponent({
   name: 'Login',
   setup() {
     const router = useRouter();
+    const route = useRoute();
     const store = useStore();
     const state = reactive({
       customActiveKey: 'tab1',
@@ -207,7 +208,7 @@ export default defineComponent({
     };
 
     const loginSuccess = () => {
-      router.push({ path: '/' });
+      router.push(decodeURIComponent((route.query?.redirect as string) || '') || '/');
       // 延迟 1 秒显示欢迎信息
       setTimeout(() => {
         notification.success({
