@@ -1,4 +1,5 @@
-import { ConfigEnv, loadEnv, UserConfig } from 'vite';
+import type { ConfigEnv, UserConfig } from 'vite';
+import { loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import path from 'path';
@@ -32,7 +33,8 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     },
     resolve: {
       alias: {
-        // moment: 'moment/dist/moment.js',
+        moment$: 'moment/dist/moment.js',
+        'moment/locale': 'moment/dist/locale',
         '~@': path.join(__dirname, './src'),
         '@': path.join(__dirname, './src'),
         vue: 'vue/dist/vue.esm-bundler.js',
@@ -45,6 +47,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         'store/plugins/expire',
         'ant-design-vue/es/_util/vue-types',
         'ant-design-vue/es/form',
+        'moment',
         'moment/locale/eu',
         'moment/locale/zh-cn',
         '@ant-design/icons-vue',
