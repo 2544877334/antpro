@@ -1,4 +1,4 @@
-import { createStore, createLogger } from 'vuex';
+import { createStore } from 'vuex';
 import { app } from './modules/app';
 import { user } from './modules/user';
 import { stepForm } from '@/views/form/step-form/model';
@@ -25,5 +25,5 @@ export default createStore({
     stepForm,
   },
   strict: debug,
-  plugins: debug ? [createLogger(), persistedPlugin] : [],
+  plugins: debug ? [persistedPlugin] : [],
 });
