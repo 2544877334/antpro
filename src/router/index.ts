@@ -21,7 +21,7 @@ export const routes: MenuDataItem[] = [
         path: '/workplace',
         name: 'Workplace',
         meta: { icon: 'HistoryOutlined', title: 'pages.dashboard.workplace.title', lock: true },
-        component: h(RouteView, {}, () => h(AsyncWorkplace)),
+        component: h(RouteView, null, () => h(AsyncWorkplace)),
       },
       // dashboard
       {

@@ -9,6 +9,13 @@
   dependencies:
     "@ctrl/tinycolor" "^3.3.1"
 
+"@ant-design/colors@^6.0.0":
+  version "6.0.0"
+  resolved "https://registry.npmjs.org/@ant-design/colors/-/colors-6.0.0.tgz#9b9366257cffcc47db42b9d0203bb592c13c0298"
+  integrity sha512-qAZRvPzfdWHtfameEGP2Qvuf838NhergR35o+EuVyB5XvSA98xod5r4utvi4TJ3ywmevm290g9nsCG5MryrdWQ==
+  dependencies:
+    "@ctrl/tinycolor" "^3.4.0"
+
 "@ant-design/icons-svg@^4.0.0":
   version "4.2.1"
   resolved "https://registry.npmmirror.com/@ant-design/icons-svg/download/@ant-design/icons-svg-4.2.1.tgz#8630da8eb4471a4aabdaed7d1ff6a97dcb2cf05a"
@@ -963,7 +970,7 @@
     "@babel/helper-validator-identifier" "^7.15.7"
     to-fast-properties "^2.0.0"
 
-"@ctrl/tinycolor@^3.3.1":
+"@ctrl/tinycolor@^3.3.1", "@ctrl/tinycolor@^3.4.0":
   version "3.4.0"
   resolved "https://registry.npmmirror.com/@ctrl/tinycolor/download/@ctrl/tinycolor-3.4.0.tgz#c3c5ae543c897caa9c2a68630bed355be5f9990f"
   integrity sha1-w8WuVDyJfKqcKmhjC+01W+X5mQ8=
@@ -2198,22 +2205,22 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-ant-design-vue@^2.2.2:
-  version "2.2.8"
-  resolved "https://registry.npmmirror.com/ant-design-vue/download/ant-design-vue-2.2.8.tgz#fa87cf6842d8ee9a0d8af393ff4099ecc4072f2b"
-  integrity sha1-+ofPaELY7poNivOT/0CZ7MQHLys=
+ant-design-vue@^3.0.0-beta.6:
+  version "3.0.0-beta.6"
+  resolved "https://registry.npmjs.org/ant-design-vue/-/ant-design-vue-3.0.0-beta.6.tgz#ee3803bcb8d62eddf11253a96d9af1d03a9637df"
+  integrity sha512-Bgyw/8DHDbdKN11gAl4weTyljdx53H9HIPBq/dU1FqrH0h6yu8RjTyRgZcDk2H0U0HGM9b/HVotOchEANhRw9w==
   dependencies:
+    "@ant-design/colors" "^6.0.0"
     "@ant-design/icons-vue" "^6.0.0"
     "@babel/runtime" "^7.10.5"
     "@simonwep/pickr" "~1.8.0"
     array-tree-filter "^2.1.0"
-    async-validator "^3.3.0"
+    async-validator "^4.0.0"
+    dayjs "^1.10.5"
     dom-align "^1.12.1"
     dom-scroll-into-view "^2.0.0"
     lodash "^4.17.21"
     lodash-es "^4.17.15"
-    moment "^2.27.0"
-    omit.js "^2.0.0"
     resize-observer-polyfill "^1.5.1"
     scroll-into-view-if-needed "^2.2.25"
     shallow-equal "^1.0.0"
@@ -2352,10 +2359,10 @@ astral-regex@^2.0.0:
   resolved "https://registry.npmmirror.com/astral-regex/download/astral-regex-2.0.0.tgz#483143c567aeed4785759c0865786dc77d7d2e31"
   integrity sha1-SDFDxWeu7UeFdZwIZXhtx319LjE=
 
-async-validator@^3.3.0:
-  version "3.5.2"
-  resolved "https://registry.npmmirror.com/async-validator/download/async-validator-3.5.2.tgz?cache=0&sync_timestamp=1634529574100&other_urls=https%3A%2F%2Fregistry.npmmirror.com%2Fasync-validator%2Fdownload%2Fasync-validator-3.5.2.tgz#68e866a96824e8b2694ff7a831c1a25c44d5e500"
-  integrity sha1-aOhmqWgk6LJpT/eoMcGiXETV5QA=
+async-validator@^4.0.0:
+  version "4.0.7"
+  resolved "https://registry.npmjs.org/async-validator/-/async-validator-4.0.7.tgz#034a0fd2103a6b2ebf010da75183bec299247afe"
+  integrity sha512-Pj2IR7u8hmUEDOwB++su6baaRi+QvsgajuFB9j95foM1N2gy5HM4z60hfusIO0fBPG5uLAEl6yCJr1jNSVugEQ==
 
 async@^2.6.2:
   version "2.6.3"
@@ -3412,6 +3419,11 @@ currently-unhandled@^0.4.1:
   integrity sha1-mI3zP+qxke95mmE2nddsF635V+o=
   dependencies:
     array-find-index "^1.0.1"
+
+dayjs@^1.10.5, dayjs@^1.10.7:
+  version "1.10.7"
+  resolved "https://registry.npmjs.org/dayjs/-/dayjs-1.10.7.tgz#2cf5f91add28116748440866a0a1d26f3a6ce468"
+  integrity sha512-P6twpd70BcPK34K26uJ1KT3wlhpuOAPoMwJzpsIWUxHZ7wpmbdZL/hQqBDfz7hGurYSa5PhzdhDHtt319hL3ig==
 
 debug@2.6.9, debug@^2.2.0, debug@^2.3.3, debug@^2.6.9:
   version "2.6.9"
@@ -6406,11 +6418,6 @@ module-alias@^2.2.2:
   resolved "https://registry.npmmirror.com/module-alias/download/module-alias-2.2.2.tgz#151cdcecc24e25739ff0aa6e51e1c5716974c0e0"
   integrity sha1-FRzc7MJOJXOf8KpuUeHFcWl0wOA=
 
-moment@^2.27.0, moment@^2.28.0:
-  version "2.29.1"
-  resolved "https://registry.npmmirror.com/moment/download/moment-2.29.1.tgz#b2be769fa31940be9eeea6469c075e35006fa3d3"
-  integrity sha1-sr52n6MZQL6e7qZGnAdeNQBvo9M=
-
 mrmime@^1.0.0:
   version "1.0.0"
   resolved "https://registry.npmmirror.com/mrmime/download/mrmime-1.0.0.tgz#14d387f0585a5233d291baba339b063752a2398b"
@@ -6709,11 +6716,6 @@ obuf@^1.0.0, obuf@^1.1.2:
   version "1.1.2"
   resolved "https://registry.npmmirror.com/obuf/download/obuf-1.1.2.tgz#09bea3343d41859ebd446292d11c9d4db619084e"
   integrity sha1-Cb6jND1BhZ69RGKS0RydTbYZCE4=
-
-omit.js@^2.0.0:
-  version "2.0.2"
-  resolved "https://registry.npmmirror.com/omit.js/download/omit.js-2.0.2.tgz#dd9b8436fab947a5f3ff214cb2538631e313ec2f"
-  integrity sha1-3ZuENvq5R6Xz/yFMslOGMeMT7C8=
 
 on-finished@~2.3.0:
   version "2.3.0"

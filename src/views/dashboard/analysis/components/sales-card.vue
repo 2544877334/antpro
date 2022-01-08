@@ -99,6 +99,8 @@ import { Bar } from './charts';
 import { useI18n } from 'vue-i18n';
 import numeral from 'numeral';
 import type { SalesDataItem } from '@/api/dashboard/analysis';
+import type { Dayjs } from 'dayjs';
+import type { RangePickerProps } from 'ant-design-vue/lib/vc-picker/RangePicker';
 
 export interface RankingDataItem {
   title: string;
@@ -120,13 +122,13 @@ export default defineComponent({
       default: () => {},
     },
     handleRangePickerChange: {
-      type: Function,
+      type: Function as PropType<RangePickerProps<Dayjs>['onChange']>,
       default: () => {
         return undefined;
       },
     },
     rangePickerValue: {
-      type: Array as PropType<RankingDataItem[]>,
+      type: Array as unknown as PropType<RangePickerProps<Dayjs>['value']>,
       required: true,
     },
     salesData: {

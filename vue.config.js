@@ -29,11 +29,6 @@ module.exports = {
   publicPath: process.env.VUE_APP_PUBLIC_PATH,
   configureWebpack: {
     plugins: [
-      // Ignore all locale files of moment.js
-      new IgnorePlugin({
-        resourceRegExp: /^\.\/locale$/,
-        contextRegExp: /moment$/,
-      }),
       // stylelint
       // @see https://vue-loader.vuejs.org/zh/guide/linting.html#stylelint
       // new StyleLintPlugin({

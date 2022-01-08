@@ -14,6 +14,7 @@
 </template>
 
 <script lang="ts">
+import type { AvatarSize } from 'ant-design-vue/lib/avatar';
 import type { PropType } from 'vue';
 import { defineComponent, inject } from 'vue';
 import { avatarListKey } from './list.vue';
@@ -31,7 +32,10 @@ export default defineComponent({
     },
   },
   setup() {
-    const parentProps = inject(avatarListKey, { size: 'default', excessItemsStyle: {} });
+    const parentProps = inject(avatarListKey, {
+      size: 'default' as AvatarSize,
+      excessItemsStyle: {},
+    });
 
     return {
       parentProps,

@@ -1,7 +1,9 @@
 import { ref } from 'vue';
 import { createI18n } from 'vue-i18n';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import enUS from './lang/en-US';
+import updateLocale from 'dayjs/plugin/updateLocale';
+dayjs.extend(updateLocale);
 
 export const locales: string[] = ['zh-CN', 'zh-TW', 'en-US', 'pt-BR'];
 
@@ -44,8 +46,8 @@ export function loadLanguageAsync(lang: string = defaultLang): Promise<string> {
           const loadedLang = result.default;
           // set vue-i18n lang
           currentLocale.setLocaleMessage(lang, loadedLang);
-          // set moment lang
-          moment.updateLocale(loadedLang.momentLocaleName, loadedLang.moment);
+          // set dayjs lang
+          dayjs.updateLocale(loadedLang.dayjsLocaleName, loadedLang.dayjs);
           // save loaded
           loadedLanguages.value.push(lang);
           return resolve(setI18nLanguage(lang));

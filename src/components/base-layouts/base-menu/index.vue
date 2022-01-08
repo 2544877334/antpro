@@ -46,6 +46,7 @@
 </template>
 
 <script lang="ts">
+import type { MenuMode, MenuTheme } from 'ant-design-vue';
 import type { ComputedRef, PropType } from 'vue';
 import { defineComponent, computed, ref } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -67,11 +68,11 @@ export const BaseMenuProps = {
   },
   // top-nav-header: horizontal
   mode: {
-    type: String,
+    type: String as PropType<MenuMode>,
     default: 'inline',
   },
   theme: {
-    type: String,
+    type: String as PropType<MenuTheme>,
     default: 'dark',
   },
   collapsed: {

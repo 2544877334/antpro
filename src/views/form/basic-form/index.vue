@@ -126,7 +126,8 @@
 </template>
 
 <script lang="ts">
-import moment from 'moment';
+import type { Dayjs } from 'dayjs';
+import dayjs from 'dayjs';
 import { defineComponent, reactive, toRaw } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { localStorage } from '@/utils/local-storage';
@@ -137,6 +138,7 @@ import { message } from 'ant-design-vue';
 import type { ResponseBody } from '@/api/typing';
 import type { BasicFormResponse } from '@/api/form/basic-form';
 import { saveBasicFormData } from '@/api/form/basic-form';
+import type { RangePickerProps } from 'ant-design-vue/lib/vc-picker/RangePicker';
 
 const LOCAL_SAVE_BASIC_FORM_DATA_KEY = 'LOCAL_SAVE_BASIC_FORM_DATA';
 
@@ -153,13 +155,13 @@ export default defineComponent({
     if (localFormData !== undefined) {
       formData = JSON.parse(localFormData);
       if (formData.date) {
-        formData.date = [moment(formData.date[0]), moment(formData.date[1])];
+        formData.date = [dayjs(formData.date[0]), dayjs(formData.date[1])];
       }
     }
 
     const modelRef = reactive({
       title: undefined,
-      date: [],
+      date: null as RangePickerProps<Dayjs>['value'],
       goal: undefined,
       standard: undefined,
       client: undefined,
@@ -185,8 +187,8 @@ export default defineComponent({
           saveBasicFormData({
             title: modelRef.title,
             date: [
-              moment(modelRef.date[0]).format('YYYY-MM-DD hh:mm:ss'),
-              moment(modelRef.date[1]).format('YYYY-MM-DD hh:mm:ss'),
+              dayjs(modelRef.date[0]).format('YYYY-MM-DD hh:mm:ss'),
+              dayjs(modelRef.date[1]).format('YYYY-MM-DD hh:mm:ss'),
             ],
             goal: modelRef.goal,
             standard: modelRef.standard,

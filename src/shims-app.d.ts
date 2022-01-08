@@ -1,10 +1,7 @@
 declare module '*.vue' {
-  import type { DefineComponent } from 'vue';
-  // eslint-disable-next-line @typescript-eslint/ban-types
-  const component: DefineComponent<any, any, any>;
-  export default component;
+  import { defineComponent } from 'vue';
+  export default defineComponent;
 }
-
 declare module '*.json' {
   const obj: Record<string | number, any>;
   export default obj;
@@ -62,11 +59,5 @@ declare module '*.module.sass' {
 declare module 'ant-design-vue/es/locale/*' {
   import type { Locale } from 'ant-design-vue/es/locale-provider';
   const locale: Locale & { readonly [key: string]: string };
-  export default locale;
-}
-
-declare module 'moment/locale/*' {
-  import type { LocaleSpecification } from 'moment';
-  const locale: LocaleSpecification & { readonly [key: string]: string };
   export default locale;
 }

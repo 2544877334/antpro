@@ -39,7 +39,7 @@
 import { computed, defineComponent, onMounted, ref, onBeforeUnmount } from 'vue';
 import type { NoticeItem } from '@/api/user/notice';
 import { queryNotices } from '@/api/user/notice';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { groupBy } from 'lodash-es';
 import NoticeDropdown from './notice-dropdown.vue';
 import NoticeList from './notice-list.vue';
@@ -114,7 +114,7 @@ export default defineComponent({
           const newNotice = { ...notice };
 
           if (newNotice.datetime) {
-            newNotice.datetime = moment(notice.datetime as string).fromNow();
+            newNotice.datetime = dayjs(notice.datetime as string).fromNow();
           }
 
           if (newNotice.id) {

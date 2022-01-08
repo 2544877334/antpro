@@ -20,43 +20,47 @@
           </a-card>
         </a-col>
         <a-col :sm="24" :md="12">
-          <a-card title="按钮组合" class="pro-examples-button-group">
-            <h4>Basic</h4>
-            <a-button-group>
-              <a-button>Cancel</a-button>
-              <a-button type="primary">OK</a-button>
-            </a-button-group>
-            <a-button-group>
-              <a-button disabled>L</a-button>
-              <a-button disabled>M</a-button>
-              <a-button disabled>R</a-button>
-            </a-button-group>
-            <a-button-group>
-              <a-button type="primary">L</a-button>
-              <a-button>M</a-button>
-              <a-button>M</a-button>
-              <a-button type="dashed">R</a-button>
-            </a-button-group>
-
-            <h4>With Icon</h4>
-            <a-button-group>
-              <a-button type="primary">
-                <left-outlined />
-                Go back
-              </a-button>
-              <a-button type="primary">
-                Go forward
-                <right-outlined />
-              </a-button>
-            </a-button-group>
-            <a-button-group>
-              <a-button type="primary">
-                <template #icon><cloud-outlined /></template>
-              </a-button>
-              <a-button type="primary">
-                <template #icon><cloud-download-outlined /></template>
-              </a-button>
-            </a-button-group>
+          <a-card title="按钮尺寸" class="pro-examples-button pro-examples-button-size">
+            <a-radio-group :value="state.size" @change="handleSizeChange">
+              <a-radio-button value="large">Large</a-radio-button>
+              <a-radio-button value="default">Default</a-radio-button>
+              <a-radio-button value="small">Small</a-radio-button>
+            </a-radio-group>
+            <br />
+            <br />
+            <a-button type="primary" :size="state.size">Primary</a-button>
+            <a-button :size="state.size">Normal</a-button>
+            <a-button type="dashed" :size="state.size">Dashed</a-button>
+            <a-button danger :size="state.size">Danger</a-button>
+            <a-button type="link" :size="state.size">Link</a-button>
+            <br />
+            <a-button type="primary" :size="state.size">
+              <template #icon>
+                <download-outlined />
+              </template>
+            </a-button>
+            <a-button type="primary" shape="circle" :size="state.size">
+              <template #icon>
+                <download-outlined />
+              </template>
+            </a-button>
+            <a-button type="primary" shape="round" :size="state.size">
+              <template #icon>
+                <download-outlined />
+                Download
+              </template>
+            </a-button>
+            <a-button type="primary" shape="round" :size="state.size">
+              <template #icon>
+                <download-outlined />
+              </template>
+            </a-button>
+            <a-button type="primary" :size="state.size">
+              <template #icon>
+                <download-outlined />
+              </template>
+              Download
+            </a-button>
           </a-card>
         </a-col>
       </a-row>
@@ -139,61 +143,6 @@
             <a-button type="link" block>Link</a-button>
           </a-card>
         </a-col>
-        <a-col :span="24">
-          <a-card title="按钮尺寸" class="pro-examples-button pro-examples-button-size">
-            <a-radio-group :value="state.size" @change="handleSizeChange">
-              <a-radio-button value="large">Large</a-radio-button>
-              <a-radio-button value="default">Default</a-radio-button>
-              <a-radio-button value="small">Small</a-radio-button>
-            </a-radio-group>
-            <br />
-            <br />
-            <a-button type="primary" :size="state.size">Primary</a-button>
-            <a-button :size="state.size">Normal</a-button>
-            <a-button type="dashed" :size="state.size">Dashed</a-button>
-            <a-button danger :size="state.size">Danger</a-button>
-            <a-button type="link" :size="state.size">Link</a-button>
-            <br />
-            <a-button type="primary" :size="state.size">
-              <template #icon>
-                <download-outlined />
-              </template>
-            </a-button>
-            <a-button type="primary" shape="circle" :size="state.size">
-              <template #icon>
-                <download-outlined />
-              </template>
-            </a-button>
-            <a-button type="primary" shape="round" :size="state.size">
-              <template #icon>
-                <download-outlined />
-                Download
-              </template>
-            </a-button>
-            <a-button type="primary" shape="round" :size="state.size">
-              <template #icon>
-                <download-outlined />
-              </template>
-            </a-button>
-            <a-button type="primary" :size="state.size">
-              <template #icon>
-                <download-outlined />
-              </template>
-              Download
-            </a-button>
-            <br />
-            <a-button-group :size="state.size">
-              <a-button type="primary">
-                <left-outlined />
-                Backward
-              </a-button>
-              <a-button type="primary">
-                Forward
-                <right-outlined />
-              </a-button>
-            </a-button-group>
-          </a-card>
-        </a-col>
       </a-row>
     </a-card>
   </page-container>
@@ -201,14 +150,8 @@
 
 <script lang="ts">
 import { defineComponent, reactive } from 'vue';
-import {
-  LeftOutlined,
-  RightOutlined,
-  CloudDownloadOutlined,
-  CloudOutlined,
-  DownOutlined,
-  DownloadOutlined,
-} from '@ant-design/icons-vue';
+import { DownOutlined, DownloadOutlined } from '@ant-design/icons-vue';
+import type { SizeType } from 'ant-design-vue/es/config-provider';
 
 export default defineComponent({
   name: 'ButtonExample',
@@ -216,7 +159,7 @@ export default defineComponent({
     const state = reactive({
       loading: false,
       iconLoading: false as boolean | { delay: number },
-      size: 'large',
+      size: 'large' as SizeType,
     });
     const enterLoading = () => {
       state.loading = true;
@@ -226,7 +169,7 @@ export default defineComponent({
     };
     const handleMenuClick = () => {};
     const handleSizeChange = (e: Event) => {
-      state.size = (e.target as HTMLInputElement).value;
+      state.size = (e.target as HTMLInputElement).value as SizeType;
     };
     return {
       state,
@@ -238,10 +181,6 @@ export default defineComponent({
     };
   },
   components: {
-    LeftOutlined,
-    RightOutlined,
-    CloudDownloadOutlined,
-    CloudOutlined,
     DownOutlined,
     DownloadOutlined,
   },

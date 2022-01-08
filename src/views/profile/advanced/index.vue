@@ -20,13 +20,13 @@
 
     <!-- actions -->
     <template #extra>
-      <a-button-group style="margin-right: 4px">
+      <a-space :size="5">
         <a-button>操作</a-button>
         <a-button>操作</a-button>
         <a-button>
           <ellipsis-outlined />
         </a-button>
-      </a-button-group>
+      </a-space>
       <a-button type="primary">主操作</a-button>
     </template>
 
