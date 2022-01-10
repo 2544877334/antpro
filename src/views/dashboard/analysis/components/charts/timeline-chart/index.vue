@@ -12,17 +12,12 @@ import type { PropType } from 'vue';
 import { defineComponent, ref, computed, watch, onMounted } from 'vue';
 import { Chart } from '@/components';
 import dayjs from 'dayjs';
-
-export interface TimelineItem {
-  x: string;
-  y1: number;
-  y2: number;
-}
+import type { OfflineChartDataItem } from '@/api/dashboard/analysis';
 
 export default defineComponent({
   props: {
     data: {
-      type: Array as PropType<TimelineItem[]>,
+      type: Array as PropType<OfflineChartDataItem[]>,
       default: () => [],
     },
     title: {
@@ -98,7 +93,7 @@ export default defineComponent({
 
     const chartHeight = computed(() => `${props.height}px`);
 
-    const setChartOption = (data: TimelineItem[]) => {
+    const setChartOption = (data: OfflineChartDataItem[]) => {
       const xAxis: string[] = [];
       const seriesData1: number[] = [];
       const seriesData2: number[] = [];

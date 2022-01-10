@@ -34,8 +34,8 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const root = ref<HTMLDivElement | undefined>(undefined);
-    const node = ref<HTMLCanvasElement | undefined>(undefined);
+    const root = ref<HTMLDivElement>();
+    const node = ref<HTMLCanvasElement>();
     const timer = ref(0);
     const radio = ref(1);
 

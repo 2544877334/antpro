@@ -126,7 +126,7 @@ export default defineComponent({
     const chartHeight = computed(() => `${props.height + 100}px`);
     const setChartOption = (data: SeriesDataItem[]) => {
       const xAxis: string[] = [];
-      const seriesData: EChartOption.SeriesPie.DataObject[] = [];
+      const seriesData = [];
       data.forEach(item => {
         const { x, y } = item;
         xAxis.push(x);

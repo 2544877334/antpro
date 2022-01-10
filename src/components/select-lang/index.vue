@@ -22,6 +22,7 @@ import { useStore } from 'vuex';
 import type { AppState } from '@/store/modules/app/state';
 import { locales } from '@/locales';
 import { GlobalOutlined } from '@ant-design/icons-vue';
+import type { MenuProps } from 'ant-design-vue';
 
 const languageLabels = {
   'zh-CN': '简体中文',
@@ -42,18 +43,12 @@ const languageSupports = {
   'pt-BR': false,
 };
 
-interface MenuClick {
-  item: Record<string, unknown>;
-  key: string;
-  keyPath: string;
-}
-
 export default defineComponent({
   setup() {
     const store = useStore<AppState>();
     const currentLang = computed(() => store.getters['app/lang']);
 
-    const handleMenuClick = ({ key }: MenuClick): void => {
+    const handleMenuClick: MenuProps['onClick'] = ({ key }) => {
       store.dispatch('app/SET_LANG', key);
     };
 

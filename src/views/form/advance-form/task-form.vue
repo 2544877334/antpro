@@ -92,7 +92,7 @@ export default defineComponent({
       validate().then(() => {
         notification['error']({
           message: 'Received values of form:',
-          description: toRaw(modelRef),
+          description: JSON.stringify(toRaw(modelRef)),
         });
       });
     };

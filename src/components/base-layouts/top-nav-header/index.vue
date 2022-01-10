@@ -38,6 +38,7 @@ import { useProProvider } from '../pro-provider/index';
 import BaseMenu from '@/components/base-layouts/base-menu/index.vue';
 import RightContent from '../top-nav-header/right-content.vue';
 import type { RouteProps } from '../typing';
+import type { MenuTheme } from 'ant-design-vue';
 
 export default defineComponent({
   props: {
@@ -50,7 +51,7 @@ export default defineComponent({
       default: 'side',
     },
     theme: {
-      type: String,
+      type: String as PropType<MenuTheme>,
       default: 'dark',
     },
     contentWidth: {

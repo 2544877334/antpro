@@ -95,7 +95,11 @@ export default defineComponent({
       default: false,
     },
     back: {
-      type: Function,
+      type: Function as PropType<(...args: any[]) => void>,
+      default: undefined,
+    },
+    onBack: {
+      type: Function as PropType<(...args: any[]) => void>,
       default: undefined,
     },
     prefixCls: {
@@ -108,7 +112,7 @@ export default defineComponent({
     },
   },
   emits: ['tab-change', 'update:tab-active-key'],
-  setup(props, { attrs, slots, emit }) {
+  setup(props, { slots, emit }) {
     const config = useProProvider();
     const { breadcrumb } = injectMenuState();
     const { getPrefixCls, contentWidth } = toRefs(config);
@@ -119,7 +123,7 @@ export default defineComponent({
     });
     // 当未设置 back props 或未监听 @back，不显示 back
     // props 的 back 事件优先级高于 @back，需要注意
-    const onBack = props.back || attrs.onBack;
+    const onBack = props.back || props.onBack;
     const handleBack = onBack || undefined;
     const handleTabChange = (activeKey: string): void => {
       emit('tab-change', activeKey);

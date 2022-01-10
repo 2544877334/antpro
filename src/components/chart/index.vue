@@ -22,7 +22,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const chartDom = ref<HTMLDivElement | null>(null);
+    const chartDom = ref<HTMLDivElement>();
     let chart: ECharts | null = null;
     const isRealDark = inject('isRealDark', ref(false));
     const resizeChart = () => {

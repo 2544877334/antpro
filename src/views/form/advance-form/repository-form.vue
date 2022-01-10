@@ -85,7 +85,7 @@ export default defineComponent({
       url: undefined,
       owner: undefined,
       approver: undefined,
-      dateRange: [],
+      dateRange: null, // as RangePickerProps['value'],
       type: undefined,
     });
     const rulesRef = reactive({

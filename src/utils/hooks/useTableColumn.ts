@@ -1,6 +1,6 @@
+import type { ColumnType } from 'ant-design-vue/lib/table';
 import type { Ref } from 'vue';
 import { ref, reactive, watch } from 'vue';
-import type { TableColumn } from '@/typing';
 
 export type TableOptions =
   | {
@@ -23,7 +23,7 @@ export type DynamicColumnState = {
 };
 
 export interface DynamicColumns {
-  dynamicColumns: Ref<TableColumn[]>;
+  dynamicColumns: Ref<ColumnType[]>;
   dynamicColumnItems: Ref<DynamicColumnItem[]>;
   state: DynamicColumnState;
   reset: () => void;
@@ -39,7 +39,7 @@ const defaultRowIndexColumn = {
 };
 
 export const useTableDynamicColumns = (
-  columns: TableColumn[],
+  columns: ColumnType[],
   defOptions: TableOptions,
 ): DynamicColumns => {
   const options: {
@@ -85,10 +85,10 @@ export const useTableDynamicColumns = (
     const keys = dynamicColumnItems.value.map(item => item.key);
 
     dynamicColumns.value = columns
-      .filter(item => state.checkedList.includes(item.dataIndex))
+      .filter(item => state.checkedList.includes(item.dataIndex as string))
       .sort((a, b) => {
-        const aKey = a.key || a.dataIndex;
-        const bKey = b.key || b.dataIndex;
+        const aKey = (a.key || a.dataIndex) as string;
+        const bKey = (b.key || b.dataIndex) as string;
         return keys.indexOf(aKey) - keys.indexOf(bKey);
       })
       .map(item => item);

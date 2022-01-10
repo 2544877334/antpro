@@ -4,7 +4,7 @@
     class="cover-card-list"
     :loading="context.loading"
     :data-source="context.dataSource"
-    :grid="{ gutter: 16, xs: 1, sm: 2, md: 3, lg: 3, xl: 4, xxl: 4 }"
+    :grid="{ gutter: 16, xs: 1, sm: 2, md: 3, lg: 3, xl: 4, xxl: 4, xxxl: 4 }"
   >
     <template #renderItem="{ item }">
       <a-list-item>

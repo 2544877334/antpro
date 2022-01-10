@@ -41,6 +41,7 @@
         lg: 3,
         xl: 4,
         xxl: 4,
+        xxxl: 4,
       }"
       :dataSource="[nullData, ...context.dataSource]"
     >

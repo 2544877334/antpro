@@ -59,6 +59,7 @@ import type { ReponseData } from '@/utils/hooks/useFetchData';
 import { useFetchData } from '@/utils/hooks/useFetchData';
 import { default as TableTotalRow } from '@/components/table/total-table';
 import { useI18n } from 'vue-i18n';
+import type { TableColumn } from '@/typing';
 
 interface ListItem {
   id: string;
@@ -84,7 +85,7 @@ const statusMap = {
   failed: '失败',
 };
 
-const goodsColumns = [
+const goodsColumns: TableColumn[] = [
   {
     title: '商品编号',
     dataIndex: 'id',

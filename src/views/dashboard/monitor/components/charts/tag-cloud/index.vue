@@ -25,7 +25,7 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const chartDom = ref<HTMLDivElement | null>(null);
+    const chartDom = ref<HTMLDivElement>();
     let chart: ECharts | null = null;
 
     const renderChart = (option: any) => {

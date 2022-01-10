@@ -71,6 +71,7 @@ import Trend from './trend/index.vue';
 import type { SearchDataItem, VisitDataItem } from '@/api/dashboard/analysis';
 
 import numeral from 'numeral';
+import type { TableColumn } from '@/typing';
 
 export default defineComponent({
   props: {
@@ -90,7 +91,7 @@ export default defineComponent({
   setup() {
     const { t } = useI18n();
 
-    const columns = [
+    const columns: TableColumn[] = [
       {
         title: t('dashboard.analysis.table.rank'),
         dataIndex: 'index',

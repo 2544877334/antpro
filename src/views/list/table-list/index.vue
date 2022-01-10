@@ -221,8 +221,6 @@ const baseColumns: TableColumn[] = [
     sorter: true,
     align: 'right',
     customRender: ({ text }) => `${text} 万`,
-    // mark to display a total number
-    needTotal: true,
   },
   {
     title: '状态',
