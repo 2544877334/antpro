@@ -54,6 +54,9 @@ import { useIcons } from '@/icons';
 import Authority from './utils/authority/authority.vue';
 import './app.less';
 import './router/router-guards';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+dayjs.extend(relativeTime);
 
 const app = createApp(App);
 

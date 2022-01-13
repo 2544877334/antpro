@@ -14,7 +14,7 @@
       :class="{ 'ant-pro-multi-tab-wrap': true, 'ant-pro-multi-tab-wrap-fixed': fixed }"
       @change="handleActiveKeyChange"
     >
-      <template #tabBarExtraContent>
+      <template #rightExtra>
         <a-dropdown>
           <ellipsis-outlined
             :rotate="90"
@@ -183,7 +183,7 @@ export default defineComponent({
 .ant-pro-multi-tab-wrap {
   background: @component-background;
 }
-.ant-pro-multi-tab-wrap :deep(.ant-tabs-bar) {
+.ant-pro-multi-tab-wrap :deep(.ant-tabs-nav) {
   padding-left: 16px;
   .ant-tabs-tab {
     padding: 0;

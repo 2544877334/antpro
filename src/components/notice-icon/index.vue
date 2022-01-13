@@ -1,6 +1,6 @@
 <template>
   <notice-dropdown class="action" :count="userInfo && userInfo.unreadCount" :loading="loading">
-    <a-tabs v-model:activeKey="activeKey">
+    <a-tabs class="notice-tab" v-model:activeKey="activeKey">
       <template v-for="{ key, title, emptyText, showViewMore } in noticesConfig" :key="key">
         <a-tab-pane v-if="key" :key="key" :tab="title">
           <notice-list
@@ -187,4 +187,11 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less"></style>
+<style lang="less" scoped>
+.notice-tab :deep(.ant-tabs-nav-list) {
+  .ant-tabs-tab {
+    flex: 1;
+    justify-content: center;
+  }
+}
+</style>

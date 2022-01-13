@@ -5,7 +5,7 @@
 </template>
 
 <script lang="ts">
-import { computed, provide, watch } from 'vue';
+import { computed, defineComponent, provide, watch } from 'vue';
 import { useStore } from 'vuex';
 import { STORAGE_LANG_KEY } from '@/store/mutation-type';
 import { localStorage } from '@/utils/local-storage';
@@ -15,7 +15,7 @@ import useMenuState, { MenuStateSymbol } from './layouts/use-menu-state';
 import { useMultiTabStateProvider } from './components/multi-tab';
 import { defaultLang } from './locales';
 
-export default {
+export default defineComponent({
   name: 'App',
   setup() {
     const store = useStore();
@@ -66,5 +66,5 @@ export default {
       locale,
     };
   },
-};
+});
 </script>

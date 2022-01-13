@@ -1,11 +1,7 @@
 <template>
   <div class="main">
     <a-form id="formLogin" layout="vertical" class="user-layout-login">
-      <a-tabs
-        :active-key="customActiveKey"
-        :tab-bar-style="{ textAlign: 'center', borderBottom: 'unset' }"
-        @change="handleTabClick"
-      >
+      <a-tabs centered :active-key="customActiveKey" @change="handleTabClick">
         <a-tab-pane key="tab1" tab="账号密码登录">
           <a-alert
             v-if="isLoginError"
@@ -359,6 +355,11 @@ export default defineComponent({
   .prefixIcon {
     color: @primary-color;
     font-size: @font-size-base;
+  }
+}
+.user-layout-login :deep(.ant-tabs) {
+  .ant-tabs-nav::before {
+    border-bottom: none;
   }
 }
 </style>

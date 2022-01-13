@@ -2,7 +2,7 @@
   <a-card :loading="loading" :bordered="false" :body-style="loading ? {} : { padding: 0 }">
     <div class="salesCard">
       <a-tabs size="large" :tab-bar-style="{ marginBottom: '24px' }">
-        <template #tabBarExtraContent>
+        <template #rightExtra>
           <div class="salesExtraWrap">
             <div class="salesExtra">
               <a :class="isActive('today')" @click="() => selectDate('today')">
