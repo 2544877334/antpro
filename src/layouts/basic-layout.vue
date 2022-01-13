@@ -71,7 +71,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, inject, ref } from 'vue';
+import { defineComponent, computed, inject, ref, watch } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { genMenuInfo } from '@/utils/menu-util';
 import { default as WrapContent } from '@/components/base-layouts/wrap-content/index.vue';
@@ -86,6 +86,8 @@ import { default as NoticeIcon } from '@/components/notice-icon/index.vue';
 import { MultiTab } from '@/components/multi-tab';
 import { useStore } from 'vuex';
 import { injectMenuState } from './use-menu-state';
+import { useAuth } from '@/utils/authority';
+import { Action } from '@/store/modules/user/typing';
 
 export default defineComponent({
   name: 'BasicLayout',
@@ -99,7 +101,14 @@ export default defineComponent({
       () => menuState.layout.value === 'side' || menuState.layout.value === 'left',
     );
     const hasTopMenu = computed(() => menuState.layout.value === 'top');
-
+    const hasAuth = useAuth([Action.DELETE, Action.ADD]);
+    watch(
+      hasAuth,
+      () => {
+        console.log('hasAuth', hasAuth.value);
+      },
+      { immediate: true },
+    );
     // gen menus
     const allowRouters = computed(() => store.getters[`user/allowRouters`]); // genMenuInfo(filterMenu(routes)).menus;
     const menus = computed(() => genMenuInfo(allowRouters.value).menus);
@@ -111,6 +120,7 @@ export default defineComponent({
       hasSideMenu,
       hasTopMenu,
       isMobile,
+      hasAuth,
     };
   },
   components: {
