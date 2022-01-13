@@ -2,8 +2,6 @@ import { ref } from 'vue';
 import { createI18n } from 'vue-i18n';
 import dayjs from 'dayjs';
 import enUS from './lang/en-US';
-import updateLocale from 'dayjs/plugin/updateLocale';
-dayjs.extend(updateLocale);
 
 export const locales: string[] = ['zh-CN', 'zh-TW', 'en-US', 'pt-BR'];
 

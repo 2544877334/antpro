@@ -14,6 +14,7 @@ import { useI18n } from 'vue-i18n';
 import useMenuState, { MenuStateSymbol } from './layouts/use-menu-state';
 import { useMultiTabStateProvider } from './components/multi-tab';
 import { defaultLang } from './locales';
+import type { ConfigProviderProps } from 'ant-design-vue/lib/config-provider';
 
 export default defineComponent({
   name: 'App',
@@ -59,7 +60,7 @@ export default defineComponent({
     );
     provide(MenuStateSymbol, menuState);
     const locale = computed(() => {
-      return i18n.getLocaleMessage(i18n.locale.value).antd;
+      return i18n.getLocaleMessage(i18n.locale.value).antd as ConfigProviderProps['locale'];
     });
 
     return {
