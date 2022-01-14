@@ -46,14 +46,15 @@
         pageSize: 5,
       }"
     >
-      <template #keywordRender="{ text }">
-        <a href="/">{{ text }}</a>
-      </template>
-
-      <template #rangeRender="{ text, record }">
-        <trend :flag="record.status === 1 ? 'down' : 'up'">
-          <span style="margin-right: 4px">{{ text }}%</span>
-        </trend>
+      <template #bodyCell="{ text, column, record }">
+        <template v-if="column.key === 'keyword'">
+          <a href="/">{{ text }}</a>
+        </template>
+        <template v-else-if="column.key === 'range'">
+          <trend :flag="record.status === 1 ? 'down' : 'up'">
+            <span style="margin-right: 4px">{{ text }}%</span>
+          </trend>
+        </template>
       </template>
     </a-table>
   </a-card>
@@ -101,7 +102,6 @@ export default defineComponent({
         title: t('dashboard.analysis.table.search-keyword'),
         dataIndex: 'keyword',
         key: 'keyword',
-        scopedSlots: { customRender: 'keywordRender' },
       },
       {
         title: t('dashboard.analysis.table.users'),
@@ -115,7 +115,6 @@ export default defineComponent({
         dataIndex: 'range',
         key: 'range',
         sorter: (a: Record<string, number>, b: Record<string, number>) => a.range - b.range,
-        scopedSlots: { customRender: 'rangeRender' },
       },
     ];
     const state = reactive({
