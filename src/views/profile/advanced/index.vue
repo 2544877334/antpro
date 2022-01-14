@@ -132,33 +132,15 @@
       "
     >
       <a-table
-        v-if="state.operationActiveTabKey === '1'"
+        :key="state.operationActiveTabKey"
         :columns="operationColumns"
-        :data-source="operation1"
+        :data-source="operationsData[`operation${state.operationActiveTabKey}`]"
         :pagination="false"
       >
-        <template #status="status">
-          <a-badge :status="status" :text="status" />
-        </template>
-      </a-table>
-      <a-table
-        v-if="state.operationActiveTabKey === '2'"
-        :columns="operationColumns"
-        :data-source="operation2"
-        :pagination="false"
-      >
-        <template #status="status">
-          <a-badge :status="status" :text="status" />
-        </template>
-      </a-table>
-      <a-table
-        v-if="state.operationActiveTabKey === '3'"
-        :columns="operationColumns"
-        :data-source="operation3"
-        :pagination="false"
-      >
-        <template #status="status">
-          <a-badge :status="status" :text="status" />
+        <template #bodyCell="{ text, column }">
+          <template v-if="column.key === 'status'">
+            <a-badge :status="text === 'agree' ? 'success' : 'error'" :text="text" />
+          </template>
         </template>
       </a-table>
     </a-card>
@@ -184,7 +166,6 @@ const operationColumns = [
     title: '执行结果',
     dataIndex: 'status',
     key: 'status',
-    scopedSlots: { customRender: 'status' },
   },
   {
     title: '操作时间',
@@ -305,9 +286,11 @@ export default defineComponent({
     return {
       state,
       operationColumns,
-      operation1,
-      operation2,
-      operation3,
+      operationsData: {
+        operation1,
+        operation2,
+        operation3,
+      },
       direction: computed(() => (isMobile.value ? 'vertical' : 'horizontal')),
       handleTabChange,
     };

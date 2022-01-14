@@ -163,17 +163,19 @@
               </a-row>
             </div>
           </template>
-          <template #action="{ record }">
-            <a
-              @click="
-                () => {
-                  roleModalRef = record;
-                  modalVisible = true;
-                }
-              "
-            >
-              编辑
-            </a>
+          <template #bodyCell="{ record, column }">
+            <template v-if="column.dataIndex === 'action'">
+              <a
+                @click="
+                  () => {
+                    roleModalRef = record;
+                    modalVisible = true;
+                  }
+                "
+              >
+                编辑
+              </a>
+            </template>
           </template>
         </a-table>
       </a-card>
@@ -218,7 +220,6 @@ const baseColumns: TableColumn[] = [
   {
     title: '操作',
     dataIndex: 'action',
-    slots: { customRender: 'action' },
   },
 ];
 export default defineComponent({

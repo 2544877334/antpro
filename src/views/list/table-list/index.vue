@@ -158,11 +158,13 @@
           <template #rowIndex="{ index }">
             {{ index }}
           </template>
-          <template #status="{ text }">
-            <a-badge :status="statusMap[text].status" :text="statusMap[text].text" />
-          </template>
-          <template #action="{ text }">
-            <a :title="text">编辑</a>
+          <template #bodyCell="{ text, column }">
+            <template v-if="column.dataIndex === 'status'">
+              <a-badge :status="statusMap[text].status" :text="statusMap[text].text" />
+            </template>
+            <template v-else-if="column.dataIndex === 'action'">
+              <a :title="text">编辑</a>
+            </template>
           </template>
         </a-table>
       </a-card>
@@ -225,7 +227,6 @@ const baseColumns: TableColumn[] = [
   {
     title: '状态',
     dataIndex: 'status',
-    slots: { customRender: 'status' },
     filters: [
       {
         text: status[0],
@@ -253,7 +254,6 @@ const baseColumns: TableColumn[] = [
   {
     title: '操作',
     dataIndex: 'action',
-    slots: { customRender: 'action' },
   },
 ];
 export default defineComponent({
