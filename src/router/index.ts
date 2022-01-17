@@ -394,7 +394,8 @@ export const routes: MenuDataItem[] = [
           {
             name: 'nested-menu1',
             path: '/nested/menu1',
-            meta: { title: 'pages.nested.menu1.title' },
+            // 由于 vuerouter 问题，三级路由开启 keepalive 会导致组件多次 setup
+            meta: { title: 'pages.nested.menu1.title', keepAlive: false },
             component: () =>
               import(/* webpackChunkName: "nested" */ '@/views/examples/nested/menu1.vue'),
             redirect: '/nested/menu1/menu1-1',
@@ -409,7 +410,7 @@ export const routes: MenuDataItem[] = [
               {
                 name: 'nested-menu1-2',
                 path: '/nested/menu1/menu1-2',
-                meta: { title: 'pages.nested.menu1-2.title' },
+                meta: { title: 'pages.nested.menu1-2.title', keepAlive: false },
                 redirect: '/nested/menu1/menu1-2/menu1-2-1',
                 component: () =>
                   import(/* webpackChunkName: "nested" */ '@/views/examples/nested/menu1-2.vue'),
@@ -437,7 +438,7 @@ export const routes: MenuDataItem[] = [
           {
             name: 'nested-menu3',
             path: '/nested/menu3',
-            meta: { title: 'pages.nested.menu3.title', hideChildrenInMenu: true },
+            meta: { title: 'pages.nested.menu3.title', hideChildrenInMenu: true, keepAlive: false },
             redirect: '/nested/menu3/menu3-1',
             component: () =>
               import(/* webpackChunkName: "nested" */ '@/views/examples/nested/menu3.vue'),
