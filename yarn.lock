@@ -14,7 +14,7 @@
   resolved "https://registry.npmmirror.com/@ant-design/icons-svg/download/@ant-design/icons-svg-4.2.1.tgz#8630da8eb4471a4aabdaed7d1ff6a97dcb2cf05a"
   integrity sha1-hjDajrRHGkqr2u19H/apfcss8Fo=
 
-"@ant-design/icons-vue@^6.0.0":
+"@ant-design/icons-vue@^6.0.0", "@ant-design/icons-vue@^6.0.1":
   version "6.0.1"
   resolved "https://registry.npmmirror.com/@ant-design/icons-vue/download/@ant-design/icons-vue-6.0.1.tgz#9d804c3c74d2cfaf97cb18e582d3b9400934f5fd"
   integrity sha1-nYBMPHTSz6+XyxjlgtO5QAk09f0=
@@ -1148,6 +1148,15 @@
   dependencies:
     remark "^13.0.0"
     unist-util-find-all-after "^3.0.2"
+
+"@surely-vue/table@^2.0.10":
+  version "2.0.10"
+  resolved "https://registry.npmmirror.com/@surely-vue/table/download/@surely-vue/table-2.0.10.tgz#5db255accc8a21a4a5710b0da127b8453ae2538a"
+  integrity sha512-iXDIMKL0Y3c3OkK7pWnONceYx2S6CjsMEb+lbc6T1FpOtbUQ9v5yTUAUV1mdQ3+eAvsAtjP4cOSkbOBmVDnEKA==
+  dependencies:
+    "@ant-design/icons-vue" "^6.0.1"
+    lodash-es "^4.17.21"
+    resize-observer-polyfill "^1.5.1"
 
 "@trysound/sax@0.2.0":
   version "0.2.0"
@@ -5962,7 +5971,7 @@ locate-path@^5.0.0:
   dependencies:
     p-locate "^4.1.0"
 
-lodash-es@^4.17.15:
+lodash-es@^4.17.15, lodash-es@^4.17.21:
   version "4.17.21"
   resolved "https://registry.npmmirror.com/lodash-es/download/lodash-es-4.17.21.tgz#43e626c46e6591b7750beb2b50117390c609e3ee"
   integrity sha1-Q+YmxG5lkbd1C+srUBFzkMYJ4+4=

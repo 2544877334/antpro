@@ -44,6 +44,7 @@ export default {
 
   'pages.examples.title': '组件展示',
   'pages.examples.button.title': '按钮',
+  'pages.examples.surely-vue.title': 'Surely Vue',
   'pages.examples.input.title': '输入框',
   'pages.examples.rate.title': '评分',
   'pages.examples.authority.title': '权限',

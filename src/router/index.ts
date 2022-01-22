@@ -342,6 +342,16 @@ export const routes: MenuDataItem[] = [
         redirect: '/examples/button',
         children: [
           {
+            name: 'SurelyVueExample',
+            path: '/examples/surely-vue',
+            meta: {
+              title: 'pages.examples.surely-vue.title',
+              // collapsedIcon: 'AppstoreAddOutlined',
+            },
+            component: () =>
+              import(/* webpackChunkName: "examples" */ '@/views/examples/surely-vue/index.vue'),
+          },
+          {
             name: 'ButtonExample',
             path: '/examples/button',
             meta: {
