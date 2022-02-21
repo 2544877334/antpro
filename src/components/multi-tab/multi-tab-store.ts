@@ -174,7 +174,6 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
   const clearCache = async (path: CacheKey) => {
     const cacheItem = state.cacheList.find(item => item.path === path);
     state.exclude = [cacheItem?.key as string];
-    delete componentMap[cacheItem?.key];
     new Promise<void>(resolve => {
       setTimeout(() => {
         state.exclude = [];
