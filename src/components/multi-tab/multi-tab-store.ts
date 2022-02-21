@@ -1,7 +1,7 @@
-import type { InjectionKey, UnwrapRef } from 'vue';
+import type { DefineComponent, InjectionKey, UnwrapRef } from 'vue';
 import {
+  h,
   KeepAlive,
-  cloneVNode,
   reactive,
   createVNode,
   toRaw,
@@ -87,7 +87,7 @@ const findMatchedRoute = (
     }) as RouteRecordNormalized) || route
   );
 };
-
+const componentMap: Record<string, DefineComponent> = {};
 // 创建消费端
 export const MultiTabStoreConsumer = defineComponent({
   name: 'MultiTabStoreConsumer',
@@ -144,18 +144,29 @@ export const MultiTabStoreConsumer = defineComponent({
       if (route.meta.keepAlive === false) {
         exclude.push(cacheItem.key!);
       }
-      component.type.name = cacheItem.key;
+      const newCom =
+        componentMap[cacheItem.key] ||
+        defineComponent({
+          name: cacheItem.key,
+          setup(props, { attrs }) {
+            return () => h(component, { ...props, ...attrs });
+          },
+        });
+      if (exclude.find(k => k === cacheItem.key)) {
+        delete componentMap[cacheItem.key];
+      } else {
+        componentMap[cacheItem.key] = newCom;
+      }
       return createVNode(
         KeepAlive,
         { exclude },
         {
-          default: () => cloneVNode(component, { key: cacheItem!.key + route.fullPath }),
+          default: () => h(newCom, { key: cacheItem!.key + route.fullPath }),
         },
       );
     };
   },
 });
-
 export const useMultiTab = (/*options?: Options*/): MultiTabType => {
   const router = useRouter();
   const route = useRoute();
@@ -163,6 +174,7 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
   const clearCache = async (path: CacheKey) => {
     const cacheItem = state.cacheList.find(item => item.path === path);
     state.exclude = [cacheItem?.key as string];
+    delete componentMap[cacheItem?.key];
     new Promise<void>(resolve => {
       setTimeout(() => {
         state.exclude = [];
@@ -221,13 +233,24 @@ export const useMultiTab = (/*options?: Options*/): MultiTabType => {
     const list = state.cacheList;
     const end = start + num;
     const newList: CacheItem[] = [];
+    const deleteKeyList: string[] = [];
     for (let i = 0; i < list.length; i++) {
       const item = list[i];
       if (i < start || i >= end || item.lock) {
         newList.push(item);
+      } else {
+        deleteKeyList.push(item.key);
+        delete componentMap[item.key];
       }
     }
+    state.exclude = deleteKeyList;
     state.cacheList = newList;
+    new Promise<void>(resolve => {
+      setTimeout(() => {
+        state.exclude = [];
+        resolve();
+      });
+    });
   };
 
   const closeLeft = (selectedPath: CacheKey) => {
