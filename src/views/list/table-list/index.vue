@@ -171,7 +171,7 @@
     </div>
     <a-modal
       title="Basic Modal"
-      :getContainer="() => elRef.$el"
+      :getContainer="() => elRef && elRef.$el"
       v-model:visible="modalVisible"
       @ok="handleModalOk"
     >
