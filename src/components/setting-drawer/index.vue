@@ -127,6 +127,7 @@ import BlockCheckbox from './block-checkbox.vue';
 import LayoutChange from './layout-change.vue';
 import { useI18n } from 'vue-i18n';
 import type { LayoutBlockTheme } from './layout-block.vue';
+import type { SelectProps } from 'ant-design-vue';
 
 const iconStyle = {
   color: '#fff',
@@ -288,7 +289,7 @@ export default defineComponent({
       store.commit(`app/${SET_LAYOUT}`, val);
     };
 
-    const handleChange = (type: string, val: string | boolean) => {
+    const handleChange = (type: string, val: string | boolean | SelectProps['value']) => {
       console.log('change', type, val);
       if (type === 'layout') {
         updateLayoutSetting(val as string);
