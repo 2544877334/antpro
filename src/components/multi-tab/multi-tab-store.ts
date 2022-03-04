@@ -112,7 +112,6 @@ export const MultiTabStoreConsumer = defineComponent({
     );
     return () => {
       const component = flattenChildren((slots.default && slots.default()) || [])[0] as any;
-      if (!multiTab.value) return component;
       if (!component) {
         return null;
       }
@@ -128,7 +127,7 @@ export const MultiTabStoreConsumer = defineComponent({
           tabPath: tabRoute.path,
           lock: !!route.meta.lock,
         };
-        state.cacheList.push(cacheItem);
+        multiTab.value ? state.cacheList.push(cacheItem) : (state.cacheList = [cacheItem]);
       } else if (cacheItem.path !== route.path) {
         // 处理 mergeTab 逻辑
         Object.assign(cacheItem, {
@@ -157,13 +156,9 @@ export const MultiTabStoreConsumer = defineComponent({
       } else {
         componentMap[cacheItem.key] = newCom;
       }
-      return createVNode(
-        KeepAlive,
-        { exclude },
-        {
-          default: () => h(newCom, { key: cacheItem!.key + route.fullPath }),
-        },
-      );
+      return createVNode(KeepAlive, multiTab.value ? { exclude } : { include: [] }, {
+        default: () => h(newCom, { key: cacheItem!.key + route.fullPath }),
+      });
     };
   },
 });
