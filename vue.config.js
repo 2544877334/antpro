@@ -6,7 +6,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 // const StyleLintPlugin = require('stylelint-webpack-plugin');
 const { existsSync } = require('fs');
 const { getThemeVariables } = require('ant-design-vue/dist/theme');
-const { cssVariable } = require('./build/cssVariable');
+const { cssVariable } = require('./cssVariable');
 
 // const isProd = process.env.NODE_ENV === 'production'
 // const isUseCDN = process.env.IS_USE_CDN === 'true';
