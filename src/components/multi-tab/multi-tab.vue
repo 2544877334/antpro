@@ -15,7 +15,7 @@
       @change="handleActiveKeyChange"
     >
       <template #rightExtra>
-        <a-dropdown>
+        <a-dropdown placement="bottomRight">
           <ellipsis-outlined
             :rotate="90"
             class="ant-dropdown-link ant-pro-multi-tab-dropdown-menu-btn"
