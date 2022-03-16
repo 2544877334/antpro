@@ -1,4 +1,4 @@
-import 'ant-design-vue/dist/antd.less';
+import 'ant-design-vue/dist/antd.variable.less';
 import {
   Layout,
   Menu,

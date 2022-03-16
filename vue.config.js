@@ -6,7 +6,7 @@ const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 // const StyleLintPlugin = require('stylelint-webpack-plugin');
 const { existsSync } = require('fs');
 const { getThemeVariables } = require('ant-design-vue/dist/theme');
-const { additionalData } = require('./themeConfig');
+const { cssVariable } = require('./build/cssVariable');
 
 // const isProd = process.env.NODE_ENV === 'production'
 // const isUseCDN = process.env.IS_USE_CDN === 'true';
@@ -56,12 +56,14 @@ module.exports = {
     loaderOptions: {
       less: {
         lessOptions: {
-          modifyVars: { ...getThemeVariables() },
+          modifyVars: {
+            ...getThemeVariables(),
+            ...cssVariable(),
+            'root-entry-name': 'variable',
+          },
           // DO NOT REMOVE THIS LINE
           javascriptEnabled: true,
         },
-        // 如果你不需要多主题，可以注释 additionalData
-        additionalData,
       },
     },
   },

@@ -17,9 +17,17 @@
     <div :class="`${prefixCls}-content`">
       <body-wrapper key="pageStyle" :title="t('app.setting.pagestyle')">
         <block-checkbox
-          :value="value.navTheme"
+          :value="navTheme"
           :list="themeList.themeList"
           @change="val => handleChange('theme', val)"
+        />
+      </body-wrapper>
+
+      <body-wrapper key="themeColor" :title="t('app.setting.themecolor')">
+        <theme-color
+          :value="genStringToTheme(primaryColor)"
+          :colorList="themeList.colorList"
+          @change="val => handleChange('primaryColor', val)"
         />
       </body-wrapper>
 
@@ -27,17 +35,17 @@
 
       <body-wrapper key="mode" :title="t('app.setting.navigationmode')">
         <block-checkbox
-          :value="value.layout"
+          :value="layout"
           @change="val => handleChange('layout', val)"
         ></block-checkbox>
       </body-wrapper>
 
       <layout-change
-        :contentWidth="value.contentWidth"
-        :fixedHeader="value.fixedHeader"
-        :fixSiderbar="value.fixSidebar"
-        :layout="value.layout"
-        :splitMenus="value.splitMenus"
+        :contentWidth="contentWidth"
+        :fixedHeader="fixedHeader"
+        :fixSiderbar="fixSidebar"
+        :layout="layout"
+        :splitMenus="splitMenus"
         @change="({ type, value }) => handleChange(type, value)"
       />
 
@@ -51,7 +59,7 @@
               <a-select
                 size="small"
                 style="width: 100px"
-                :value="value.transitionName || 'null'"
+                :value="transitionName || 'null'"
                 @change="val => handleChange('transition', val)"
               >
                 <a-select-option value="null">Null</a-select-option>
@@ -69,8 +77,8 @@
               <template #actions>
                 <a-switch
                   size="small"
-                  :checked="value.multiTab"
-                  @change="() => handleChange('multiTab', !value.multiTab)"
+                  :checked="multiTab"
+                  @change="() => handleChange('multiTab', !multiTab)"
                 />
               </template>
             </a-list-item>
@@ -78,15 +86,15 @@
 
           <a-tooltip placement="left" :title="t('app.setting.multitab.fixed.hit')">
             <a-list-item>
-              <span :style="{ opacity: !value.multiTab ? '0.5' : '1' }">
+              <span :style="{ opacity: !multiTab ? '0.5' : '1' }">
                 {{ t('app.setting.multitab.fixed') }}
               </span>
               <template #actions>
                 <a-switch
                   size="small"
-                  :checked="value.multiTabFixed"
-                  :disabled="!value.multiTab && !value.fixedHeader"
-                  @change="() => handleChange('multiTabFixed', !value.multiTabFixed)"
+                  :checked="multiTabFixed"
+                  :disabled="!multiTab && !fixedHeader"
+                  @change="() => handleChange('multiTabFixed', !multiTabFixed)"
                 />
               </template>
             </a-list-item>
@@ -106,7 +114,7 @@
 
 <script lang="ts">
 import PropTypes from 'ant-design-vue/es/_util/vue-types';
-import { defineComponent, computed, reactive, ref } from 'vue';
+import { defineComponent, computed, ref, watch } from 'vue';
 import { useProProvider } from '../base-layouts/pro-provider';
 import { CloseOutlined, SettingOutlined } from '@ant-design/icons-vue';
 import type { ContentWidth } from '../base-layouts/typing';
@@ -121,6 +129,7 @@ import {
   SET_FIXED_SIDEBAR,
   SET_MULTI_TAB,
   SET_FIXED_MULTI_TAB,
+  SET_PRIMARY_COLOR,
 } from '@/store/modules/app/mutations';
 import BodyWrapper from './body-wrapper.vue';
 import BlockCheckbox from './block-checkbox.vue';
@@ -128,6 +137,8 @@ import LayoutChange from './layout-change.vue';
 import { useI18n } from 'vue-i18n';
 import type { LayoutBlockTheme } from './layout-block.vue';
 import type { SelectProps } from 'ant-design-vue';
+import { genStringToTheme, updateTheme } from './util';
+import ThemeColor from './theme-color.vue';
 
 const iconStyle = {
   color: '#fff',
@@ -140,41 +151,34 @@ export interface ThemeItem {
   url?: string;
   title: string;
 }
-export interface ThemeConfig {
-  key: string;
-  fileName?: string;
-  theme: string;
-  modifyVars: Record<string, any>;
-}
 
-export interface SettingProps {
-  theme: 'dark' | 'light' | 'realDrak';
+export interface SettingState {
+  theme: 'dark' | 'light' | 'realDark';
   primaryColor: string;
   layout: 'side' | 'top' | 'mix' | 'left';
   colorWeak: boolean;
+  splitMenus: boolean;
   contentWidth: ContentWidth;
   fixedHeader: boolean;
   fixSiderbar: boolean;
   hideHintAlert: boolean;
   hideCopyButton: boolean;
+  transitionName: string;
+  multiTab: boolean;
+  multiTabFixed: boolean;
 }
 
-export const vueSettingProps = {
-  theme: PropTypes.oneOf(['dark', 'light', 'realDark']),
-  primaryColor: PropTypes.string,
-  layout: PropTypes.oneOf(['side', 'top', 'mix', 'left']),
-  colorWeak: PropTypes.bool,
-  contentWidth: PropTypes.oneOf(['Fluid', 'Fixed']).def('Fluid'),
-  fixedHeader: PropTypes.bool,
-  fixSiderbar: PropTypes.bool,
-  hideHintAlert: PropTypes.bool.def(false),
-  hideCopyButton: PropTypes.bool.def(false),
-};
-
 const getThemeList = (t: (s: string) => string) => {
-  // @ts-ignoe
-  // const list: ThemeConfig[] = window.antdv_pro_plugin_ant_themeVar || [];
-  const list: ThemeConfig[] = [];
+  const colorList = [
+    { key: 'daybreak', color: '#1890ff' },
+    { key: 'dust', color: '#F5222D' },
+    { key: 'volcano', color: '#FA541C' },
+    { key: 'sunset', color: '#FAAD14' },
+    { key: 'cyan', color: '#13C2C2' },
+    { key: 'green', color: '#52C41A' },
+    { key: 'geekblue', color: '#2F54EB' },
+    { key: 'purple', color: '#722ED1' },
+  ];
   const themeList: ThemeItem[] = [
     {
       key: 'light',
@@ -190,51 +194,8 @@ const getThemeList = (t: (s: string) => string) => {
     },
   ];
 
-  const darkColorList = [
-    {
-      key: '#1890ff',
-      color: '#1890ff',
-      theme: 'dark',
-    },
-  ];
-
-  const lightColorList = [
-    {
-      key: '#1890ff',
-      color: '#1890ff',
-      theme: 'dark',
-    },
-  ];
-
-  if (list.find(item => item.theme === 'dark')) {
-    themeList.push({
-      key: 'realDark',
-      url: 'https://gw.alipayobjects.com/zos/antfincdn/hmKaLQvmY2/LCkqqYNmvBEbokSDscrm.svg',
-      title: t('app.setting.pagestyle.realdark'),
-    });
-  }
-  // insert  theme color List
-  list.forEach(item => {
-    const color = (item.modifyVars || {})['@primary-color'];
-    if (item.theme === 'dark' && color) {
-      darkColorList.push({
-        color,
-        ...item,
-      });
-    }
-    if (!item.theme || item.theme === 'light') {
-      lightColorList.push({
-        color,
-        ...item,
-      });
-    }
-  });
-
   return {
-    colorList: {
-      dark: darkColorList,
-      light: lightColorList,
-    },
+    colorList,
     themeList,
   };
 };
@@ -256,18 +217,35 @@ export default defineComponent({
     const { t } = useI18n();
     const themeList = getThemeList(t);
     const store = useStore();
-    const value = reactive({
-      layout: computed(() => store.getters['app/layout']),
-      navTheme: computed(() => store.getters['app/navTheme']),
-      contentWidth: computed(() => store.getters['app/contentWidth']),
-      splitMenus: computed(() => store.getters['app/splitMenus']),
-      fixedHeader: computed(() => store.getters['app/fixedHeader']),
-      fixSidebar: computed(() => store.getters['app/fixedSidebar']),
-      transitionName: computed(() => store.getters['app/transitionName']),
-      multiTab: computed(() => store.getters['app/multiTab']),
-      multiTabFixed: computed(() => store.getters['app/multiTabFixed']),
-    });
-
+    const layout = computed<SettingState['layout']>(() => store.getters['app/layout']);
+    const navTheme = computed<SettingState['theme']>(() => store.getters['app/navTheme']);
+    const primaryColor = computed<SettingState['primaryColor']>(
+      () => store.getters['app/primaryColor'],
+    );
+    const contentWidth = computed<SettingState['contentWidth']>(
+      () => store.getters['app/contentWidth'],
+    );
+    const splitMenus = computed<SettingState['splitMenus']>(() => store.getters['app/splitMenus']);
+    const fixedHeader = computed<SettingState['fixedHeader']>(
+      () => store.getters['app/fixedHeader'],
+    );
+    const fixSidebar = computed<SettingState['fixSiderbar']>(
+      () => store.getters['app/fixedSidebar'],
+    );
+    const transitionName = computed<SettingState['transitionName']>(
+      () => store.getters['app/transitionName'],
+    );
+    const multiTab = computed<SettingState['multiTab']>(() => store.getters['app/multiTab']);
+    const multiTabFixed = computed<SettingState['multiTabFixed']>(
+      () => store.getters['app/multiTabFixed'],
+    );
+    watch(
+      [navTheme, primaryColor],
+      () => {
+        updateTheme(navTheme.value === 'realDark', primaryColor.value);
+      },
+      { immediate: true },
+    );
     const setShow = (flag: boolean) => {
       visible.value = flag;
     };
@@ -295,6 +273,8 @@ export default defineComponent({
         updateLayoutSetting(val as string);
       } else if (type === 'theme') {
         store.commit(`app/${SET_NAV_THEME}`, val);
+      } else if (type === 'primaryColor') {
+        store.commit(`app/${SET_PRIMARY_COLOR}`, val);
       } else if (type === 'splitmenus') {
         store.commit(`app/${SET_SPLIT_MENUS}`, val);
       } else if (type === 'fixSiderbar') {
@@ -312,7 +292,7 @@ export default defineComponent({
       } else if (type === 'multiTab') {
         store.commit(`app/${SET_MULTI_TAB}`, val);
       } else if (type === 'multiTabFixed') {
-        if (!value.fixedHeader) {
+        if (!fixedHeader.value) {
           store.commit(`app/${SET_FIXED_HEADER}`, true);
         }
         store.commit(`app/${SET_FIXED_MULTI_TAB}`, val);
@@ -323,11 +303,20 @@ export default defineComponent({
 
     return {
       t,
-      value,
+      layout,
+      navTheme,
+      primaryColor,
+      contentWidth,
+      splitMenus,
+      fixedHeader,
+      fixSidebar,
+      transitionName,
+      multiTab,
+      multiTabFixed,
       prefixCls,
       iconStyle,
       themeList,
-
+      genStringToTheme,
       visible,
       setShow,
       handleChange,
@@ -337,7 +326,7 @@ export default defineComponent({
   components: {
     CloseOutlined,
     SettingOutlined,
-
+    ThemeColor,
     BodyWrapper,
     BlockCheckbox,
     LayoutChange,

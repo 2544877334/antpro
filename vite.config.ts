@@ -4,7 +4,7 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import path from 'path';
 import { getThemeVariables } from 'ant-design-vue/dist/theme';
-import { additionalData } from './build/themeConfig';
+const { cssVariable } = require('./build/cssVariable');
 import createMockServer from './build/mockServer';
 
 export default ({ mode }: ConfigEnv): UserConfig => {
@@ -57,10 +57,13 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     css: {
       preprocessorOptions: {
         less: {
-          modifyVars: { ...getThemeVariables() },
+          modifyVars: {
+            ...getThemeVariables(),
+            ...cssVariable(),
+            'root-entry-name': 'variable',
+          },
           // DO NOT REMOVE THIS LINE
           javascriptEnabled: true,
-          additionalData,
         },
       },
     },
