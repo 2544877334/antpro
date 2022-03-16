@@ -55,7 +55,7 @@ export const defaultContext: Context<any> = {
 };
 
 // 如果请求数据中，没有分页，仅单列表数据，可以使用该方法进行包装，免去重复写请求方法
-export const wrap = <T>(req: () => Promise<T[]>): (() => Promise<ReponseData<T>>) => {
+export const wrap = (req: () => Promise<any[]>): (() => Promise<ReponseData<any>>) => {
   return () =>
     req().then(res => {
       const data = res;
