@@ -4,8 +4,9 @@ import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import path from 'path';
 import { getThemeVariables } from 'ant-design-vue/dist/theme';
-const { cssVariable } = require('./build/cssVariable');
+import { cssVariable } from './build/cssVariable';
 import createMockServer from './build/mockServer';
+import legacy from '@vitejs/plugin-legacy';
 
 export default ({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
@@ -17,7 +18,13 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       'process.env.VUE_APP_API_BASE_URL': JSON.stringify(env.VITE_APP_API_BASE_URL),
       'process.env.VUE_APP_PUBLIC_PATH': JSON.stringify(env.VITE_APP_PUBLIC_PATH),
     },
-    plugins: [vue(), vueJsx()],
+    plugins: [
+      legacy({
+        targets: ['defaults', 'not IE 11'],
+      }),
+      vue(),
+      vueJsx(),
+    ],
     build: {
       cssCodeSplit: false,
       chunkSizeWarningLimit: 2048,
