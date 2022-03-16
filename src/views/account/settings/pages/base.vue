@@ -11,7 +11,7 @@
         <a-form-item label="Personal profile">
           <a-textarea
             v-model:value="modelRef.bio"
-            rows="4"
+            :rows="4"
             placeholder="Brief introduction to yourself"
           />
         </a-form-item>
