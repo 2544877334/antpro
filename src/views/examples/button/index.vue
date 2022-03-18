@@ -47,8 +47,8 @@
             <a-button type="primary" shape="round" :size="state.size">
               <template #icon>
                 <download-outlined />
-                Download
               </template>
+              Download
             </a-button>
             <a-button type="primary" shape="round" :size="state.size">
               <template #icon>
