@@ -1,4 +1,6 @@
+
 import 'ant-design-vue/dist/antd.variable.less';
+import '@surely-vue/table/dist/index.less';
 import {
   Layout,
   Menu,
@@ -43,6 +45,7 @@ import {
   Upload,
   Badge,
 } from 'ant-design-vue';
+import STable from '@surely-vue/table';
 import { createApp } from 'vue';
 import router from './router';
 import store from './store';
@@ -65,6 +68,7 @@ app
   .use(router)
   .use(locale as any)
   .use(store)
+  .use(STable)
   .use(Layout)
   .use(Menu)
   .use(Row)

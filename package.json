@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@ant-design/icons-vue": "^6.1.0",
+    "@surely-vue/table": "^2.2.0",
     "@types/lodash-es": "^4.17.3",
     "ant-design-vue": "^3.1.0-0",
     "axios": "^0.20.0",

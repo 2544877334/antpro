@@ -39,7 +39,7 @@ export const useAuth = (actions: MaybeRef<Action | Action[]>) => {
       typeof route.meta.authority === 'string'
         ? [route.meta.authority]
         : (route.meta.authority as string[]) || [];
-    const permissions = role.value.permissions;
+    const permissions = role.value?.permissions;
     const auths = toArray(unref(actions));
     if (permissions) {
       hasAuth.value = false;

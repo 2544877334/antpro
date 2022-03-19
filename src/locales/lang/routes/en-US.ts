@@ -44,6 +44,7 @@ export default {
 
   'pages.examples.title': 'Components',
   'pages.examples.button.title': 'Button',
+  'pages.examples.surely-vue.title': 'Surely Vue',
   'pages.examples.input.title': 'Input',
   'pages.examples.rate.title': 'Rate',
   'pages.examples.authority.title': 'Authority',
