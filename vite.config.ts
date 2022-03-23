@@ -40,8 +40,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     },
     resolve: {
       alias: {
-        dayjs$: 'dayjs/esm/index.js',
-        'dayjs/locale': 'dayjs/esm/locale',
         '~@': path.join(__dirname, './src'),
         '@': path.join(__dirname, './src'),
         vue: 'vue/dist/vue.esm-bundler.js',
@@ -55,8 +53,8 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         'ant-design-vue/es/_util/vue-types',
         'ant-design-vue/es/form',
         'dayjs',
-        'dayjs/esm/locale/eu',
-        'dayjs/esm/locale/zh-cn',
+        'dayjs/locale/eu',
+        'dayjs/locale/zh-cn',
         '@ant-design/icons-vue',
         'lodash-es',
       ],
