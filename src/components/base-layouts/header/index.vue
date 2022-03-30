@@ -25,7 +25,7 @@
       :layout="layout"
       :menus="needShowMenu ? computedMenus : []"
       :open-keys="openKeys"
-      :selected-keys="splitMenus ? openKeys : selectedKeys"
+      :selected-keys="splitMenus ? [...openKeys, ...selectedKeys] : selectedKeys"
       @update:openKeys="handleOpenKeys"
       @update:selectedKeys="handleSelectedKeys"
     >
