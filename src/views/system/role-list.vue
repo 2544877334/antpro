@@ -234,7 +234,7 @@ export default defineComponent({
       handleColumnChange,
       reset,
       move,
-    } = useTableDynamicColumns(baseColumns, { checkAll: true, needRowIndex: false });
+    } = useTableDynamicColumns(baseColumns, { needRowIndex: false });
     const [elRef, screenState, { setFull, exitFull }] = useFullscreen();
 
     // 表格数据和加载

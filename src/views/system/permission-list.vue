@@ -221,7 +221,7 @@ export default defineComponent({
       handleColumnChange,
       reset,
       move,
-    } = useTableDynamicColumns(baseColumns, true);
+    } = useTableDynamicColumns(baseColumns, { needRowIndex: true });
     const [elRef, screenState, { setFull, exitFull }] = useFullscreen();
 
     const {

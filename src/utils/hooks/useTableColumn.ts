@@ -1,23 +1,23 @@
+import { computed, unref, shallowRef } from '@vue/reactivity';
 import type { ColumnType } from 'ant-design-vue/lib/table';
 import type { Ref } from 'vue';
-import { ref, reactive, watch } from 'vue';
+import { watchEffect, ref, reactive, watch } from 'vue';
 
-export type TableOptions =
-  | {
-      checkAll?: boolean;
-      needRowIndex?: boolean;
-    }
-  | boolean;
+type Key = number | string;
+export type TableOptions = {
+  needRowIndex?: boolean | Ref<boolean>;
+  checkedList?: Ref<Key[]>;
+};
 
 export type DynamicColumnItem = {
-  key: string;
+  key: Key;
   label: string;
   checked: boolean;
 };
 
 export type DynamicColumnState = {
   checkAll: boolean;
-  checkedList: string[];
+  checkedList: Key[];
   needRowIndex: boolean;
   indeterminate: boolean;
 };
@@ -32,131 +32,135 @@ export interface DynamicColumns {
   move: (index: number, targetIndex: number) => void;
 }
 
-const defaultRowIndexColumn = {
-  title: '序号',
-  dataIndex: 'my-custom-show-index',
-  customRender: ({ index }: any) => `${index + 1}`,
-};
-
+// columns 支持响应式，排序会影响原数组，所以，不同表格不能也不该使用同一份 columns，如果你需要共用，建议你使用函数返回，确保每一个 table 使用的都是独立的配置
 export const useTableDynamicColumns = (
-  columns: ColumnType[],
-  defOptions: TableOptions,
+  columns: ColumnType[] | Ref<ColumnType[]>,
+  defOptions: TableOptions = {},
 ): DynamicColumns => {
-  const options: {
-    checkAll: boolean;
-    needRowIndex: boolean;
-  } =
-    typeof defOptions === 'boolean'
-      ? {
-          checkAll: defOptions,
-          needRowIndex: false,
-        }
-      : {
-          checkAll: !!defOptions.checkAll,
-          needRowIndex: !!defOptions.needRowIndex,
-        };
+  const defaultRowIndexColumn = {
+    title: '序号',
+    dataIndex: 'my-custom-show-index',
+    key: 'my-custom-show-index',
+    customRender: ({ index }: any) => `${index + 1}`,
+  };
 
+  const getKey = (column: ColumnType) =>
+    column?.key ?? Array.isArray(column.dataIndex)
+      ? (column.dataIndex as []).join('$$')
+      : (column.dataIndex as string);
+  const mergedColumns = shallowRef<ColumnType[]>([]);
+
+  watch(
+    () => columns,
+    () => {
+      mergedColumns.value = unref(columns || [])
+        .slice()
+        .map(column => {
+          return { ...column, key: getKey(column) };
+        });
+    },
+    { immediate: true, deep: true },
+  );
+
+  const defaultCheckedList =
+    defOptions.checkedList?.value ?? mergedColumns.value.map(column => column.key) ?? [];
+  const checkedList = ref(defaultCheckedList);
   const state = reactive<DynamicColumnState>({
-    checkAll: options.checkAll,
-    needRowIndex: options.needRowIndex,
-    checkedList: [],
+    checkAll: false,
+    needRowIndex: false,
+    checkedList: defaultCheckedList,
     indeterminate: true,
   });
-  const dynamicColumns = ref([...columns]);
-  if (options.needRowIndex) {
-    dynamicColumns.value.unshift(defaultRowIndexColumn);
-  }
-  const dynamicColumnItems: Ref<DynamicColumnItem[]> = ref(
-    columns.map(column => {
+  const listMap = computed(() => {
+    return new Map(state.checkedList.map((c, index) => [c, index]));
+  });
+  const columnsMap = computed(() => {
+    return new Map(mergedColumns.value.map((c, index) => [c.key, index]));
+  });
+
+  watchEffect(() => {
+    state.needRowIndex = !!unref(defOptions.needRowIndex);
+    state.checkedList = checkedList.value.filter(key => columnsMap.value.has(key));
+  });
+
+  watch(
+    [() => state.checkedList, mergedColumns],
+    () => {
+      state.checkAll = state.checkedList.length === mergedColumns.value.length;
+      state.indeterminate =
+        !!state.checkedList.length && state.checkedList.length < mergedColumns.value.length;
+    },
+    { immediate: true },
+  );
+
+  const dynamicColumns = ref([]);
+  watch(
+    [mergedColumns, () => state.needRowIndex, () => state.checkedList],
+    () => {
+      let newColumns = mergedColumns.value.slice();
+      newColumns = newColumns
+        .filter(item => {
+          return listMap.value.has(item.key);
+        })
+        .sort((a, b) => {
+          const aKey = a.key as string;
+          const bKey = b.key as string;
+          return columnsMap.value.get(aKey) - columnsMap.value.get(bKey);
+        })
+        .map(item => item);
+      if (state.needRowIndex) {
+        newColumns.unshift(defaultRowIndexColumn);
+      }
+      dynamicColumns.value = newColumns;
+    },
+    { immediate: true },
+  );
+
+  const dynamicColumnItems = computed<DynamicColumnItem[]>(() =>
+    mergedColumns.value.map(column => {
       return {
-        key: column?.key || column.dataIndex,
+        key: column.key,
         label: column.title,
-        checked: options.checkAll,
+        checked: listMap.value.has(column.key),
       } as DynamicColumnItem;
     }),
   );
-  const dynamicColumnValues: string[] = dynamicColumnItems.value.map(column => column.key);
-
-  state.checkedList = dynamicColumnValues;
-  state.checkAll = options.checkAll;
-  state.indeterminate = !options.checkAll;
-
-  const planColumns = () => {
-    const keys = dynamicColumnItems.value.map(item => item.key);
-
-    dynamicColumns.value = columns
-      .filter(item => state.checkedList.includes(item.dataIndex as string))
-      .sort((a, b) => {
-        const aKey = (a.key || a.dataIndex) as string;
-        const bKey = (b.key || b.dataIndex) as string;
-        return keys.indexOf(aKey) - keys.indexOf(bKey);
-      })
-      .map(item => item);
-    if (options.needRowIndex) {
-      dynamicColumns.value.unshift(defaultRowIndexColumn);
-    }
-  };
-
-  watch(
-    () => state.checkedList,
-    () => {
-      state.checkAll =
-        !!state.checkedList.length && state.checkedList.length === dynamicColumnValues.length;
-      state.indeterminate =
-        !!state.checkedList.length && state.checkedList.length < dynamicColumnValues.length;
-      planColumns();
-    },
-    { deep: true },
-  );
-
-  watch(
-    () => dynamicColumnItems,
-    () => {
-      planColumns();
-    },
-    { deep: true },
-  );
+  const dynamicColumnValues = computed(() => dynamicColumnItems.value.map(column => column.key));
 
   const handleColumnChange = (e: Event, column: DynamicColumnItem) => {
     const checked = (e.target as HTMLInputElement).checked;
     column.checked = checked;
     if (checked) {
-      !state.checkedList.includes(column.key) && state.checkedList.push(column.key);
+      if (!listMap.value.has(column.key)) {
+        checkedList.value = [...state.checkedList, column.key];
+      }
     } else {
-      state.checkedList = state.checkedList.filter(item => item !== column.key);
+      checkedList.value = state.checkedList.filter(item => item !== column.key);
     }
   };
 
   const handleColumnAllClick = (e: Event) => {
     const checked = (e.target as HTMLInputElement).checked;
-    state.checkedList = checked ? dynamicColumnValues : [];
-    dynamicColumnItems.value = dynamicColumnItems.value.map(column => {
-      column.checked = checked;
-      return column;
-    });
+    checkedList.value = checked ? dynamicColumnValues.value : [];
   };
 
   const reset = () => {
-    state.checkedList = dynamicColumnValues;
-    dynamicColumnItems.value = columns.map(column => {
-      return {
-        key: column?.key || column.dataIndex,
-        label: column.title,
-        checked: options.checkAll,
-      } as DynamicColumnItem;
-    });
+    checkedList.value = defaultCheckedList;
+    mergedColumns.value = mergedColumns.value
+      .sort((a, b) => defaultCheckedList.indexOf(a.key) - defaultCheckedList.indexOf(b.key))
+      .slice();
   };
 
   const move = (index: number, targetIndex: number) => {
-    const newColumnItems = dynamicColumnItems.value;
-    const columnItemKey = newColumnItems[index];
-    newColumnItems.splice(index, 1);
+    const newColumns = mergedColumns.value.slice();
+    const columnItem = newColumns[index];
+    newColumns.splice(index, 1);
     if (targetIndex === 0) {
-      newColumnItems.unshift(columnItemKey);
+      newColumns.unshift(columnItem);
     } else {
-      newColumnItems.splice(targetIndex, 0, columnItemKey);
+      newColumns.splice(targetIndex, 0, columnItem);
     }
-    dynamicColumnItems.value = newColumnItems;
+    mergedColumns.value = newColumns;
   };
 
   return {
