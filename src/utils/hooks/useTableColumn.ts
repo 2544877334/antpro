@@ -45,9 +45,10 @@ export const useTableDynamicColumns = (
   };
 
   const getKey = (column: ColumnType) =>
-    column?.key ?? Array.isArray(column.dataIndex)
+    column?.key ??
+    (Array.isArray(column.dataIndex)
       ? (column.dataIndex as []).join('$$')
-      : (column.dataIndex as string);
+      : (column.dataIndex as string));
   const mergedColumns = shallowRef<ColumnType[]>([]);
 
   watch(
