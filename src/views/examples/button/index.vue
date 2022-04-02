@@ -152,6 +152,7 @@
 import { defineComponent, reactive } from 'vue';
 import { DownOutlined, DownloadOutlined } from '@ant-design/icons-vue';
 import type { SizeType } from 'ant-design-vue/es/config-provider';
+import type { RadioChangeEvent } from 'ant-design-vue';
 
 export default defineComponent({
   name: 'ButtonExample',
@@ -168,7 +169,7 @@ export default defineComponent({
       state.iconLoading = { delay: 1000 };
     };
     const handleMenuClick = () => {};
-    const handleSizeChange = (e: Event) => {
+    const handleSizeChange = (e: RadioChangeEvent) => {
       state.size = (e.target as HTMLInputElement).value as SizeType;
     };
     return {

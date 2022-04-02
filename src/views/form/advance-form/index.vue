@@ -11,7 +11,7 @@
           title="表单校验信息"
           overlay-class-name="antd-pro-pages-forms-style-errorPopover"
           trigger="click"
-          :get-popup-container="triggerNode => triggerNode.parentNode"
+          :get-popup-container="getPopupContainer"
         >
           <template #content>
             <template v-for="item in state.errors" :key="item.key">
@@ -128,6 +128,7 @@ export default defineComponent({
       taskForm,
       handleErrorClick,
       handleSubmit,
+      getPopupContainer: (triggerNode: HTMLElement) => triggerNode.parentNode as HTMLElement,
     };
   },
   components: {

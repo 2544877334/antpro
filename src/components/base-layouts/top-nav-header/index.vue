@@ -65,11 +65,11 @@ export default defineComponent({
       default: () => [],
     },
     openKeys: {
-      type: Array,
+      type: Array as PropType<string[]>,
       required: true,
     },
     selectedKeys: {
-      type: Array,
+      type: Array as PropType<string[]>,
       required: true,
     },
   },

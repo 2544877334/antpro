@@ -1,4 +1,5 @@
 import { computed, unref, shallowRef } from '@vue/reactivity';
+import type { CheckboxChangeEvent } from 'ant-design-vue/es/checkbox/interface';
 import type { ColumnType } from 'ant-design-vue/lib/table';
 import type { Ref } from 'vue';
 import { watchEffect, ref, reactive, watch } from 'vue';
@@ -27,8 +28,8 @@ export interface DynamicColumns {
   dynamicColumnItems: Ref<DynamicColumnItem[]>;
   state: DynamicColumnState;
   reset: () => void;
-  handleColumnChange: (e: Event, column: DynamicColumnItem) => void;
-  handleColumnAllClick: (e: Event) => void;
+  handleColumnChange: (e: CheckboxChangeEvent, column: DynamicColumnItem) => void;
+  handleColumnAllClick: (e: CheckboxChangeEvent) => void;
   move: (index: number, targetIndex: number) => void;
 }
 
@@ -128,7 +129,7 @@ export const useTableDynamicColumns = (
   );
   const dynamicColumnValues = computed(() => dynamicColumnItems.value.map(column => column.key));
 
-  const handleColumnChange = (e: Event, column: DynamicColumnItem) => {
+  const handleColumnChange = (e: CheckboxChangeEvent, column: DynamicColumnItem) => {
     const checked = (e.target as HTMLInputElement).checked;
     column.checked = checked;
     if (checked) {
@@ -140,7 +141,7 @@ export const useTableDynamicColumns = (
     }
   };
 
-  const handleColumnAllClick = (e: Event) => {
+  const handleColumnAllClick = (e: CheckboxChangeEvent) => {
     const checked = (e.target as HTMLInputElement).checked;
     checkedList.value = checked ? dynamicColumnValues.value : [];
   };

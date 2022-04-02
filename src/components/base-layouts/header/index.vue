@@ -79,11 +79,11 @@ export default defineComponent({
       default: (): Record<string, unknown>[] => [],
     },
     openKeys: {
-      type: Array,
+      type: Array as PropType<string[]>,
       required: true,
     },
     selectedKeys: {
-      type: Array,
+      type: Array as PropType<string[]>,
       required: true,
     },
     hasSiderMenu: {

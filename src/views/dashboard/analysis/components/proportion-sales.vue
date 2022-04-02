@@ -39,6 +39,7 @@ import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { Pie } from './charts';
 import type { SalesDataItem } from '@/api/dashboard/analysis';
+import type { RadioProps } from 'ant-design-vue';
 
 export type SalesType = 'all' | 'online' | 'stores' | string;
 
@@ -60,7 +61,7 @@ export default defineComponent({
       default: () => [],
     },
     handleChangeSalesType: {
-      type: Function as PropType<(e?: Event) => void>,
+      type: Function as PropType<RadioProps['onChange']>,
       default: () => null,
     },
   },

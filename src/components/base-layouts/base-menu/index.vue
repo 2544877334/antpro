@@ -80,11 +80,11 @@ export const BaseMenuProps = {
     default: false,
   },
   openKeys: {
-    type: Array,
+    type: Array as PropType<string[]>,
     required: true,
   },
   selectedKeys: {
-    type: Array,
+    type: Array as PropType<string[]>,
     required: true,
   },
   customItem: {

@@ -2320,14 +2320,15 @@ ansi-styles@^4.0.0, ansi-styles@^4.1.0:
   dependencies:
     color-convert "^2.0.1"
 
-ant-design-vue@^3.1.0-0:
-  version "3.1.0-rc.0"
-  resolved "https://registry.npmmirror.com/ant-design-vue/-/ant-design-vue-3.1.0-rc.0.tgz#8759bde685c747859160c474d67f8a51dacc3a6b"
-  integrity sha512-HbMMSEBBS5g8yNm/Ol4Kop48zNFEzTY0w/nZRq776NLX+Rg0Kko9ie93NZr6hKuS/d0bJNKll6I/WC5krIWsBg==
+ant-design-vue@^3.1.0-rc.6:
+  version "3.1.0-rc.6"
+  resolved "https://registry.npmmirror.com/ant-design-vue/-/ant-design-vue-3.1.0-rc.6.tgz#e508904eb7f6d4d29b104c07768b1c2c1a4f81a3"
+  integrity sha512-gnJiN2nRFRbCAl+zCnvZSiIFVoXHGHbbLuGuOi5ZHc0QDGLoglQmsqL7s3oYBWS0i2+0e6MsYQMhVR1pyfUyGA==
   dependencies:
     "@ant-design/colors" "^6.0.0"
     "@ant-design/icons-vue" "^6.1.0"
     "@babel/runtime" "^7.10.5"
+    "@ctrl/tinycolor" "^3.4.0"
     "@simonwep/pickr" "~1.8.0"
     array-tree-filter "^2.1.0"
     async-validator "^4.0.0"
@@ -3558,7 +3559,7 @@ currently-unhandled@^0.4.1:
   dependencies:
     array-find-index "^1.0.1"
 
-dayjs@^1.10.5, dayjs@^1.10.7:
+dayjs@^1.10.5, dayjs@^1.11.0:
   version "1.11.0"
   resolved "https://registry.npmmirror.com/dayjs/-/dayjs-1.11.0.tgz#009bf7ef2e2ea2d5db2e6583d2d39a4b5061e805"
   integrity sha512-JLC809s6Y948/FuCZPm5IX8rRhQwOiyMb2TfVVQEixG7P8Lm/gt5S7yoQZmC8x1UehI9Pb7sksEt4xx14m+7Ug==
