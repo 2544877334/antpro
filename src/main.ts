@@ -1,4 +1,3 @@
-
 import 'ant-design-vue/dist/antd.variable.less';
 import '@surely-vue/table/dist/index.less';
 import {

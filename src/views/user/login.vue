@@ -114,8 +114,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
 import { getSmsCaptcha } from '@/api/user/login';
-import { message, notification } from 'ant-design-vue';
-import { Form } from 'ant-design-vue';
+import { message, notification, Form } from 'ant-design-vue';
 import {
   UserOutlined,
   LockOutlined,

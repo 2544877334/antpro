@@ -113,7 +113,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, computed, ref, watch, PropType } from 'vue';
+import type { PropType } from 'vue';
+import { defineComponent, computed, ref, watch } from 'vue';
 import { useProProvider } from '../base-layouts/pro-provider';
 import { CloseOutlined, SettingOutlined } from '@ant-design/icons-vue';
 import type { ContentWidth } from '../base-layouts/typing';

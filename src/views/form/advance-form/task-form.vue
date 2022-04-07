@@ -57,8 +57,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRaw } from 'vue';
-import { Form } from 'ant-design-vue';
-import { notification } from 'ant-design-vue';
+import { Form, notification } from 'ant-design-vue';
 
 export default defineComponent({
   name: 'TaskForm',

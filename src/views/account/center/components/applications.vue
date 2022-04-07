@@ -17,7 +17,7 @@
                 <a-avatar class="card-avatar" :src="item.avatar" size="small" />
               </template>
             </a-card-meta>
-            <template class="ant-card-actions" #actions>
+            <template #actions>
               <a>
                 <download-outlined />
               </a>

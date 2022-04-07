@@ -37,10 +37,9 @@
 </template>
 
 <script lang="ts">
-import { Form } from 'ant-design-vue';
+import { Form, message } from 'ant-design-vue';
 import type { PropType } from 'vue';
 import { defineComponent, ref, reactive, toRaw, watchEffect } from 'vue';
-import { message } from 'ant-design-vue';
 import { addPermission, updatePermission } from '@/api/user/role';
 import type { Action, Permission } from '@/store/modules/user/typing';
 
