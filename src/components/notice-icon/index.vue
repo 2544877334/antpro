@@ -1,6 +1,6 @@
 <template>
   <notice-dropdown class="action" :count="userInfo && userInfo.unreadCount" :loading="loading">
-    <a-tabs class="notice-tab" v-model:activeKey="activeKey">
+    <a-tabs class="notice-tab" v-model:activeKey="activeKey" centered>
       <template v-for="{ key, title, emptyText, showViewMore } in noticesConfig" :key="key">
         <a-tab-pane v-if="key" :key="key" :tab="title">
           <notice-list
