@@ -5,8 +5,6 @@ const { createMockMiddleware } = require('umi-mock-middleware');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 // const StyleLintPlugin = require('stylelint-webpack-plugin');
 const { existsSync } = require('fs');
-const { getThemeVariables } = require('ant-design-vue/dist/theme');
-const { cssVariable } = require('./cssVariable');
 
 // const isProd = process.env.NODE_ENV === 'production'
 // const isUseCDN = process.env.IS_USE_CDN === 'true';
@@ -42,6 +40,7 @@ module.exports = {
     config.plugins.delete('preload-app');
 
     config.resolve.alias.set('@', resolve('./src'));
+    config.resolve.alias.set('~', resolve('./src/assets'));
     config.resolve.alias.set('vue$', resolve('./node_modules/vue/dist/vue.esm-bundler.js'));
     config.module.rule('markdown').test(/\.md$/).use('raw-loader').loader('raw-loader').end();
     // if `IS_ANALYZ` env is TRUE on report bundle info
@@ -57,8 +56,7 @@ module.exports = {
       less: {
         lessOptions: {
           modifyVars: {
-            ...getThemeVariables(),
-            ...cssVariable(),
+            hack: 'true; @import "~/styles/variables.less";',
             'root-entry-name': 'variable',
           },
           // DO NOT REMOVE THIS LINE

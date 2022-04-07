@@ -3,8 +3,6 @@ import { loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import path from 'path';
-import { getThemeVariables } from 'ant-design-vue/dist/theme';
-import { cssVariable } from './build/cssVariable';
 import createMockServer from './build/mockServer';
 import legacy from '@vitejs/plugin-legacy';
 
@@ -42,6 +40,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       alias: {
         '~@': path.join(__dirname, './src'),
         '@': path.join(__dirname, './src'),
+        '~': path.join(__dirname, './src/assets'),
         vue: 'vue/dist/vue.esm-bundler.js',
       },
     },
@@ -50,7 +49,6 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         'ant-design-vue/es/locale/en_US',
         'ant-design-vue/es/locale/zh_CN',
         'store/plugins/expire',
-        'ant-design-vue/es/_util/vue-types',
         'ant-design-vue/es/form',
         'dayjs',
         'dayjs/locale/eu',
@@ -63,8 +61,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       preprocessorOptions: {
         less: {
           modifyVars: {
-            ...getThemeVariables(),
-            ...cssVariable(),
+            hack: 'true; @import "~/styles/variables.less";',
             'root-entry-name': 'variable',
           },
           // DO NOT REMOVE THIS LINE
