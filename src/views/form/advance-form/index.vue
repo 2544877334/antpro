@@ -44,7 +44,6 @@
 </template>
 
 <script lang="ts">
-import type { RendererElement } from 'vue';
 import { defineComponent, reactive, ref, toRaw } from 'vue';
 import { CloseCircleOutlined } from '@ant-design/icons-vue';
 import { useI18n } from 'vue-i18n';
@@ -84,8 +83,8 @@ export default defineComponent({
       errors: [] as ErrorItem[],
     });
 
-    const repositoryForm = ref<RendererElement | null>(null);
-    const taskForm = ref<RendererElement | null>(null);
+    const repositoryForm = ref<InstanceType<typeof RepositoryForm>>(null);
+    const taskForm = ref<InstanceType<typeof TaskForm>>(null);
 
     // generator errors
     const errorList = (errs: validateInfos) => {

@@ -113,8 +113,7 @@
 </template>
 
 <script lang="ts">
-import PropTypes from 'ant-design-vue/es/_util/vue-types';
-import { defineComponent, computed, ref, watch } from 'vue';
+import { defineComponent, computed, ref, watch, PropType } from 'vue';
 import { useProProvider } from '../base-layouts/pro-provider';
 import { CloseOutlined, SettingOutlined } from '@ant-design/icons-vue';
 import type { ContentWidth } from '../base-layouts/typing';
@@ -207,7 +206,7 @@ export default defineComponent({
     //   type: Object as PropType<SettingProps>,
     //   required: true,
     // },
-    getContainer: PropTypes.func,
+    getContainer: Function as PropType<(node: HTMLElement) => HTMLElement>,
   },
   emits: ['change'],
   setup() {

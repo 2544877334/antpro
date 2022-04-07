@@ -52,7 +52,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, computed, toRaw } from 'vue';
-import { useForm } from 'ant-design-vue/es/form';
+import { Form } from 'ant-design-vue';
 import { useStore } from 'vuex';
 // require defined typo
 import type { FormState } from '../../model';
@@ -74,7 +74,7 @@ export default defineComponent({
       password: [{ required: true, message: '需要支付密码才能进行支付' }],
     });
 
-    const { resetFields, validate, validateInfos } = useForm(modelRef, rulesRef);
+    const { resetFields, validate, validateInfos } = Form.useForm(modelRef, rulesRef);
     const handleSubmit = (e: Event) => {
       e.preventDefault();
       state.loading = true;

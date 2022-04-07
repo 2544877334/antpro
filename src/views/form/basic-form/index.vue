@@ -133,7 +133,7 @@ import { useI18n } from 'vue-i18n';
 import { localStorage } from '@/utils/local-storage';
 import { InfoCircleOutlined } from '@ant-design/icons-vue';
 import { useRoute } from 'vue-router';
-import { useForm } from 'ant-design-vue/es/form';
+import { Form } from 'ant-design-vue';
 import { message } from 'ant-design-vue';
 import type { ResponseBody } from '@/api/typing';
 import type { BasicFormResponse } from '@/api/form/basic-form';
@@ -178,7 +178,7 @@ export default defineComponent({
       standard: [{ required: true, message: () => t('form.basicform.standard.required') }],
     });
 
-    const { resetFields, validate, validateInfos } = useForm(modelRef, rulesRef);
+    const { resetFields, validate, validateInfos } = Form.useForm(modelRef, rulesRef);
     const handleSubmit = (e: Event): void => {
       e.preventDefault();
       state.submitting = true;

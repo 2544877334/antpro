@@ -57,7 +57,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRaw } from 'vue';
-import { useForm } from 'ant-design-vue/es/form';
+import { Form } from 'ant-design-vue';
 import { notification } from 'ant-design-vue';
 
 export default defineComponent({
@@ -85,7 +85,7 @@ export default defineComponent({
       dateRange2: [{ required: true, message: '请选择提醒时间' }],
       type2: [{ required: true, message: '请选择任务类型' }],
     });
-    const { resetFields, validate, validateInfos } = useForm(modelRef, rulesRef);
+    const { resetFields, validate, validateInfos } = Form.useForm(modelRef, rulesRef);
 
     const handleSubmit = (e: Event) => {
       e.preventDefault();

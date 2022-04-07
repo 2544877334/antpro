@@ -93,7 +93,7 @@
 
 <script lang="ts">
 import { computed, defineComponent, reactive } from 'vue';
-import { useForm } from 'ant-design-vue/es/form';
+import { Form } from 'ant-design-vue';
 import { message, notification } from 'ant-design-vue';
 import { MailOutlined } from '@ant-design/icons-vue';
 import { getSmsCaptcha } from '@/api/user/login';
@@ -199,7 +199,7 @@ export default defineComponent({
       mobile: [{ required: true, message: '请输入正确的手机号', pattern: /^1[3456789]\d{9}$/ }],
       captcha: [{ required: true, message: '请输入验证码' }],
     });
-    const { validateInfos, validate } = useForm(modelRef, rulesRef);
+    const { validateInfos, validate } = Form.useForm(modelRef, rulesRef);
 
     const requestFailed = (err: AxiosError) => {
       state.registerBtn = true;

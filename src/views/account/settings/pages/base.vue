@@ -70,7 +70,7 @@ import { defineComponent, reactive, ref } from 'vue';
 import CitySelect from '@/components/city-select/index.vue';
 import InputPhone from '@/components/input-phone/index.vue';
 import { UploadOutlined } from '@ant-design/icons-vue';
-import { useForm } from 'ant-design-vue/es/form';
+import { Form } from 'ant-design-vue';
 import type { FormItemInstance } from 'ant-design-vue';
 
 export default defineComponent({
@@ -93,7 +93,7 @@ export default defineComponent({
       address: [{ required: true, trigger: ['change', 'blur'] }],
       phoneNumber: [{ required: true, trigger: ['change', 'blur'] }],
     });
-    const { validateInfos, validate } = useForm(modelRef, rulesRef);
+    const { validateInfos, validate } = Form.useForm(modelRef, rulesRef);
     const handleSubmit = () => {
       validate()
         .then(res => {

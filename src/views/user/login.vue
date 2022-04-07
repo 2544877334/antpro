@@ -115,7 +115,7 @@
 import { defineComponent, reactive, toRefs } from 'vue';
 import { getSmsCaptcha } from '@/api/user/login';
 import { message, notification } from 'ant-design-vue';
-import { useForm } from 'ant-design-vue/es/form';
+import { Form } from 'ant-design-vue';
 import {
   UserOutlined,
   LockOutlined,
@@ -186,7 +186,7 @@ export default defineComponent({
       ],
       captcha: [{ required: true, message: '请输入验证码' }],
     });
-    const { validateInfos, validate, resetFields } = useForm(modelRef, rulesRef);
+    const { validateInfos, validate, resetFields } = Form.useForm(modelRef, rulesRef);
 
     const handleTabClick = (key: string) => {
       state.customActiveKey = key;

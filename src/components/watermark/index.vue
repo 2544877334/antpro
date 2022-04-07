@@ -28,50 +28,8 @@
 
 <script lang="ts">
 import { inject, defineComponent, computed, ref, watchEffect } from 'vue';
-import type { CSSProperties } from 'vue';
-import PropTypes from 'ant-design-vue/es/_util/vue-types';
+import type { CSSProperties, PropType } from 'vue';
 import { useProProvider } from '../base-layouts/pro-provider';
-
-export type WaterMarkProps = {
-  /** 是否禁用水印 */
-  disabled?: boolean;
-  /** 水印样式 */
-  markStyle?: CSSProperties;
-  /** 水印类名 */
-  markClassName?: string;
-  /** 水印之间的水平间距 */
-  gapX?: number;
-  /** 水印之间的垂直间距 */
-  gapY?: number;
-  /** 追加的水印元素的z-index */
-  zIndex?: number;
-  /** 水印的宽度 */
-  width?: number;
-  /** 水印的高度 */
-  height?: number;
-  /** 水印在canvas 画布上绘制的垂直偏移量，正常情况下，水印绘制在中间位置, 即 offsetTop = gapY / 2 */
-  offsetTop?: number; // 水印图片距离绘制 canvas 单元的顶部距离
-  /** 水印在canvas 画布上绘制的水平偏移量, 正常情况下，水印绘制在中间位置, 即 offsetTop = gapX / 2 */
-  offsetLeft?: number;
-  /** 水印绘制时，旋转的角度，单位 ° */
-  rotate?: number;
-  /** ClassName 前缀 */
-  prefixCls?: string;
-  /** 高清印图片源, 为了高清屏幕显示，建议使用 2倍或3倍图，优先使用图片渲染水印。 */
-  image?: string;
-  /** 水印文字内容 */
-  content?: string;
-  /** 文字颜色 */
-  fontColor?: string;
-  /** 文字样式 */
-  fontStyle?: 'none' | 'normal' | 'italic' | 'oblique';
-  /** 文字族 */
-  fontFamily?: string;
-  /** 文字粗细 */
-  fontWeight?: 'normal' | 'light' | 'weight' | number;
-  /** 文字大小 */
-  fontSize?: number | string;
-};
 
 const getPixelRatio = (context: any) => {
   if (!context) {
@@ -90,25 +48,47 @@ const getPixelRatio = (context: any) => {
 
 export default defineComponent({
   props: {
-    disabled: PropTypes.bool.def(false),
-    markStyle: PropTypes.object,
-    markClassName: PropTypes.string,
-    prefixCls: PropTypes.string.def('pro'),
-    zIndex: PropTypes.number.def(999),
-    gapX: PropTypes.number.def(212),
-    gapY: PropTypes.number.def(222),
-    width: PropTypes.number.def(120),
-    height: PropTypes.number.def(64),
-    rotate: PropTypes.number.def(-22),
-    fontStyle: PropTypes.string.def('normal'),
-    fontWeight: PropTypes.string.def('normal'),
-    fontColor: PropTypes.string,
-    fontSize: PropTypes.number.def(16),
-    fontFamily: PropTypes.string.def('sans-serif'),
-    offsetLeft: PropTypes.number,
-    offsetTop: PropTypes.number,
-    image: PropTypes.string,
-    content: PropTypes.string,
+    /** 是否禁用水印 */
+    disabled: Boolean,
+    /** 水印样式 */
+    markStyle: { type: Object as PropType<CSSProperties>, default: undefined as CSSProperties },
+    /** 水印类名 */
+    markClassName: String,
+    /** ClassName 前缀 */
+    prefixCls: { type: String, default: 'pro' },
+    /** 追加的水印元素的z-index */
+    zIndex: { type: Number, default: 999 },
+    /** 水印之间的水平间距 */
+    gapX: { type: Number, default: 212 },
+    /** 水印之间的垂直间距 */
+    gapY: { type: Number, default: 222 },
+    /** 水印的宽度 */
+    width: { type: Number, default: 120 },
+    /** 水印的高度 */
+    height: { type: Number, default: 64 },
+    /** 水印绘制时，旋转的角度，单位 ° */
+    rotate: { type: Number, default: -22 },
+    /** 文字样式 */
+    fontStyle: {
+      type: String as PropType<'none' | 'normal' | 'italic' | 'oblique'>,
+      default: 'normal',
+    },
+    fontWeight: {
+      type: [String, Number] as PropType<'normal' | 'light' | 'weight' | number>,
+      default: 'normal',
+    },
+    /** 文字颜色 */
+    fontColor: String,
+    fontSize: { type: Number, default: 16 },
+    fontFamily: { type: String, default: 'sans-serif' },
+    /** 水印在canvas 画布上绘制的水平偏移量, 正常情况下，水印绘制在中间位置, 即 offsetTop = gapX / 2 */
+    offsetLeft: Number,
+    /** 水印在canvas 画布上绘制的垂直偏移量，正常情况下，水印绘制在中间位置, 即 offsetTop = gapY / 2 */
+    offsetTop: Number,
+    /** 高清印图片源, 为了高清屏幕显示，建议使用 2倍或3倍图，优先使用图片渲染水印。 */
+    image: String,
+    /** 水印文字内容 */
+    content: String,
   },
   setup(props) {
     const { getPrefixCls } = useProProvider();
