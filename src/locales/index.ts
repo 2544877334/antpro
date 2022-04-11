@@ -4,7 +4,7 @@ import dayjs from 'dayjs';
 import enUS from './lang/en-US';
 
 export const locales = ['zh-CN', 'zh-TW', 'en-US', 'pt-BR'];
-type Locale = 'zh-CN' | 'zh-TW' | 'en-US' | 'pt-BR';
+export type Locale = 'zh-CN' | 'zh-TW' | 'en-US' | 'pt-BR';
 export const defaultLang = 'en-US';
 
 const loadedLanguages = ref([defaultLang]);
