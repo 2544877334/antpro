@@ -2,7 +2,7 @@ import type { ConfigEnv, UserConfig } from 'vite';
 import { loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import path from 'path';
+import path, { resolve } from 'path';
 import createMockServer from './build/mockServer';
 import legacy from '@vitejs/plugin-legacy';
 
@@ -27,6 +27,10 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       cssCodeSplit: false,
       chunkSizeWarningLimit: 2048,
       rollupOptions: {
+        input: {
+          main: resolve(__dirname, 'index.html'),
+          subpage: resolve(__dirname, 'pages/index.html'),
+        },
         output: {
           manualChunks: {
             vue: ['vue', 'vuex', 'vue-router'],
