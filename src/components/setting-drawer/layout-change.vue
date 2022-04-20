@@ -67,21 +67,22 @@
 </template>
 
 <script lang="ts">
-import PropTypes from 'ant-design-vue/es/_util/vue-types';
+import type { PropType } from 'vue';
 import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
 
 export default defineComponent({
   props: {
-    contentWidth: PropTypes.oneOf(['Fluid', 'Fixed']).def('Fluid'),
-    fixedHeader: PropTypes.bool,
-    fixSiderbar: PropTypes.bool,
-    splitMenus: PropTypes.bool,
-    layout: PropTypes.oneOf(['side', 'top', 'mix', 'left']),
+    contentWidth: { type: String as PropType<'Fluid' | 'Fixed'>, default: 'Fluid' },
+    fixedHeader: Boolean,
+    fixSiderbar: Boolean,
+    splitMenus: Boolean,
+    layout: { type: String as PropType<'side' | 'top' | 'mix' | 'left'> },
+    onChange: Function as PropType<(arg: { type: string; value: string }) => void>,
   },
   setup(_props, { emit }) {
     const { t } = useI18n();
-    const handleChange = (type: string, value: string) => {
+    const handleChange = (type: string, value: any) => {
       emit('change', { type, value });
     };
 

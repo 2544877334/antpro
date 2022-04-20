@@ -2,10 +2,9 @@ import type { ConfigEnv, UserConfig } from 'vite';
 import { loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
-import path from 'path';
-import { getThemeVariables } from 'ant-design-vue/dist/theme';
-import { additionalData } from './build/themeConfig';
+import path, { resolve } from 'path';
 import createMockServer from './build/mockServer';
+import legacy from '@vitejs/plugin-legacy';
 
 export default ({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
@@ -17,26 +16,35 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       'process.env.VUE_APP_API_BASE_URL': JSON.stringify(env.VITE_APP_API_BASE_URL),
       'process.env.VUE_APP_PUBLIC_PATH': JSON.stringify(env.VITE_APP_PUBLIC_PATH),
     },
-    plugins: [vue(), vueJsx()],
+    plugins: [
+      legacy({
+        targets: ['defaults', 'not IE 11'],
+      }),
+      vue(),
+      vueJsx(),
+    ],
     build: {
       cssCodeSplit: false,
       chunkSizeWarningLimit: 2048,
       rollupOptions: {
+        input: {
+          main: resolve(__dirname, 'index.html'),
+          subpage: resolve(__dirname, 'pages/index.html'),
+        },
         output: {
           manualChunks: {
             vue: ['vue', 'vuex', 'vue-router'],
             antdv: ['ant-design-vue', '@ant-design/icons-vue'],
-            moment: ['moment'],
+            dayjs: ['dayjs'],
           },
         },
       },
     },
     resolve: {
       alias: {
-        moment$: 'moment/dist/moment.js',
-        'moment/locale': 'moment/dist/locale',
         '~@': path.join(__dirname, './src'),
         '@': path.join(__dirname, './src'),
+        '~': path.join(__dirname, './src/assets'),
         vue: 'vue/dist/vue.esm-bundler.js',
       },
     },
@@ -45,11 +53,10 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         'ant-design-vue/es/locale/en_US',
         'ant-design-vue/es/locale/zh_CN',
         'store/plugins/expire',
-        'ant-design-vue/es/_util/vue-types',
         'ant-design-vue/es/form',
-        'moment',
-        'moment/locale/eu',
-        'moment/locale/zh-cn',
+        'dayjs',
+        'dayjs/locale/eu',
+        'dayjs/locale/zh-cn',
         '@ant-design/icons-vue',
         'lodash-es',
       ],
@@ -57,10 +64,12 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     css: {
       preprocessorOptions: {
         less: {
-          modifyVars: { ...getThemeVariables() },
+          modifyVars: {
+            hack: 'true; @import "~/styles/variables.less";',
+            'root-entry-name': 'variable',
+          },
           // DO NOT REMOVE THIS LINE
           javascriptEnabled: true,
-          additionalData,
         },
       },
     },

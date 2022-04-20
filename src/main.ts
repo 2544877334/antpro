@@ -1,4 +1,5 @@
-import 'ant-design-vue/dist/antd.less';
+import 'ant-design-vue/dist/antd.variable.less';
+import '@surely-vue/table/dist/index.less';
 import {
   Layout,
   Menu,
@@ -43,6 +44,7 @@ import {
   Upload,
   Badge,
 } from 'ant-design-vue';
+import STable from '@surely-vue/table';
 import { createApp } from 'vue';
 import router from './router';
 import store from './store';
@@ -54,13 +56,18 @@ import { useIcons } from '@/icons';
 import Authority from './utils/authority/authority.vue';
 import './app.less';
 import './router/router-guards';
-
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
+import updateLocale from 'dayjs/plugin/updateLocale';
+dayjs.extend(updateLocale);
+dayjs.extend(relativeTime);
 const app = createApp(App);
 
 app
   .use(router)
   .use(locale as any)
   .use(store)
+  .use(STable)
   .use(Layout)
   .use(Menu)
   .use(Row)

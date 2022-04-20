@@ -2,6 +2,7 @@
 @import './components/table/pro-table.less';
 #app {
   height: 100%;
+  overflow-x: hidden;
 }
 .slide-fadein-up-enter-active,
 .slide-fadein-up-leave-active {
@@ -86,8 +87,9 @@
   padding-bottom: 10px;
 }
 
-[data-pro-theme="antdv-pro-theme-dark"] {
-  &, * {
+[data-pro-theme='antdv-pro-theme-dark'] {
+  &,
+  * {
     color-scheme: dark !important;
   }
 }

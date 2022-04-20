@@ -91,6 +91,7 @@ export default function useMenuState(
       const navTheme = store.getters['app/navTheme'];
       return navTheme === 'realDark' ? 'dark' : navTheme;
     }),
+    primaryColor: computed(() => store.getters['app/primaryColor']),
     fixedSidebar: computed(() => store.getters['app/fixedSidebar']),
     fixedHeader: computed(() => store.getters['app/fixedHeader']),
     contentWidth: computed(() => store.getters['app/contentWidth']),

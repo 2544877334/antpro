@@ -15,11 +15,11 @@
 import type { InjectionKey, CSSProperties, PropType } from 'vue';
 import { defineComponent, provide, reactive, ref, readonly } from 'vue';
 import { filterEmpty } from '@/utils/vnode-util';
-import type { SizeType } from '@/components/avatar-list/typing';
 import AvatarListItem from './item.vue';
+import type { AvatarSize } from 'ant-design-vue/lib/avatar';
 
 export interface AvatarItemInjectData {
-  size: SizeType;
+  size: AvatarSize;
   excessItemsStyle?: CSSProperties;
 }
 
@@ -29,8 +29,8 @@ export default defineComponent({
   name: 'AvatarList',
   props: {
     size: {
-      type: String as PropType<SizeType>,
-      default: 'default',
+      type: String as PropType<AvatarSize>,
+      default: 'default' as AvatarSize,
     },
     maxLength: {
       type: Number as PropType<number>,

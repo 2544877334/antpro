@@ -1,6 +1,6 @@
 <template>
   <notice-dropdown class="action" :count="userInfo && userInfo.unreadCount" :loading="loading">
-    <a-tabs v-model:activeKey="activeKey">
+    <a-tabs class="notice-tab" v-model:activeKey="activeKey" centered>
       <template v-for="{ key, title, emptyText, showViewMore } in noticesConfig" :key="key">
         <a-tab-pane v-if="key" :key="key" :tab="title">
           <notice-list
@@ -39,7 +39,7 @@
 import { computed, defineComponent, onMounted, ref, onBeforeUnmount } from 'vue';
 import type { NoticeItem } from '@/api/user/notice';
 import { queryNotices } from '@/api/user/notice';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import { groupBy } from 'lodash-es';
 import NoticeDropdown from './notice-dropdown.vue';
 import NoticeList from './notice-list.vue';
@@ -114,7 +114,7 @@ export default defineComponent({
           const newNotice = { ...notice };
 
           if (newNotice.datetime) {
-            newNotice.datetime = moment(notice.datetime as string).fromNow();
+            newNotice.datetime = dayjs(notice.datetime as string).fromNow();
           }
 
           if (newNotice.id) {
@@ -187,4 +187,11 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less"></style>
+<style lang="less" scoped>
+.notice-tab :deep(.ant-tabs-nav-list) {
+  .ant-tabs-tab {
+    flex: 1;
+    justify-content: center;
+  }
+}
+</style>

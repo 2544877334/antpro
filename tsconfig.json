@@ -23,6 +23,14 @@
     "skipLibCheck": true,
     "importsNotUsedAsValues": "preserve"
   },
-  "include": ["src/**/*.ts", "src/**/*.tsx", "src/**/*.vue", "tests/**/*.ts", "tests/**/*.tsx"],
-  "exclude": ["node_modules"]
+  "include": [
+    "src/App.vue",
+    "src/**/*.ts",
+    "src/**/*.tsx",
+    "src/**/*.vue",
+    "tests/**/*.ts",
+    "tests/**/*.tsx",
+    "node_modules/ant-design-vue/typings/global.d.ts"
+  ],
+  "exclude": ["node_modules/ant-design-vue/lib/**"]
 }

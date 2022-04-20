@@ -11,5 +11,4 @@ export { default as TransformVnode } from './transform-vnode';
 // charts
 export { default as Chart } from './chart/index.vue';
 
-// eslint-disable-next-line prettier/prettier
 export type { SeriesDataItem, RadarDataItem, RadarIndicatorItem } from './chart/typing';

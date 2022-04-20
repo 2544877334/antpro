@@ -1,11 +1,7 @@
 <template>
   <div class="main">
     <a-form id="formLogin" layout="vertical" class="user-layout-login">
-      <a-tabs
-        :active-key="customActiveKey"
-        :tab-bar-style="{ textAlign: 'center', borderBottom: 'unset' }"
-        @change="handleTabClick"
-      >
+      <a-tabs centered :active-key="customActiveKey" @change="handleTabClick">
         <a-tab-pane key="tab1" tab="账号密码登录">
           <a-alert
             v-if="isLoginError"
@@ -118,8 +114,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
 import { getSmsCaptcha } from '@/api/user/login';
-import { message, notification } from 'ant-design-vue';
-import { useForm } from 'ant-design-vue/es/form';
+import { message, notification, Form } from 'ant-design-vue';
 import {
   UserOutlined,
   LockOutlined,
@@ -190,7 +185,7 @@ export default defineComponent({
       ],
       captcha: [{ required: true, message: '请输入验证码' }],
     });
-    const { validateInfos, validate, resetFields } = useForm(modelRef, rulesRef);
+    const { validateInfos, validate, resetFields } = Form.useForm(modelRef, rulesRef);
 
     const handleTabClick = (key: string) => {
       state.customActiveKey = key;
@@ -359,6 +354,11 @@ export default defineComponent({
   .prefixIcon {
     color: @primary-color;
     font-size: @font-size-base;
+  }
+}
+.user-layout-login :deep(.ant-tabs) {
+  .ant-tabs-nav::before {
+    border-bottom: none;
   }
 }
 </style>

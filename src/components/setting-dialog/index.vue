@@ -96,6 +96,7 @@ import {
 
 import List from './list.vue';
 import ListItem from './list-item.vue';
+import type { RadioChangeEvent } from 'ant-design-vue';
 
 export default defineComponent({
   name: 'SettingDialog',
@@ -134,11 +135,11 @@ export default defineComponent({
       }
       store.commit(`app/${SET_LAYOUT}`, value);
     };
-    const handleContentWidthChange = (e: Event) => {
+    const handleContentWidthChange = (e: RadioChangeEvent) => {
       const value = (e.target as HTMLInputElement).value;
       store.commit(`app/${SET_CONTENT_WIDTH}`, value);
     };
-    const handleNavThemeChange = (e: Event) => {
+    const handleNavThemeChange = (e: RadioChangeEvent) => {
       const value = (e.target as HTMLInputElement).value;
       store.commit(`app/${SET_NAV_THEME}`, value);
     };

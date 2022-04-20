@@ -58,7 +58,7 @@
 </template>
 
 <script lang="ts">
-import { useForm } from 'ant-design-vue/es/form';
+import { Form } from 'ant-design-vue';
 import { defineComponent, reactive } from 'vue';
 
 export default defineComponent({
@@ -85,7 +85,7 @@ export default defineComponent({
       url: undefined,
       owner: undefined,
       approver: undefined,
-      dateRange: [],
+      dateRange: null, // as RangePickerProps['value'],
       type: undefined,
     });
     const rulesRef = reactive({
@@ -93,7 +93,7 @@ export default defineComponent({
       url: [{ required: true, validator: validateDomain }],
     });
 
-    const { resetFields, validate, validateInfos } = useForm(modelRef, rulesRef);
+    const { resetFields, validate, validateInfos } = Form.useForm(modelRef, rulesRef);
 
     const handleSubmit = (e: Event) => {
       e.preventDefault();
@@ -104,7 +104,6 @@ export default defineComponent({
       resetFields,
       validate,
       validateInfos,
-
       handleSubmit,
     };
   },

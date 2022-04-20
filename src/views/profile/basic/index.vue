@@ -25,13 +25,29 @@
         :loading="context.loading"
         :columns="goodsColumns"
         :data-source="context.dataSource"
-        :components="tableComponents"
       >
-        <template #id="{ text }">
-          <a>{{ text }}</a>
+        <template #bodyCell="{ text, column }">
+          <template v-if="column.key === 'id'">
+            <a>{{ text }}</a>
+          </template>
         </template>
         <template #summary>
-          <div>123</div>
+          <a-table-summary fixed>
+            <a-table-summary-row>
+              <a-table-summary-cell :index="0">总计</a-table-summary-cell>
+              <a-table-summary-cell :index="1" :col-span="3"></a-table-summary-cell>
+              <a-table-summary-cell :index="4">
+                <div style="text-align: right; font-weight: bold">
+                  {{ context.dataSource.reduce((pre, cur) => pre + Number(cur.num), 0) }}
+                </div>
+              </a-table-summary-cell>
+              <a-table-summary-cell :index="5">
+                <div style="text-align: right; font-weight: bold">
+                  {{ context.dataSource.reduce((pre, cur) => pre + Number(cur.amount), 0) }}
+                </div>
+              </a-table-summary-cell>
+            </a-table-summary-row>
+          </a-table-summary>
         </template>
       </a-table>
 
@@ -44,8 +60,10 @@
         :columns="scheduleColumns"
         :data-source="context2.dataSource"
       >
-        <template #status="{ text }">
-          <a-badge :status="text" :text="statusMap[text]" />
+        <template #bodyCell="{ text, column }">
+          <template v-if="column.key === 'status'">
+            <a-badge :status="text" :text="statusMap[text]" />
+          </template>
         </template>
       </a-table>
     </a-card>
@@ -53,12 +71,12 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { defineComponent } from 'vue';
 import { goodsData, scheduleData } from './mockData';
 import type { ReponseData } from '@/utils/hooks/useFetchData';
 import { useFetchData } from '@/utils/hooks/useFetchData';
-import { default as TableTotalRow } from '@/components/table/total-table';
 import { useI18n } from 'vue-i18n';
+import type { TableColumn } from '@/typing';
 
 interface ListItem {
   id: string;
@@ -84,15 +102,11 @@ const statusMap = {
   failed: '失败',
 };
 
-const goodsColumns = [
+const goodsColumns: TableColumn[] = [
   {
     title: '商品编号',
     dataIndex: 'id',
     key: 'id',
-    slots: { customRender: 'id' },
-    summary: () => {
-      return '总计';
-    },
   },
   {
     title: '商品名称',
@@ -115,29 +129,12 @@ const goodsColumns = [
     dataIndex: 'num',
     key: 'num',
     align: 'right',
-    summary: (data: any[], h: any) => {
-      const total = data
-        .map((it: any) => {
-          return parseInt(it['num']) || 0;
-        })
-        .reduce((prev: number, cur: number) => {
-          return prev + cur;
-        });
-      return h(
-        'span',
-        {
-          style: 'color: red;font-weight: bold;',
-        },
-        total,
-      );
-    },
   },
   {
     title: '金额',
     dataIndex: 'amount',
     key: 'amount',
     align: 'right',
-    summary: true,
   },
 ];
 
@@ -156,7 +153,6 @@ const scheduleColumns = [
     title: '状态',
     dataIndex: 'status',
     key: 'status',
-    slots: { customRender: 'status' },
   },
   {
     title: '操作员ID',
@@ -189,16 +185,8 @@ export default defineComponent({
         });
       });
     });
-
-    const tableComponents = reactive({
-      body: {
-        wrapper: TableTotalRow,
-      },
-    });
-
     return {
       t,
-      tableComponents,
 
       goodsColumns,
       scheduleColumns,

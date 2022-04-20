@@ -6,44 +6,52 @@
       :data-source="state.dataSource"
       :loading="state.loading"
     >
-      <template v-for="(col, i) in ['name', 'workId', 'department']" #[col]="{ text, record }">
-        <a-input
-          :key="col"
-          v-if="record.editable"
-          style="margin: -5px 0"
-          :value="text"
-          :placeholder="columns[i].title"
-          @change="e => handleChange(e.target.value, record.key, col)"
-        />
-        <template v-else>{{ text }}</template>
-      </template>
-      <template #operation="{ record }">
-        <template v-if="record.editable">
-          <span v-if="record.isNew">
-            <a @click="saveRow(record)">添加</a>
-            <a-divider type="vertical" />
-            <a-popconfirm title="是否要删除此行？" @confirm="handleRemove(record.key)">
-              <a>删除</a>
-            </a-popconfirm>
-          </span>
-          <span v-else>
-            <a @click="saveRow(record)">保存</a>
-            <a-divider type="vertical" />
-            <a @click="handleCancel(record.key)">取消</a>
-          </span>
+      <template #bodyCell="{ text, record, column }">
+        <template v-if="['name', 'workId', 'department'].includes(column.key)">
+          <a-input
+            :key="column.key"
+            v-if="record.editable"
+            style="margin: -5px 0"
+            :value="text"
+            :placeholder="column.title"
+            @change="e => handleChange(e.target.value, record.key, column.key)"
+          />
+          <template v-else>{{ text }}</template>
         </template>
-        <span v-else>
-          <a @click="toggleEdit(record.key)">编辑</a>
-          <a-divider type="vertical" />
-          <a-popconfirm
-            title="是否要删除此行？"
-            :ok-text="t('confirm.ok')"
-            :cancel-text="t('confirm.cancel')"
-            @confirm="handleRemove(record.key)"
-          >
-            <a>删除</a>
-          </a-popconfirm>
-        </span>
+        <template v-else-if="column.key === 'action'">
+          <template v-if="record.editable">
+            <template v-if="record.isNew">
+              <span key="add">
+                <a @click="saveRow(record)">添加</a>
+                <a-divider type="vertical" />
+                <a-popconfirm title="是否要删除此行？" @confirm="handleRemove(record.key)">
+                  <a>删除</a>
+                </a-popconfirm>
+              </span>
+            </template>
+            <template v-else>
+              <span key="save">
+                <a @click="saveRow(record)">保存</a>
+                <a-divider type="vertical" />
+                <a @click="handleCancel(record.key)">取消</a>
+              </span>
+            </template>
+          </template>
+          <template v-else>
+            <span key="edit">
+              <a @click="toggleEdit(record.key)">编辑</a>
+              <a-divider type="vertical" />
+              <a-popconfirm
+                title="是否要删除此行？"
+                :ok-text="t('confirm.ok')"
+                :cancel-text="t('confirm.cancel')"
+                @confirm="handleRemove(record.key)"
+              >
+                <a>删除</a>
+              </a-popconfirm>
+            </span>
+          </template>
+        </template>
       </template>
     </a-table>
     <a-button
@@ -79,26 +87,22 @@ const columns = [
     dataIndex: 'name',
     key: 'name',
     width: '20%',
-    slots: { customRender: 'name' },
   },
   {
     title: '工号',
     dataIndex: 'workId',
     key: 'workId',
     width: '20%',
-    slots: { customRender: 'workId' },
   },
   {
     title: '所属部门',
     dataIndex: 'department',
     key: 'department',
     width: '40%',
-    slots: { customRender: 'department' },
   },
   {
     title: '操作',
     key: 'action',
-    slots: { customRender: 'operation' },
   },
 ];
 const dataSource: DataFields[] = [
@@ -135,11 +139,11 @@ export default defineComponent({
     const handleSubmit = (e: Event) => {
       e.preventDefault();
     };
-    const handleChange = (value: string, key: string, column: string) => {
+    const handleChange = (value: string, key: string, columnKey: string) => {
       const newData: DataFields[] = [...state.dataSource];
       const target = newData.find(item => key === item.key);
       if (target) {
-        target[column] = value;
+        target[columnKey] = value;
         state.dataSource = newData;
       }
     };
@@ -194,6 +198,7 @@ export default defineComponent({
       if (target) {
         target._originalData = { ...target };
         target.editable = !target.editable;
+        // state.dataSource = [...state.dataSource];
       }
     };
     return {

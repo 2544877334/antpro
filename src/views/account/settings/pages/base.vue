@@ -11,7 +11,7 @@
         <a-form-item label="Personal profile">
           <a-textarea
             v-model:value="modelRef.bio"
-            rows="4"
+            :rows="4"
             placeholder="Brief introduction to yourself"
           />
         </a-form-item>
@@ -26,17 +26,17 @@
         <a-form-item label="Street Address" v-bind="validateInfos.address">
           <a-input v-model:value="modelRef.address" />
         </a-form-item>
-        <a-form-item label="Phone Number" ref="phoneNumber" v-bind="validateInfos.phoneNumber">
+        <a-form-item label="Phone Number" ref="phoneNumberRef" v-bind="validateInfos.phoneNumber">
           <input-phone
             v-model="modelRef.phoneNumber"
             @blur="
               () => {
-                $refs.phoneNumber.onFieldBlur();
+                phoneNumberRef.onFieldBlur();
               }
             "
             @change="
               () => {
-                $refs.phoneNumber.onFieldChange();
+                phoneNumberRef.onFieldChange();
               }
             "
           />
@@ -66,15 +66,17 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive } from 'vue';
+import { defineComponent, reactive, ref } from 'vue';
 import CitySelect from '@/components/city-select/index.vue';
 import InputPhone from '@/components/input-phone/index.vue';
 import { UploadOutlined } from '@ant-design/icons-vue';
-import { useForm } from 'ant-design-vue/es/form';
+import { Form } from 'ant-design-vue';
+import type { FormItemInstance } from 'ant-design-vue';
 
 export default defineComponent({
   name: 'BaseSettings',
   setup() {
+    const phoneNumberRef = ref<FormItemInstance>();
     const modelRef = reactive({
       email: 'antdesign@alipay.com',
       nickname: 'Serati Ma',
@@ -91,7 +93,7 @@ export default defineComponent({
       address: [{ required: true, trigger: ['change', 'blur'] }],
       phoneNumber: [{ required: true, trigger: ['change', 'blur'] }],
     });
-    const { validateInfos, validate } = useForm(modelRef, rulesRef);
+    const { validateInfos, validate } = Form.useForm(modelRef, rulesRef);
     const handleSubmit = () => {
       validate()
         .then(res => {
@@ -102,6 +104,7 @@ export default defineComponent({
         });
     };
     return {
+      phoneNumberRef,
       modelRef,
       validateInfos,
       handleSubmit,

@@ -41,7 +41,7 @@
 <script lang="ts">
 import type { PropType } from 'vue';
 import { defineComponent, reactive, ref, watchEffect, watch } from 'vue';
-import { useForm } from 'ant-design-vue/es/form';
+import { Form } from 'ant-design-vue';
 import type { Role, Permission, Action } from '@/store/modules/user/typing';
 import { getPermissions } from '@/api/user/role';
 import { cloneDeep } from 'lodash';
@@ -100,7 +100,7 @@ export default defineComponent({
       { key: 'export', describe: '导出' },
     ];
     const selectedTags = ref<string[]>([]);
-    const { validateInfos, resetFields } = useForm(modelRef, rulesRef);
+    const { validateInfos, resetFields } = Form.useForm(modelRef, rulesRef);
 
     const loadPermissionList = () => {
       loading.value = true;

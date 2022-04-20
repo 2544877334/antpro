@@ -87,14 +87,15 @@ import { MenuFoldOutlined, MenuUnfoldOutlined } from '@ant-design/icons-vue';
 import { findMenuChildren } from '@/utils/menu-util';
 import { useRoute } from 'vue-router';
 import type { LayoutType } from '../typing';
-
+import type { MenuTheme } from 'ant-design-vue';
+import type { Breakpoint } from '@/typing';
 const SiderMenuProps = Object.assign({}, BaseMenuProps, {
   prefixCls: {
     type: String,
     default: () => undefined,
   },
   breakpoint: {
-    type: String,
+    type: String as PropType<Breakpoint>,
     default: 'lg',
   },
   siderWidth: {
@@ -118,7 +119,7 @@ const SiderMenuProps = Object.assign({}, BaseMenuProps, {
     default: 48,
   },
   theme: {
-    type: String,
+    type: String as PropType<MenuTheme>,
     default: () => undefined,
   },
   layout: {
@@ -170,7 +171,9 @@ export default defineComponent({
     const prefixCls = propPrefixCls.value || getPrefixCls('sider');
 
     const isMix = computed(() => layout.value === 'mix');
-    const runtimeTheme = computed(() => (layout.value === 'mix' && 'light') || theme.value);
+    const runtimeTheme = computed<MenuTheme>(() =>
+      layout.value === 'mix' ? 'light' : theme.value,
+    );
     const runtimeSideWidth = computed(() =>
       collapsed.value ? collapsedWidth.value : siderWidth.value,
     );

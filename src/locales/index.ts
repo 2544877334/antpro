@@ -1,15 +1,16 @@
 import { ref } from 'vue';
 import { createI18n } from 'vue-i18n';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import enUS from './lang/en-US';
 
-export const locales: string[] = ['zh-CN', 'zh-TW', 'en-US', 'pt-BR'];
-
+export const locales = ['zh-CN', 'zh-TW', 'en-US', 'pt-BR'];
+export type Locale = 'zh-CN' | 'zh-TW' | 'en-US' | 'pt-BR';
 export const defaultLang = 'en-US';
 
-const loadedLanguages = ref<string[]>([defaultLang]);
+const loadedLanguages = ref([defaultLang]);
 
 const i18n = createI18n({
+  legacy: false,
   missingWarn: false,
   fallbackWarn: false,
   // 如果不需要国际化，可以打开如下两个配置，取消控制台的警告
@@ -21,19 +22,19 @@ const i18n = createI18n({
   },
 });
 
-function setI18nLanguage(lang: string) {
-  i18n.global.locale = lang;
+function setI18nLanguage(lang: Locale) {
+  i18n.global.locale.value = lang as any;
   // request.headers['Accept-Language'] = lang
   const HTML = document.querySelector('html');
   HTML && HTML.setAttribute('lang', lang);
   return lang;
 }
 
-export function loadLanguageAsync(lang: string = defaultLang): Promise<string> {
+export function loadLanguageAsync(lang: Locale = defaultLang): Promise<string> {
   return new Promise<string>(resolve => {
     const currentLocale = i18n.global;
 
-    if (currentLocale.locale !== lang) {
+    if (currentLocale.locale.value !== lang) {
       if (!loadedLanguages.value.includes(lang)) {
         return import(
           /* webpackChunkName: "lang-[request]" */
@@ -44,8 +45,8 @@ export function loadLanguageAsync(lang: string = defaultLang): Promise<string> {
           const loadedLang = result.default;
           // set vue-i18n lang
           currentLocale.setLocaleMessage(lang, loadedLang);
-          // set moment lang
-          moment.updateLocale(loadedLang.momentLocaleName, loadedLang.moment);
+          // set dayjs lang
+          dayjs.updateLocale(loadedLang.dayjsLocaleName, loadedLang.dayjs);
           // save loaded
           loadedLanguages.value.push(lang);
           return resolve(setI18nLanguage(lang));

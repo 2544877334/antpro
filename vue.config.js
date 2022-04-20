@@ -5,8 +5,6 @@ const { createMockMiddleware } = require('umi-mock-middleware');
 const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
 // const StyleLintPlugin = require('stylelint-webpack-plugin');
 const { existsSync } = require('fs');
-const { getThemeVariables } = require('ant-design-vue/dist/theme');
-const { additionalData } = require('./themeConfig');
 
 // const isProd = process.env.NODE_ENV === 'production'
 // const isUseCDN = process.env.IS_USE_CDN === 'true';
@@ -29,11 +27,6 @@ module.exports = {
   publicPath: process.env.VUE_APP_PUBLIC_PATH,
   configureWebpack: {
     plugins: [
-      // Ignore all locale files of moment.js
-      new IgnorePlugin({
-        resourceRegExp: /^\.\/locale$/,
-        contextRegExp: /moment$/,
-      }),
       // stylelint
       // @see https://vue-loader.vuejs.org/zh/guide/linting.html#stylelint
       // new StyleLintPlugin({
@@ -47,6 +40,7 @@ module.exports = {
     config.plugins.delete('preload-app');
 
     config.resolve.alias.set('@', resolve('./src'));
+    config.resolve.alias.set('~', resolve('./src/assets'));
     config.resolve.alias.set('vue$', resolve('./node_modules/vue/dist/vue.esm-bundler.js'));
     config.module.rule('markdown').test(/\.md$/).use('raw-loader').loader('raw-loader').end();
     // if `IS_ANALYZ` env is TRUE on report bundle info
@@ -61,12 +55,13 @@ module.exports = {
     loaderOptions: {
       less: {
         lessOptions: {
-          modifyVars: { ...getThemeVariables() },
+          modifyVars: {
+            hack: 'true; @import "~/styles/variables.less";',
+            'root-entry-name': 'variable',
+          },
           // DO NOT REMOVE THIS LINE
           javascriptEnabled: true,
         },
-        // 如果你不需要多主题，可以注释 additionalData
-        additionalData,
       },
     },
   },

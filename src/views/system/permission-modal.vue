@@ -37,10 +37,9 @@
 </template>
 
 <script lang="ts">
-import { useForm } from 'ant-design-vue/es/form';
+import { Form, message } from 'ant-design-vue';
 import type { PropType } from 'vue';
 import { defineComponent, ref, reactive, toRaw, watchEffect } from 'vue';
-import { message } from 'ant-design-vue';
 import { addPermission, updatePermission } from '@/api/user/role';
 import type { Action, Permission } from '@/store/modules/user/typing';
 
@@ -97,7 +96,7 @@ export default defineComponent({
       }
     });
 
-    const { resetFields, validate, validateInfos } = useForm(modelRef, rulesRef);
+    const { resetFields, validate, validateInfos } = Form.useForm(modelRef, rulesRef);
     const handleSubmit = (e: Event) => {
       e.preventDefault();
       loading.value = true;

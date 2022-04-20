@@ -142,11 +142,13 @@
           }"
           @change="handleTableChange"
         >
-          <template #actions="{ record }">
-            <a-tag v-for="action in record.actions" :key="action">{{ action }}</a-tag>
-          </template>
-          <template #action="{ text, record }">
-            <a :title="text" @click="() => handleOpenEdit(record)">编辑</a>
+          <template #bodyCell="{ text, record, column }">
+            <template v-if="column.dataIndex === 'action'">
+              <a :title="text" @click="() => handleOpenEdit(record)">编辑</a>
+            </template>
+            <template v-else-if="column.dataIndex === 'actions'">
+              <a-tag v-for="action in record.actions" :key="action">{{ action }}</a-tag>
+            </template>
           </template>
         </a-table>
       </a-card>
@@ -202,12 +204,10 @@ const baseColumns: TableColumn[] = [
   {
     title: 'Action',
     dataIndex: 'actions',
-    slots: { customRender: 'actions' },
   },
   {
     title: '操作',
     dataIndex: 'action',
-    slots: { customRender: 'action' },
   },
 ];
 export default defineComponent({
@@ -221,7 +221,7 @@ export default defineComponent({
       handleColumnChange,
       reset,
       move,
-    } = useTableDynamicColumns(baseColumns, true);
+    } = useTableDynamicColumns(baseColumns, { needRowIndex: true });
     const [elRef, screenState, { setFull, exitFull }] = useFullscreen();
 
     const {

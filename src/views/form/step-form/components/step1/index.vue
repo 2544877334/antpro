@@ -50,7 +50,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRaw } from 'vue';
-import { useForm } from 'ant-design-vue/es/form';
+import { Form } from 'ant-design-vue';
 import { useStore } from 'vuex';
 import type { ReceiverAccountType } from '../receiver-account.vue';
 import ReceiverAccount from '../receiver-account.vue';
@@ -105,7 +105,7 @@ export default defineComponent({
       ],
     });
 
-    const { resetFields, validate, validateInfos } = useForm(modelRef, rulesRef);
+    const { resetFields, validate, validateInfos } = Form.useForm(modelRef, rulesRef);
     const handleSubmit = (e: Event) => {
       e.preventDefault();
 

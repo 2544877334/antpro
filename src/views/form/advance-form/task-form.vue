@@ -57,8 +57,7 @@
 
 <script lang="ts">
 import { defineComponent, reactive, toRaw } from 'vue';
-import { useForm } from 'ant-design-vue/es/form';
-import { notification } from 'ant-design-vue';
+import { Form, notification } from 'ant-design-vue';
 
 export default defineComponent({
   name: 'TaskForm',
@@ -85,14 +84,14 @@ export default defineComponent({
       dateRange2: [{ required: true, message: '请选择提醒时间' }],
       type2: [{ required: true, message: '请选择任务类型' }],
     });
-    const { resetFields, validate, validateInfos } = useForm(modelRef, rulesRef);
+    const { resetFields, validate, validateInfos } = Form.useForm(modelRef, rulesRef);
 
     const handleSubmit = (e: Event) => {
       e.preventDefault();
       validate().then(() => {
         notification['error']({
           message: 'Received values of form:',
-          description: toRaw(modelRef),
+          description: JSON.stringify(toRaw(modelRef)),
         });
       });
     };

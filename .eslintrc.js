@@ -7,8 +7,7 @@ module.exports = {
     'plugin:vue/vue3-essential',
     'eslint:recommended',
     '@vue/typescript/recommended',
-    '@vue/prettier',
-    '@vue/prettier/@typescript-eslint',
+    '@vue/eslint-config-typescript',
     'plugin:import/recommended',
     'plugin:import/typescript',
   ],
@@ -17,6 +16,7 @@ module.exports = {
     ecmaVersion: 2020,
   },
   rules: {
+    'vue/multi-word-component-names': 'off',
     'import/no-named-as-default': 'off',
     'import/namespace': [2, { allowComputed: true }],
     'import/no-named-as-default-member': 'off',

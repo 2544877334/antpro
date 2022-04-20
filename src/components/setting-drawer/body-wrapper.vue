@@ -6,14 +6,13 @@
 </template>
 
 <script lang="ts">
-import PropTypes from 'ant-design-vue/es/_util/vue-types';
 import { defineComponent } from 'vue';
 import { useProProvider } from '../base-layouts/pro-provider';
 
 export default defineComponent({
   name: 'BodyWrapper',
   props: {
-    title: PropTypes.string.def(''),
+    title: { type: String, default: '' },
   },
   setup() {
     const { getPrefixCls } = useProProvider();

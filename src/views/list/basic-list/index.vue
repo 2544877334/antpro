@@ -85,7 +85,7 @@
                 </div>
                 <div class="list-content-item">
                   <span>开始时间</span>
-                  <p>{{ moment(item.createdAt).format('YYYY-MM-DD HH:mm') }}</p>
+                  <p>{{ dayjs(item.createdAt).format('YYYY-MM-DD HH:mm') }}</p>
                 </div>
                 <div class="list-content-item">
                   <a-progress
@@ -110,7 +110,7 @@ import { PlusOutlined } from '@ant-design/icons-vue';
 import { queryFakeList } from '@/api/list/basic-list';
 import type { TableListItem } from '../typing';
 import Info from './info.vue';
-import moment from 'moment';
+import dayjs from 'dayjs';
 import type { RequestParams } from '@/utils/hooks/useFetchData';
 import { useFetchData } from '@/utils/hooks/useFetchData';
 
@@ -170,7 +170,7 @@ export default defineComponent({
       console.log(key, item);
     };
     return {
-      moment,
+      dayjs,
       showEditModal,
       editAndDelete,
       options,

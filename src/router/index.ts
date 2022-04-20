@@ -21,7 +21,7 @@ export const routes: MenuDataItem[] = [
         path: '/workplace',
         name: 'Workplace',
         meta: { icon: 'HistoryOutlined', title: 'pages.dashboard.workplace.title', lock: true },
-        component: h(RouteView, {}, () => h(AsyncWorkplace)),
+        component: h(RouteView, null, () => h(AsyncWorkplace)),
       },
       // dashboard
       {
@@ -341,6 +341,16 @@ export const routes: MenuDataItem[] = [
         component: RouteView,
         redirect: '/examples/button',
         children: [
+          {
+            name: 'SurelyVueExample',
+            path: '/examples/surely-vue',
+            meta: {
+              title: 'pages.examples.surely-vue.title',
+              // collapsedIcon: 'AppstoreAddOutlined',
+            },
+            component: () =>
+              import(/* webpackChunkName: "examples" */ '@/views/examples/surely-vue/index.vue'),
+          },
           {
             name: 'ButtonExample',
             path: '/examples/button',

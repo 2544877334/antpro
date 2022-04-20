@@ -11,7 +11,7 @@
           title="表单校验信息"
           overlay-class-name="antd-pro-pages-forms-style-errorPopover"
           trigger="click"
-          :get-popup-container="triggerNode => triggerNode.parentNode"
+          :get-popup-container="getPopupContainer"
         >
           <template #content>
             <template v-for="item in state.errors" :key="item.key">
@@ -44,7 +44,6 @@
 </template>
 
 <script lang="ts">
-import type { RendererElement } from 'vue';
 import { defineComponent, reactive, ref, toRaw } from 'vue';
 import { CloseCircleOutlined } from '@ant-design/icons-vue';
 import { useI18n } from 'vue-i18n';
@@ -84,8 +83,8 @@ export default defineComponent({
       errors: [] as ErrorItem[],
     });
 
-    const repositoryForm = ref<RendererElement | null>(null);
-    const taskForm = ref<RendererElement | null>(null);
+    const repositoryForm = ref<InstanceType<typeof RepositoryForm>>(null);
+    const taskForm = ref<InstanceType<typeof TaskForm>>(null);
 
     // generator errors
     const errorList = (errs: validateInfos) => {
@@ -128,6 +127,7 @@ export default defineComponent({
       taskForm,
       handleErrorClick,
       handleSubmit,
+      getPopupContainer: (triggerNode: HTMLElement) => triggerNode.parentNode as HTMLElement,
     };
   },
   components: {

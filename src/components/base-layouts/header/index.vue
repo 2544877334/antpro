@@ -25,7 +25,7 @@
       :layout="layout"
       :menus="needShowMenu ? computedMenus : []"
       :open-keys="openKeys"
-      :selected-keys="splitMenus ? openKeys : selectedKeys"
+      :selected-keys="splitMenus ? [...openKeys, ...selectedKeys] : selectedKeys"
       @update:openKeys="handleOpenKeys"
       @update:selectedKeys="handleSelectedKeys"
     >
@@ -56,6 +56,7 @@ import { getMenuFirstChildren } from '@/utils/menu-util';
 import TopNavHeader from '../top-nav-header/index.vue';
 import GlobalHeader from '../global-header/index.vue';
 import type { RouteProps } from '@/components/base-layouts/typing';
+import type { MenuTheme } from 'ant-design-vue';
 
 export default defineComponent({
   name: 'HeaderView',
@@ -70,7 +71,7 @@ export default defineComponent({
       default: 'side',
     },
     theme: {
-      type: String,
+      type: String as PropType<MenuTheme>,
       default: 'dark',
     },
     menus: {
@@ -78,11 +79,11 @@ export default defineComponent({
       default: (): Record<string, unknown>[] => [],
     },
     openKeys: {
-      type: Array,
+      type: Array as PropType<string[]>,
       required: true,
     },
     selectedKeys: {
-      type: Array,
+      type: Array as PropType<string[]>,
       required: true,
     },
     hasSiderMenu: {

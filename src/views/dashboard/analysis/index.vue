@@ -81,7 +81,7 @@ import ProportionSales from './components/proportion-sales.vue';
 import OfflineData from './components/offline-data.vue';
 
 import { useAnalysisData } from '@/api/dashboard/analysis';
-import type { Moment } from 'moment';
+import type { Dayjs } from 'dayjs';
 
 export default defineComponent({
   setup() {
@@ -106,7 +106,7 @@ export default defineComponent({
       return salesPieData;
     });
 
-    const handleRangePickerChange = (rangePickerValue: [Moment, Moment]) => {
+    const handleRangePickerChange = (rangePickerValue: [Dayjs, Dayjs]) => {
       state.rangePickerValue = rangePickerValue;
     };
 

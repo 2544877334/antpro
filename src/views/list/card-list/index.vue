@@ -41,6 +41,7 @@
         lg: 3,
         xl: 4,
         xxl: 4,
+        xxxl: 4,
       }"
       :dataSource="[nullData, ...context.dataSource]"
     >
@@ -67,7 +68,7 @@
                   <div class="card-description">{{ item.content }}</div>
                 </template>
               </a-card-meta>
-              <template class="content-link" v-slot:actions>
+              <template v-slot:actions>
                 <a>操作一</a>
                 <a>操作二</a>
               </template>

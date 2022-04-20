@@ -36,8 +36,7 @@ import { defineComponent } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { TimelineChart } from './charts';
 import NumberInfo from './number-info/index.vue';
-import type { OfflineDataItem } from '@/api/dashboard/analysis';
-import type { TimelineItem } from './charts/timeline-chart/index.vue';
+import type { OfflineChartDataItem, OfflineDataItem } from '@/api/dashboard/analysis';
 
 export default defineComponent({
   props: {
@@ -54,7 +53,7 @@ export default defineComponent({
       default: () => [],
     },
     offlineChartData: {
-      type: Array as PropType<TimelineItem[]>,
+      type: Array as PropType<OfflineChartDataItem[]>,
       default: () => [],
     },
     handleTabChange: {
