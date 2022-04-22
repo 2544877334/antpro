@@ -7,7 +7,7 @@
   >
     <slot />
     <div
-      v-if="!disabled"
+      v-if="!disabled && base64Url"
       :class="waterMakrCls"
       :style="{
         zIndex,
@@ -107,7 +107,7 @@ export default defineComponent({
     });
 
     watchEffect(() => {
-      if (props.disabled) {
+      if (props.disabled || !props.content) {
         return;
       }
       const canvas = document.createElement('canvas');
