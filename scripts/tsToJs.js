@@ -1,7 +1,7 @@
 const path = require('path');
 const fs = require('fs');
 const { transformSync } = require('@babel/core');
-const { CLIEngine } = require('eslint');
+const { ESLint } = require('eslint');
 const glob = require('glob');
 const cheerio = require('cheerio');
 
@@ -9,7 +9,7 @@ const files = glob.sync('src/**/*.@(*)');
 
 const cwd = process.cwd();
 
-const engine = new CLIEngine({
+const engine = new ESLint({
   fix: true,
   useEslintrc: false,
   baseConfig: require('../.eslintrc.js'),
@@ -24,7 +24,7 @@ fs.readFile('index.html', 'utf8', function (err, test) {
   });
 });
 
-files.forEach(file => {
+files.forEach(async file => {
   console.log('files: ', file);
   const isVue = file.endsWith('.vue');
   const isTs = file.endsWith('.ts') || file.endsWith('.tsx');
@@ -56,9 +56,8 @@ files.forEach(file => {
       ],
     });
 
-    const report = engine.executeOnText(code);
-
-    let output = report.results[0].output;
+    const report = await engine.lintText(code);
+    let output = report[0].output;
     output = output ? output.trim() : output;
     if (output) {
       fs.mkdirSync(`js/${dirs.join('/')}`, {
