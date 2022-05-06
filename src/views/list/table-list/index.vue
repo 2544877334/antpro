@@ -158,12 +158,36 @@
           <template #rowIndex="{ index }">
             {{ index }}
           </template>
-          <template #bodyCell="{ text, column }">
+          <template #bodyCell="{ text, column, record }">
             <template v-if="column.dataIndex === 'status'">
               <a-badge :status="statusMap[text].status" :text="statusMap[text].text" />
             </template>
             <template v-else-if="column.dataIndex === 'action'">
-              <a :title="text">编辑</a>
+              <a>编辑</a>
+              <a-divider type="vertical" />
+              <a-popconfirm title="确定要删除吗 ?" @confirm="onDelete(record)">
+                <a>删除</a>
+              </a-popconfirm>
+              <a-divider type="vertical" />
+              <a-dropdown>
+                <a>
+                  更多
+                  <down-outlined />
+                </a>
+                <template #overlay>
+                  <a-menu>
+                    <a-menu-item>
+                      <a href="javascript:;">操作 1</a>
+                    </a-menu-item>
+                    <a-menu-item>
+                      <a href="javascript:;">操作 2</a>
+                    </a-menu-item>
+                    <a-menu-item>
+                      <a href="javascript:;">操作 3</a>
+                    </a-menu-item>
+                  </a-menu>
+                </template>
+              </a-dropdown>
             </template>
           </template>
         </a-table>
@@ -191,6 +215,7 @@ import {
   SettingOutlined,
   FullscreenOutlined,
   FullscreenExitOutlined,
+  DownOutlined,
 } from '@ant-design/icons-vue';
 import { Container as DragContainer, Draggable } from '@/components/draggable';
 import { queryRule } from '@/api/list/table-list';
@@ -311,7 +336,11 @@ export default defineComponent({
     const modalVisible = ref(false);
     const handleModalOk = () => {};
 
+    const onDelete = (record: any) => {
+      console.log('detele', record);
+    };
     return {
+      onDelete,
       statusMap,
       state,
       stripe,
@@ -349,6 +378,7 @@ export default defineComponent({
     SettingOutlined,
     FullscreenOutlined,
     FullscreenExitOutlined,
+    DownOutlined,
     Draggable,
     DragContainer,
   },
