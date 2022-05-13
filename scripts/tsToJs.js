@@ -57,7 +57,7 @@ files.forEach(async file => {
     });
 
     const report = await engine.lintText(code);
-    let output = report[0].output;
+    let output = report[0].output || report[0].source;
     output = output ? output.trim() : output;
     if (output) {
       fs.mkdirSync(`js/${dirs.join('/')}`, {
