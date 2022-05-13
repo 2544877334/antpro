@@ -511,6 +511,14 @@ export const staticRoutes: MenuDataItem[] = [
 const router = createRouter({
   history: createWebHistory(process.env.VUE_APP_PUBLIC_PATH),
   routes: staticRoutes,
+  scrollBehavior: (to, from) => {
+    if (to.path !== from.path) {
+      setTimeout(() => {
+        document.getElementById('app').scrollTop = 0;
+      });
+    }
+    return { top: 0 };
+  },
 });
 
 export default router;
