@@ -138,5 +138,7 @@ export default defineComponent({
 </script>
 
 <style lang="less">
-@import '../components/base-layouts/basic-layout.less';
+body {
+  @import '../components/base-layouts/basic-layout.less';
+}
 </style>

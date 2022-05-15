@@ -84,14 +84,16 @@ export default defineComponent({
 </script>
 
 <style lang="less">
-@import './header-dropdown.less';
-.ant-pro-header-account-name {
-  vertical-align: unset;
-}
-.ant-pro-header-account-avatar {
-  margin: 12px 8px 12px 0;
-  color: @primary-color;
-  vertical-align: top;
-  background: hsla(0, 0%, 100%, 0.85);
+body {
+  @import './header-dropdown.less';
+  .ant-pro-header-account-name {
+    vertical-align: unset;
+  }
+  .ant-pro-header-account-avatar {
+    margin: 12px 8px 12px 0;
+    color: @primary-color;
+    vertical-align: top;
+    background: hsla(0, 0%, 100%, 0.85);
+  }
 }
 </style>

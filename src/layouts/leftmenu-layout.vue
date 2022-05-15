@@ -199,6 +199,8 @@ export default defineComponent({
 </script>
 
 <style lang="less">
-@import '../components/base-layouts/leftmenu-layout.less';
-@import '../components/base-layouts/leftmenu/index.less';
+body {
+  @import '../components/base-layouts/leftmenu-layout.less';
+  @import '../components/base-layouts/leftmenu/index.less';
+}
 </style>

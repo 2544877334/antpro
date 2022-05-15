@@ -28,7 +28,7 @@ export default defineComponent({
 });
 </script>
 
-<style lang="less">
+<style lang="less" scoped>
 .basic-list-header-info {
   position: relative;
   text-align: center;
