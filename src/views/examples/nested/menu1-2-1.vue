@@ -14,6 +14,7 @@ import { useI18n } from 'vue-i18n';
 export default defineComponent({
   name: 'Menu1-2-1',
   setup() {
+    console.log('setup 1-2-1');
     const { t } = useI18n();
 
     return {

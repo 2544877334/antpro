@@ -151,11 +151,11 @@ export const MultiTabStoreConsumer = defineComponent({
             return () => h(component, { ...props, ...attrs });
           },
         });
-      if (exclude.find(k => k === cacheItem.key)) {
-        delete componentMap[cacheItem.key];
-      } else {
-        componentMap[cacheItem.key] = newCom;
-      }
+      // if (exclude.find(k => k === cacheItem.key)) {
+      //   delete componentMap[cacheItem.key];
+      // }
+      componentMap[cacheItem.key] = newCom;
+
       return createVNode(KeepAlive, multiTab.value ? { exclude } : { include: [] }, {
         default: () => h(newCom, { key: cacheItem!.key + route.fullPath }),
       });
