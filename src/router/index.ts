@@ -408,12 +408,13 @@ export const routes: MenuDataItem[] = [
             meta: { title: 'pages.nested.menu1.title', keepAlive: false },
             component: () =>
               import(/* webpackChunkName: "nested" */ '@/views/examples/nested/menu1.vue'),
+            // 使用分割菜单时，你应该重定向到一个有权限的路由，避免 404
             redirect: '/nested/menu1/menu1-1',
             children: [
               {
                 name: 'nested-menu1-1',
                 path: '/nested/menu1/menu1-1',
-                meta: { title: 'pages.nested.menu1-1.title', authority: 'nested-menu1' },
+                meta: { title: 'pages.nested.menu1-1.title' },
                 component: () =>
                   import(/* webpackChunkName: "nested" */ '@/views/examples/nested/menu1-1.vue'),
               },
