@@ -46,7 +46,7 @@ export function loadLanguageAsync(lang: Locale = defaultLang): Promise<string> {
           // set vue-i18n lang
           currentLocale.setLocaleMessage(lang, loadedLang);
           // set dayjs lang
-          dayjs.updateLocale(loadedLang.dayjsLocaleName, loadedLang.dayjs);
+          dayjs.locale(loadedLang.dayjsLocaleName);
           // save loaded
           loadedLanguages.value.push(lang);
           return resolve(setI18nLanguage(lang));

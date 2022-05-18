@@ -55,7 +55,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         'store/plugins/expire',
         'ant-design-vue/es/form',
         'dayjs',
-        'dayjs/locale/eu',
+        'dayjs/locale/en',
         'dayjs/locale/zh-cn',
         '@ant-design/icons-vue',
         'lodash-es',
