@@ -1,11 +1,10 @@
 import { ref } from 'vue';
 import { createI18n } from 'vue-i18n';
 import dayjs from 'dayjs';
-import enUS from './lang/en-US';
-
+import defaultLangValue from './lang/zh-CN';
+export const defaultLang = 'zh-CN';
 export const locales = ['zh-CN', 'zh-TW', 'en-US', 'pt-BR'];
 export type Locale = 'zh-CN' | 'zh-TW' | 'en-US' | 'pt-BR';
-export const defaultLang = 'en-US';
 
 const loadedLanguages = ref([defaultLang]);
 
@@ -18,9 +17,10 @@ const i18n = createI18n({
   // silentFallbackWarn: true,
   locale: defaultLang,
   messages: {
-    ['en-US']: enUS as any,
+    [defaultLang]: defaultLangValue as any,
   },
 });
+dayjs.locale(defaultLangValue.dayjs);
 
 function setI18nLanguage(lang: Locale) {
   i18n.global.locale.value = lang as any;
