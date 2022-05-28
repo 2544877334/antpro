@@ -43,7 +43,7 @@
               </div>
               <div class="ant-pro-table-list-toolbar-setting-item">
                 <a-tooltip title="刷新">
-                  <reload-outlined @click="() => handleTableChange({ current: 1, pageSize: 10 })" />
+                  <reload-outlined @click="reload" />
                 </a-tooltip>
               </div>
               <div class="ant-pro-table-list-toolbar-setting-item">
@@ -184,7 +184,7 @@ import {
 } from '@ant-design/icons-vue';
 import { Container as DragContainer, Draggable } from '@/components/draggable';
 import { getPermissions } from '@/api/user/role';
-import type { Pagination, TableFilters, TableColumn } from '@/typing';
+import type { Pagination, TableColumn } from '@/typing';
 import { useFetchData } from '@/utils/hooks/useFetchData';
 import { useFullscreen } from '@/utils/hooks/useFullscreen';
 import { useTableDynamicColumns } from '@/utils/hooks/useTableColumn';
@@ -192,27 +192,33 @@ import DragIcon from '@/components/table/drag-icon.vue';
 
 import PermissionModal from './permission-modal.vue';
 
-const baseColumns: TableColumn[] = [
-  {
-    title: '#',
-    dataIndex: 'id',
-  },
-  {
-    title: '权限名称',
-    dataIndex: 'name',
-  },
-  {
-    title: 'Action',
-    dataIndex: 'actions',
-  },
-  {
-    title: '操作',
-    dataIndex: 'action',
-  },
-];
 export default defineComponent({
   name: 'PermissionList',
   setup() {
+    const baseColumns: TableColumn[] = [
+      {
+        title: '#',
+        dataIndex: 'id',
+      },
+      {
+        title: '权限名称',
+        dataIndex: 'name',
+      },
+      {
+        title: 'Action',
+        dataIndex: 'actions',
+      },
+      {
+        title: '操作',
+        dataIndex: 'action',
+      },
+    ];
+    const fetchDataContext = reactive({
+      current: 1,
+      pageSize: 10,
+      tableSize: 'middle', // 'default' | 'middle' | 'small'
+      stripe: false,
+    });
     const {
       state: columnState,
       dynamicColumns,
@@ -224,23 +230,10 @@ export default defineComponent({
     } = useTableDynamicColumns(baseColumns, { needRowIndex: true });
     const [elRef, screenState, { setFull, exitFull }] = useFullscreen();
 
-    const {
-      reload,
-      setPageInfo,
-      context: state,
-    } = useFetchData(getPermissions, {
-      current: 1,
-      pageSize: 10,
-      tableSize: 'middle', // 'default' | 'middle' | 'small'
-    });
-    const handleTableChange = ({ current, pageSize }: Pagination, filters?: TableFilters) => {
-      setPageInfo({
-        current,
-        pageSize,
-        ...filters,
-      });
-
-      reload();
+    const { reload, context: state } = useFetchData(getPermissions, fetchDataContext);
+    const handleTableChange = ({ current, pageSize }: Pagination) => {
+      fetchDataContext.current = current;
+      fetchDataContext.pageSize = pageSize;
     };
 
     // edit

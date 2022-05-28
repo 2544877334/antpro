@@ -54,7 +54,7 @@
               </div>
               <div class="ant-pro-table-list-toolbar-setting-item">
                 <a-tooltip title="刷新">
-                  <reload-outlined @click="() => handleTableChange({ current: 1, pageSize: 10 })" />
+                  <reload-outlined @click="reload" />
                 </a-tooltip>
               </div>
               <div class="ant-pro-table-list-toolbar-setting-item">
@@ -207,7 +207,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, reactive, ref, toRaw } from 'vue';
+import { computed, defineComponent, reactive, ref, watch } from 'vue';
 import {
   PlusOutlined,
   ReloadOutlined,
@@ -237,55 +237,80 @@ export default defineComponent({
       3: { text: '异常', status: 'error' },
     };
     const status = ['关闭', '运行中', '已上线', '异常'];
-
-    const baseColumns: TableColumn[] = [
-      {
-        title: '规则名称',
-        dataIndex: 'name',
+    const filteredInfoMap = ref();
+    const queryParam = reactive({
+      ruleName: undefined,
+      desc: undefined,
+      callNo: undefined,
+      status: undefined,
+    });
+    const fetchDataContext = reactive({
+      current: 1,
+      pageSize: 10,
+      tableSize: 'middle', // 'default' | 'middle' | 'small'
+      stripe: false,
+      requestParams: { ...queryParam },
+    });
+    watch(
+      filteredInfoMap,
+      () => {
+        queryParam.status = filteredInfoMap.value?.status;
+        fetchDataContext.requestParams = { ...queryParam };
       },
-      {
-        title: '描述',
-        dataIndex: 'desc',
-      },
-      {
-        title: '服务调用次数',
-        dataIndex: 'callNo',
-        sorter: true,
-        align: 'right',
-        customRender: ({ text }) => `${text} 万`,
-      },
-      {
-        title: '状态',
-        dataIndex: ['status'],
-        filters: [
-          {
-            text: status[0],
-            value: '0',
-          },
-          {
-            text: status[1],
-            value: '1',
-          },
-          {
-            text: status[2],
-            value: '2',
-          },
-          {
-            text: status[3],
-            value: '3',
-          },
-        ],
-      },
-      {
-        title: '上次调度时间',
-        dataIndex: 'updatedAt',
-        sorter: true,
-      },
-      {
-        title: '操作',
-        dataIndex: 'action',
-      },
-    ];
+      { immediate: true },
+    );
+    const baseColumns = computed<TableColumn[]>(() => {
+      const filtered = filteredInfoMap.value || {};
+      return [
+        {
+          title: '规则名称',
+          dataIndex: 'name',
+        },
+        {
+          title: '描述',
+          dataIndex: 'desc',
+        },
+        {
+          title: '服务调用次数',
+          dataIndex: 'callNo',
+          sorter: true,
+          align: 'right',
+          customRender: ({ text }) => `${text} 万`,
+        },
+        {
+          title: '状态',
+          dataIndex: 'status',
+          filteredValue: filtered.status || null,
+          filters: [
+            {
+              text: status[0],
+              value: '0',
+            },
+            {
+              text: status[1],
+              value: '1',
+            },
+            {
+              text: status[2],
+              value: '2',
+            },
+            {
+              text: status[3],
+              value: '3',
+            },
+          ],
+        },
+        {
+          title: '上次调度时间',
+          dataIndex: 'updatedAt',
+          sorter: true,
+        },
+        {
+          title: '操作',
+          dataIndex: 'action',
+        },
+      ];
+    });
     const needRowIndex = ref(true);
     const {
       state: columnState,
@@ -299,37 +324,15 @@ export default defineComponent({
 
     const [elRef, screenState, { setFull, exitFull }] = useFullscreen();
 
-    const {
-      stripe,
-      reload,
-      setPageInfo,
-      context: state,
-    } = useFetchData(queryRule, {
-      current: 1,
-      pageSize: 10,
-      tableSize: 'middle', // 'default' | 'middle' | 'small'
-      stripe: false,
-    });
+    const { stripe, context: state, reload } = useFetchData(queryRule, fetchDataContext);
     const handleTableChange = ({ current, pageSize }: Pagination, filters?: TableFilters) => {
-      setPageInfo({
-        current,
-        pageSize,
-        ...filters,
-      });
-
-      reload();
+      filteredInfoMap.value = filters;
+      fetchDataContext.current = current;
+      fetchDataContext.pageSize = pageSize;
     };
-    const queryParam = reactive({
-      ruleName: undefined,
-      desc: undefined,
-      callNo: undefined,
-    });
 
     const handleSearch = () => {
-      setPageInfo({
-        ...toRaw(queryParam),
-      });
-      reload();
+      fetchDataContext.requestParams = { ...queryParam };
     };
 
     // modal
@@ -340,6 +343,7 @@ export default defineComponent({
       console.log('detele', record);
     };
     return {
+      reload,
       onDelete,
       statusMap,
       state,

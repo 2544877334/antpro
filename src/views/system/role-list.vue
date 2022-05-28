@@ -43,7 +43,7 @@
               </div>
               <div class="ant-pro-table-list-toolbar-setting-item">
                 <a-tooltip title="刷新">
-                  <reload-outlined @click="() => handleTableChange({ current: 1, pageSize: 10 })" />
+                  <reload-outlined @click="reload" />
                 </a-tooltip>
               </div>
               <div class="ant-pro-table-list-toolbar-setting-item">
@@ -185,7 +185,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, ref } from 'vue';
+import { defineComponent, reactive, ref } from 'vue';
 import {
   PlusOutlined,
   ReloadOutlined,
@@ -196,7 +196,7 @@ import {
 } from '@ant-design/icons-vue';
 import { Container as DragContainer, Draggable } from '@/components/draggable';
 import { getRoles } from '@/api/user/role';
-import type { Pagination, TableFilters, TableColumn } from '@/typing';
+import type { Pagination, TableColumn } from '@/typing';
 import { useFetchData } from '@/utils/hooks/useFetchData';
 import { useFullscreen } from '@/utils/hooks/useFullscreen';
 import { useTableDynamicColumns } from '@/utils/hooks/useTableColumn';
@@ -236,30 +236,23 @@ export default defineComponent({
       move,
     } = useTableDynamicColumns(baseColumns, { needRowIndex: false });
     const [elRef, screenState, { setFull, exitFull }] = useFullscreen();
-
-    // 表格数据和加载
-    const {
-      reload,
-      setPageInfo,
-      context: state,
-    } = useFetchData(getRoles, {
+    const fetchDataContext = reactive({
       current: 1,
       pageSize: 10,
       tableSize: 'middle', // 'default' | 'middle' | 'small'
+      stripe: false,
     });
-    const handleTableChange = ({ current, pageSize }: Pagination, filters?: TableFilters) => {
-      setPageInfo({
-        current,
-        pageSize,
-        ...filters,
-      });
-
-      reload();
+    // 表格数据和加载
+    const { reload, context: state } = useFetchData(getRoles, fetchDataContext);
+    const handleTableChange = ({ current, pageSize }: Pagination) => {
+      fetchDataContext.current = current;
+      fetchDataContext.pageSize = pageSize;
     };
     // 新增修改表单
     const modalVisible = ref<boolean>(false);
 
     return {
+      reload,
       state,
       columnState,
       dynamicColumns,

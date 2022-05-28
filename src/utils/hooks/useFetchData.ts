@@ -1,5 +1,6 @@
 import type { UnwrapRef } from 'vue';
-import { reactive, onMounted } from 'vue';
+import { isReactive, isRef, ref, watch, unref, reactive } from 'vue';
+import type { MaybeRef } from '@/typing';
 
 export interface PageInfo {
   current: number;
@@ -39,9 +40,9 @@ export interface Context<T extends ReponseData<any>> {
   dataSource: T['data'];
   loading: boolean;
   total: number;
-  requestParams?: {
+  requestParams?: MaybeRef<{
     [key: string]: any;
-  };
+  }>;
   [key: string]: any;
 }
 
@@ -67,16 +68,30 @@ export const wrap = (req: () => Promise<any[]>): (() => Promise<ReponseData<any>
     });
 };
 
+const filterNoValidValue = (obj: Record<string, any> = {}) => {
+  const newObj = {};
+  Object.keys(obj).forEach(k => {
+    if (obj[k] !== undefined && obj[k] !== '' && obj[k] !== null) {
+      newObj[k] = obj[k];
+    }
+  });
+
+  return newObj;
+};
+
 export const useFetchData = <T extends ReponseData<any>>(
   getData: (params?: RequestParams) => Promise<T>,
-  context?: {
+  context: MaybeRef<{
     stripe?: boolean;
     current?: number;
     pageSize?: number;
     dataSource?: T['data'];
     loading?: boolean;
+    requestParams?: MaybeRef<{
+      [key: string]: any;
+    }>;
     [key: string]: any;
-  },
+  }> = reactive(defaultContext),
   options?: {
     current?: number;
     pageSize?: number;
@@ -85,10 +100,15 @@ export const useFetchData = <T extends ReponseData<any>>(
     pagination?: boolean;
   },
 ): UseFetchDataAction<T> => {
-  const state = reactive<Context<T>>({
-    ...defaultContext,
-    ...context,
-  });
+  const state = reactive({} as Context<T>);
+  const mergeContext = isReactive(context) || isRef(context) ? context : ref(context);
+  watch(
+    mergeContext,
+    () => {
+      Object.assign(state, defaultContext, unref(context));
+    },
+    { immediate: true },
+  );
 
   const fetchList = async () => {
     // 请求中禁止重复请求
@@ -103,7 +123,7 @@ export const useFetchData = <T extends ReponseData<any>>(
           ? {
               current,
               pageSize,
-              ...state.requestParams,
+              ...filterNoValidValue(unref(mergeContext).requestParams),
             }
           : undefined;
       const { data, success, total: dataTotal = 0 } = await getData(params);
@@ -134,23 +154,27 @@ export const useFetchData = <T extends ReponseData<any>>(
   };
 
   const setPageInfo = (pageInfo: Partial<PageInfo>) => {
+    console.warn('setPageInfo 废弃，请直接使用响应式 context');
     pageInfo.current && (state.current = pageInfo.current);
     pageInfo.pageSize && (state.pageSize = pageInfo.pageSize);
-    state.requestParams = pageInfo;
   };
 
   const resetPageIndex = (): void => {
-    state.current = 1;
+    console.warn('resetPageIndex 废弃，请直接使用响应式 context');
+    // state.current = 1;
   };
+  watch(
+    [() => state.current, () => state.pageSize, () => unref(mergeContext).requestParams],
+    () => {
+      fetchList().catch(e => {
+        throw new Error(e);
+      });
+    },
+    { immediate: true, deep: true },
+  );
 
   const stripe = (_: any, index: number) =>
     index % 2 === 1 && state.stripe && 'ant-pro-table-row-striped';
-
-  onMounted(() => {
-    fetchList().catch(e => {
-      throw new Error(e);
-    });
-  });
 
   return {
     stripe,
