@@ -18,9 +18,13 @@ const request = axios.create({
   baseURL: process.env.VUE_APP_API_BASE_URL,
   timeout: 6000, // 请求超时时间
 });
-
+export type RequestError = AxiosError<{
+  message?: string;
+  result?: any;
+  errorMessage?: string;
+}>;
 // 异常拦截处理器
-const errorHandler = (error: AxiosError): Promise<any> => {
+const errorHandler = (error: RequestError): Promise<any> => {
   if (error.response) {
     const { data = {}, status, statusText } = error.response;
     // 403 无权限

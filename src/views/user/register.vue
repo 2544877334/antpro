@@ -97,8 +97,9 @@ import { Form, message, notification } from 'ant-design-vue';
 import { MailOutlined } from '@ant-design/icons-vue';
 import { getSmsCaptcha } from '@/api/user/login';
 import { postRegister } from '@/api/user/register';
-import type { AxiosError } from 'axios';
+
 import { useRouter } from 'vue-router';
+import type { RequestError } from '@/utils/request';
 
 const levelNames: Record<number, string> = {
   0: '低',
@@ -200,7 +201,7 @@ export default defineComponent({
     });
     const { validateInfos, validate } = Form.useForm(modelRef, rulesRef);
 
-    const requestFailed = (err: AxiosError) => {
+    const requestFailed = (err: RequestError) => {
       state.registerBtn = true;
       notification.error({
         message: '错误',

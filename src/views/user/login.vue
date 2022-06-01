@@ -124,10 +124,11 @@ import {
   TaobaoCircleOutlined,
   WeiboCircleOutlined,
 } from '@ant-design/icons-vue';
-import type { AxiosError } from 'axios';
+
 import { useRoute, useRouter } from 'vue-router';
 import { useStore } from 'vuex';
 import { LOGIN } from '@/store/modules/user/actions';
+import type { RequestError } from '@/utils/request';
 
 export default defineComponent({
   name: 'Login',
@@ -192,8 +193,7 @@ export default defineComponent({
       resetFields();
     };
 
-    const requestFailed = (err: AxiosError) => {
-      console.log('requestFailed', err?.response?.data?.errorMessage);
+    const requestFailed = (err: RequestError) => {
       state.isLoginError = true;
       notification.error({
         message: '错误',
