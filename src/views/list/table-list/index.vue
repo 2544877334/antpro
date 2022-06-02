@@ -44,7 +44,7 @@
                     <a-switch
                       checked-children="开"
                       un-checked-children="关"
-                      v-model:checked="state.stripe"
+                      v-model:checked="fetchDataContext.stripe"
                     />
                   </a-tooltip>
                 </div>
@@ -67,7 +67,7 @@
                         :selected-keys="[state.tableSize]"
                         @click="
                           ({ key }) => {
-                            state.tableSize = key;
+                            fetchDataContext.tableSize = String(key);
                           }
                         "
                       >
@@ -372,6 +372,7 @@ export default defineComponent({
       handleModalOk,
 
       tableRef,
+      fetchDataContext,
     };
   },
   components: {

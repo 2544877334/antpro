@@ -56,7 +56,7 @@
                         :selected-keys="[state.tableSize]"
                         @click="
                           ({ key }) => {
-                            state.tableSize = key;
+                            fetchDataContext.tableSize = String(key);
                           }
                         "
                       >
@@ -267,7 +267,7 @@ export default defineComponent({
       handleColumnAllClick,
       reset,
       move,
-
+      fetchDataContext,
       // edit
       editModal,
       handleOpenEdit,

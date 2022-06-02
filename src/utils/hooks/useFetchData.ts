@@ -1,6 +1,7 @@
 import type { UnwrapRef } from 'vue';
 import { isReactive, isRef, ref, watch, unref, reactive } from 'vue';
 import type { MaybeRef } from '@/typing';
+import { isEqual } from 'lodash-es';
 
 export interface PageInfo {
   current: number;
@@ -91,7 +92,7 @@ export const useFetchData = <T extends ReponseData<any>>(
       [key: string]: any;
     }>;
     [key: string]: any;
-  }> = reactive(defaultContext),
+  }> = reactive({ ...defaultContext }),
   options?: {
     current?: number;
     pageSize?: number;
@@ -100,12 +101,12 @@ export const useFetchData = <T extends ReponseData<any>>(
     pagination?: boolean;
   },
 ): UseFetchDataAction<T> => {
-  const state = reactive({} as Context<T>);
+  const state = reactive({ ...defaultContext } as Context<T>);
   const mergeContext = isReactive(context) || isRef(context) ? context : ref(context);
   watch(
     mergeContext,
     () => {
-      Object.assign(state, defaultContext, unref(context));
+      Object.assign(state, unref(context));
     },
     { immediate: true },
   );
@@ -164,11 +165,13 @@ export const useFetchData = <T extends ReponseData<any>>(
     // state.current = 1;
   };
   watch(
-    [() => state.current, () => state.pageSize, () => unref(mergeContext).requestParams],
-    () => {
-      fetchList().catch(e => {
-        throw new Error(e);
-      });
+    [() => state.current, () => state.pageSize, () => ({ ...state.requestParams })],
+    (nextValue, preValue) => {
+      if (!isEqual(nextValue, preValue)) {
+        fetchList().catch(e => {
+          throw new Error(e);
+        });
+      }
     },
     { immediate: true, deep: true },
   );

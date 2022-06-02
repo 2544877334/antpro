@@ -56,7 +56,7 @@
                         :selected-keys="[state.tableSize]"
                         @click="
                           ({ key }) => {
-                            state.tableSize = key;
+                            fetchDataContext.tableSize = String(key);
                           }
                         "
                       >
@@ -275,6 +275,7 @@ export default defineComponent({
       modalVisible,
 
       roleModalRef,
+      fetchDataContext,
     };
   },
   components: {
