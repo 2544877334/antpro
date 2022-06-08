@@ -1,8 +1,7 @@
-import { computed, unref, shallowRef } from '@vue/reactivity';
+import { computed, unref, shallowRef, watchEffect, ref, reactive, watch } from 'vue';
 import type { CheckboxChangeEvent } from 'ant-design-vue/es/checkbox/interface';
 import type { ColumnType } from 'ant-design-vue/lib/table';
-import type { Ref } from 'vue';
-import { watchEffect, ref, reactive, watch } from 'vue';
+import type { ComputedRef, Ref } from 'vue';
 
 type Key = number | string;
 export type TableOptions = {
@@ -25,7 +24,7 @@ export type DynamicColumnState = {
 
 export interface DynamicColumns {
   dynamicColumns: Ref<ColumnType[]>;
-  dynamicColumnItems: Ref<DynamicColumnItem[]>;
+  dynamicColumnItems: ComputedRef<DynamicColumnItem[]>;
   state: DynamicColumnState;
   reset: () => void;
   handleColumnChange: (e: CheckboxChangeEvent, column: DynamicColumnItem) => void;
