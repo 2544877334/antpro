@@ -41,7 +41,9 @@ const errorHandler = (error: RequestError): Promise<any> => {
         description: 'Authorization verification failed',
       });
       // 如果你需要直接跳转登录页面
-      // location.replace(loginRoutePath);
+      // location.replace(
+      //   `${process.env.VUE_APP_PUBLIC_PATH} + ${loginRoutePath}`.replaceAll('//', '/'),
+      // );
     }
   }
   return Promise.reject(error);
