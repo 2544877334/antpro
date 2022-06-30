@@ -3,8 +3,8 @@ import { loadEnv } from 'vite';
 import vue from '@vitejs/plugin-vue';
 import vueJsx from '@vitejs/plugin-vue-jsx';
 import path, { resolve } from 'path';
-import createMockServer from './build/mockServer';
 import legacy from '@vitejs/plugin-legacy';
+const mock = require('./build/mock/createMockServer');
 
 export default ({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
@@ -22,6 +22,10 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       }),
       vue(),
       vueJsx(),
+      mock({
+        watch: false,
+        cwd: process.cwd(),
+      }),
     ],
     build: {
       cssCodeSplit: false,
@@ -75,15 +79,15 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     },
     server: {
       host: true,
-      proxy: {
-        '/api': {
-          // backend url
-          target:
-            env.VITE_HTTP_MOCK && env.VITE_MOCK ? createMockServer() : 'https://store.antdv.com',
-          ws: false,
-          changeOrigin: true,
-        },
-      },
+      // proxy: {
+      //   '/api': {
+      //     // backend url
+      //     target:
+      //       env.VITE_HTTP_MOCK && env.VITE_MOCK ? createMockServer() : 'https://store.antdv.com',
+      //     ws: false,
+      //     changeOrigin: true,
+      //   },
+      // },
     },
   };
 };
