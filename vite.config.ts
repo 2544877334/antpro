@@ -23,7 +23,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       vue(),
       vueJsx(),
       mock({
-        watch: false,
+        watch: true,
         cwd: process.cwd(),
       }),
     ],

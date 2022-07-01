@@ -53,7 +53,7 @@ module.exports = function (options = { watch: true, cwd: process.cwd() }) {
   function initWatchMockFiles() {
     // chokidar 在 windows 下使用反斜杠组成的 glob 无法正确 watch 文件变动
     // ref: https://github.com/paulmillr/chokidar/issues/777
-    const absPagesGlobPath = winPath(join('./mock', '**/_mock.[jt]s'));
+    const absPagesGlobPath = winPath(join('./mock', '**/*.[jt]s'));
     watcher = chokidar.watch([...['./mock'], absMockConfigPath, absPagesGlobPath], {
       ignoreInitial: true,
     });

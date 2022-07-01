@@ -22,7 +22,7 @@ module.exports = {
     }).then(() => {
       res.send({
         message: 'transfer.success',
-        code: 0,
+        code: 200,
       });
     });
   },
