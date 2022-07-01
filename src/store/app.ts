@@ -30,6 +30,7 @@ const SET_TRANSITION_NAME = 'SET_TRANSITION_NAME';
 const SET_MULTI_TAB = 'SET_MULTI_TAB';
 const SET_FIXED_MULTI_TAB = 'SET_FIXED_MULTI_TAB';
 export const useAppStore = defineStore('app', {
+  persist: true, //process.env.NODE_ENV !== 'production',
   state: (): AppState => ({
     lang: 'en-US',
     device: 'desktop',
