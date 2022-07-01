@@ -53,16 +53,14 @@
 <script lang="ts">
 import { defineComponent, reactive, computed, toRaw } from 'vue';
 import { Form } from 'ant-design-vue';
-import { useStore } from 'vuex';
 // require defined typo
-import type { FormState } from '../../model';
+import { useStepFormStore } from '../../store';
 
 export default defineComponent({
   emits: ['next-step', 'prev'],
   setup(_, { emit }) {
-    const store = useStore();
-
-    const savedStepForm = computed<FormState>(() => store.getters['stepForm/step']);
+    const stepFormStore = useStepFormStore();
+    const savedStepForm = computed(() => stepFormStore.step);
 
     const state = reactive({
       loading: false,
@@ -82,9 +80,8 @@ export default defineComponent({
       validate()
         .then(() => {
           const password = toRaw(modelRef).password;
-
-          store
-            .dispatch('stepForm/submitStepForm', {
+          stepFormStore
+            .submitStepForm({
               ...savedStepForm.value,
               password,
             })

@@ -1,6 +1,5 @@
 import { createStore } from 'vuex';
 import { user } from './modules/user';
-import { stepForm } from '@/views/form/step-form/model';
 import createPersistedState from 'vuex-persistedstate';
 import ls from '@/utils/local-storage';
 
@@ -18,9 +17,6 @@ const persistedPlugin = createPersistedState({
 export default createStore({
   modules: {
     user,
-
-    // business
-    stepForm,
   },
   strict: debug,
   plugins: debug ? [persistedPlugin] : [],

@@ -30,6 +30,7 @@ const SET_TRANSITION_NAME = 'SET_TRANSITION_NAME';
 const SET_MULTI_TAB = 'SET_MULTI_TAB';
 const SET_FIXED_MULTI_TAB = 'SET_FIXED_MULTI_TAB';
 export const useAppStore = defineStore('app', {
+  // https://github.com/prazdevs/pinia-plugin-persistedstate 提供
   persist: true, //process.env.NODE_ENV !== 'production',
   state: (): AppState => ({
     lang: 'en-US',
