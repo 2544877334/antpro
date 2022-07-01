@@ -2188,7 +2188,7 @@
   optionalDependencies:
     prettier "^1.18.2 || ^2.0.0"
 
-"@vue/devtools-api@^6.0.0", "@vue/devtools-api@^6.0.0-beta.11", "@vue/devtools-api@^6.0.0-beta.13":
+"@vue/devtools-api@^6.0.0", "@vue/devtools-api@^6.0.0-beta.11", "@vue/devtools-api@^6.0.0-beta.13", "@vue/devtools-api@^6.1.4":
   version "6.1.4"
   resolved "https://registry.npmmirror.com/@vue/devtools-api/-/devtools-api-6.1.4.tgz#b4aec2f4b4599e11ba774a50c67fa378c9824e53"
   integrity sha512-IiA0SvDrJEgXvVxjNkHPFfDx6SXw0b/TUkqMcDZWNg9fnCAHbTpoo59YfJ9QLFkwa3raau5vSlRVzMSLDnfdtQ==
@@ -2569,10 +2569,10 @@ ansi-styles@^6.0.0:
   resolved "https://registry.npmmirror.com/ansi-styles/-/ansi-styles-6.1.0.tgz#87313c102b8118abd57371afab34618bf7350ed3"
   integrity sha512-VbqNsoz55SYGczauuup0MFUyXNQviSpFTj1RQtFzmQLk18qbVSpTFFGMT293rmDaQuKCT6InmbuEyUne4mTuxQ==
 
-ant-design-vue@^3.1.1:
-  version "3.2.7"
-  resolved "https://registry.npmjs.org/ant-design-vue/-/ant-design-vue-3.2.7.tgz#e1623e1dd6ecc3bc7e10e0b0178a72e83a8aa5d2"
-  integrity sha512-+29ATxnVUgvIYxz2BAYwkEr9oBYmdzqMKijgq9woV+lqjhYaRkcTZl6h8VDU/iiVstcH3yYdKJbrqGJjl6ktSg==
+ant-design-vue@^3.2.9:
+  version "3.2.9"
+  resolved "https://registry.npmmirror.com/ant-design-vue/-/ant-design-vue-3.2.9.tgz#0ec3d02912a3f8596680d7f7a71749e8f01288cb"
+  integrity sha512-fnZJpAf4tYAPGBALD9dv8VBmeqfJ+xPt87DfgY1/JI6x3hn6Gfge7voF1GkS0yVT0zLyzc2aTWkDVFWKB5iupA==
   dependencies:
     "@ant-design/colors" "^6.0.0"
     "@ant-design/icons-vue" "^6.1.0"
@@ -7364,6 +7364,14 @@ pify@^4.0.0, pify@^4.0.1:
   resolved "https://registry.npmmirror.com/pify/-/pify-4.0.1.tgz#4b2cd25c50d598735c50292224fd8c6df41e3231"
   integrity sha512-uB80kBFb/tfd68bVleG9T5GGsGPjJrLAUpR5PZIrhBnIaRTQRjqdJSsIKkOP6OAIFbj7GOrcudc5pNjZ+geV2g==
 
+pinia@^2.0.14:
+  version "2.0.14"
+  resolved "https://registry.npmmirror.com/pinia/-/pinia-2.0.14.tgz#0837898c20291ebac982bbfca95c8d3c6099925f"
+  integrity sha512-0nPuZR4TetT/WcLN+feMSjWJku3SQU7dBbXC6uw+R6FLQJCsg+/0pzXyD82T1FmAYe0lsx+jnEDQ1BLgkRKlxA==
+  dependencies:
+    "@vue/devtools-api" "^6.1.4"
+    vue-demi "*"
+
 pirates@^4.0.5:
   version "4.0.5"
   resolved "https://registry.npmmirror.com/pirates/-/pirates-4.0.5.tgz#feec352ea5c3268fb23a37c702ab1699f35a5f3b"
@@ -9834,6 +9842,11 @@ vscode-uri@^3.0.3:
   version "3.0.3"
   resolved "https://registry.npmmirror.com/vscode-uri/-/vscode-uri-3.0.3.tgz#a95c1ce2e6f41b7549f86279d19f47951e4f4d84"
   integrity sha512-EcswR2S8bpR7fD0YPeS7r2xXExrScVMxg4MedACaWHEtx9ftCF/qHG1xGkolzTPcEmjTavCQgbVzHUIdTMzFGA==
+
+vue-demi@*:
+  version "0.13.1"
+  resolved "https://registry.npmmirror.com/vue-demi/-/vue-demi-0.13.1.tgz#7604904c88be338418a10abbc94d5b8caa14cb8c"
+  integrity sha512-xmkJ56koG3ptpLnpgmIzk9/4nFf4CqduSJbUM0OdPoU87NwRuZ6x49OLhjSa/fC15fV+5CbEnrxU4oyE022svg==
 
 vue-eslint-parser@^8.0.0, vue-eslint-parser@^8.0.1, vue-eslint-parser@^8.3.0:
   version "8.3.0"

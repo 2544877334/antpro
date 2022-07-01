@@ -63,6 +63,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         'dayjs/locale/zh-cn',
         '@ant-design/icons-vue',
         'lodash-es',
+        'pinia',
       ],
     },
     css: {

@@ -1,5 +1,4 @@
 import { createStore } from 'vuex';
-import { app } from './modules/app';
 import { user } from './modules/user';
 import { stepForm } from '@/views/form/step-form/model';
 import createPersistedState from 'vuex-persistedstate';
@@ -18,7 +17,6 @@ const persistedPlugin = createPersistedState({
 
 export default createStore({
   modules: {
-    app,
     user,
 
     // business

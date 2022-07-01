@@ -46,6 +46,7 @@ import {
 } from 'ant-design-vue';
 import STable from '@surely-vue/table';
 import { createApp } from 'vue';
+import { createPinia } from 'pinia';
 import router from './router';
 import store from './store';
 import locale from './locales';
@@ -58,9 +59,10 @@ import './app.less';
 import './router/router-guards';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+
 dayjs.extend(relativeTime);
 const app = createApp(App);
-
+app.use(createPinia());
 app
   .use(router)
   .use(locale as any)

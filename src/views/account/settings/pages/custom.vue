@@ -35,8 +35,8 @@
 </template>
 
 <script lang="ts">
+import { useAppStore } from '@/store/app';
 import { defineComponent, computed } from 'vue';
-import { useStore } from 'vuex';
 
 const themeMap: { [key: string]: string } = {
   dark: '暗色',
@@ -91,11 +91,10 @@ const colorFilter = (color: string) => {
 export default defineComponent({
   name: 'CustomSettings',
   setup() {
-    const store = useStore();
-
+    const appStore = useAppStore();
     return {
-      navTheme: computed(() => store.getters['app/navTheme']),
-      primaryColor: computed(() => store.getters['app/primaryColor']),
+      navTheme: computed(() => appStore.navTheme),
+      primaryColor: computed(() => appStore.primaryColor),
 
       themeFilter,
       colorFilter,

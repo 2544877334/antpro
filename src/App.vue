@@ -6,8 +6,8 @@
 
 <script lang="ts">
 import { computed, defineComponent, provide, watch } from 'vue';
-import { useStore } from 'vuex';
-import { STORAGE_LANG_KEY } from '@/store/mutation-type';
+
+import { STORAGE_LANG_KEY, useAppStore } from '@/store/app';
 import { localStorage } from '@/utils/local-storage';
 import useMediaQuery from '@/utils/hooks/useMediaQuery';
 import { useI18n } from 'vue-i18n';
@@ -19,8 +19,8 @@ import type { ConfigProviderProps } from 'ant-design-vue/lib/config-provider';
 export default defineComponent({
   name: 'App',
   setup() {
-    const store = useStore();
     const i18n = useI18n();
+    const appStore = useAppStore();
     const multiTabState = useMultiTabStateProvider();
     const colSize = useMediaQuery();
     const isMobile = computed(() => colSize.value === 'sm' || colSize.value === 'xs');
@@ -35,9 +35,9 @@ export default defineComponent({
     );
     const lang = localStorage.get(STORAGE_LANG_KEY, defaultLang);
     if (lang) {
-      store.dispatch('app/SET_LANG', lang);
+      appStore.SET_LANG(lang);
     }
-    const theme = computed(() => store.getters['app/navTheme']);
+    const theme = computed(() => appStore.navTheme);
     watch(
       theme,
       () => {
