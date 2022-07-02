@@ -38,9 +38,7 @@
     "store": "^2.0.12",
     "vue": "~3.2.37",
     "vue-i18n": "~9.2.0-0",
-    "vue-router": "^4.0.14",
-    "vuex": "~4.0.2",
-    "vuex-persistedstate": "^4.1.0"
+    "vue-router": "^4.0.14"
   },
   "devDependencies": {
     "@babel/plugin-transform-spread": "^7.16.7",
@@ -62,7 +60,6 @@
     "@vue/cli-plugin-eslint": "~5.0.4",
     "@vue/cli-plugin-router": "~5.0.4",
     "@vue/cli-plugin-typescript": "~5.0.4",
-    "@vue/cli-plugin-vuex": "~5.0.4",
     "@vue/cli-service": "~5.0.4",
     "@vue/compiler-sfc": "~3.2.37",
     "@vue/eslint-config-prettier": "^7.0.0",
