@@ -1,11 +1,10 @@
-// import { Permission } from '@/store/modules/user/typing';
 import type { MenuDataItem } from '@/router/typing';
-import type { Action, Role } from '@/store/modules/user/typing';
 import type { Ref } from 'vue';
 import { unref, computed, ref, watchEffect } from 'vue';
-import { useStore } from 'vuex';
 import { intersection, toArray } from 'lodash-es';
 import { useRoute } from 'vue-router';
+import { useUserStore } from '@/store/user';
+import type { Action } from '@/api/user/login';
 
 export const filterChildRoute = (route: MenuDataItem, permissions: string[]) =>
   route.children
@@ -30,8 +29,8 @@ export const hasAuthority = (route: MenuDataItem, permissions: string[]) => {
 
 type MaybeRef<T> = T | Ref<T>;
 export const useAuth = (actions: MaybeRef<Action | Action[]>) => {
-  const store = useStore();
-  const role = computed<Role>(() => store.getters['user/role']);
+  const userStore = useUserStore();
+  const role = computed(() => userStore.role);
   const hasAuth = ref(false);
   const route = useRoute();
   watchEffect(() => {

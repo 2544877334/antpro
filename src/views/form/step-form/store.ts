@@ -1,5 +1,5 @@
 import { fakeSubmitForm } from '@/api/form/step-form';
-import { defineStore } from 'pinia';
+import { acceptHMRUpdate, defineStore } from 'pinia';
 import type { PayType } from './typing';
 
 export interface FormState {
@@ -36,7 +36,7 @@ export const useStepFormStore = defineStore('stepForm', {
   actions: {
     async submitStepForm(payload: FormState) {
       const res = await fakeSubmitForm(payload);
-      if (res.code) {
+      if ((res as any).code) {
         this.step = {
           ...this.step,
           ...payload,
@@ -57,3 +57,8 @@ export const useStepFormStore = defineStore('stepForm', {
     },
   },
 });
+
+const hot = import.meta.webpackHot || (import.meta as any).hot;
+if (hot) {
+  hot.accept(acceptHMRUpdate(useStepFormStore, hot));
+}

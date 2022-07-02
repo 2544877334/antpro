@@ -204,16 +204,16 @@ export default defineComponent({
     const { t } = useI18n();
     const themeList = getThemeList(t);
     const appStore = useAppStore();
-    const layout = computed<SettingState['layout']>(() => appStore.layout);
-    const navTheme = computed<SettingState['theme']>(() => appStore.navTheme);
-    const primaryColor = computed<SettingState['primaryColor']>(() => appStore.primaryColor);
-    const contentWidth = computed<SettingState['contentWidth']>(() => appStore.contentWidth);
-    const splitMenus = computed<SettingState['splitMenus']>(() => appStore.splitMenus);
-    const fixedHeader = computed<SettingState['fixedHeader']>(() => appStore.fixedHeader);
-    const fixSidebar = computed<SettingState['fixSiderbar']>(() => appStore.fixedSidebar);
-    const transitionName = computed<SettingState['transitionName']>(() => appStore.transitionName);
-    const multiTab = computed<SettingState['multiTab']>(() => appStore.multiTab);
-    const multiTabFixed = computed<SettingState['multiTabFixed']>(() => appStore.multiTabFixed);
+    const layout = computed(() => appStore.layout);
+    const navTheme = computed(() => appStore.navTheme);
+    const primaryColor = computed(() => appStore.primaryColor);
+    const contentWidth = computed(() => appStore.contentWidth);
+    const splitMenus = computed(() => appStore.splitMenus);
+    const fixedHeader = computed(() => appStore.fixedHeader);
+    const fixSidebar = computed(() => appStore.fixedSidebar);
+    const transitionName = computed(() => appStore.transitionName);
+    const multiTab = computed(() => appStore.multiTab);
+    const multiTabFixed = computed(() => appStore.multiTabFixed);
     watch(
       [navTheme, primaryColor],
       () => {

@@ -2,7 +2,6 @@ import type { ComputedRef, Ref, UnwrapRef } from 'vue';
 import { computed, inject, onMounted, reactive, ref, toRefs, watch } from 'vue';
 import type { RouteLocationNormalized } from 'vue-router';
 import { useRoute, useRouter } from 'vue-router';
-import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import type { LayoutType, MenuTheme } from '@/components/base-layouts/typing';
 import { xor } from 'lodash-es';
@@ -10,6 +9,7 @@ import { genMenuInfo } from '@/utils/menu-util';
 import type { MultiTabStore } from '@/components/multi-tab';
 import { loginRoutePath } from '@/router/define-meta';
 import { useAppStore } from '@/store/app';
+import { useUserStore } from '@/store/user';
 
 export interface MenuState {
   collapsed: boolean;
@@ -81,7 +81,7 @@ export default function useMenuState(
   const { t, locale } = useI18n();
   const route = useRoute();
   const router = useRouter();
-  const store = useStore();
+  const userStore = useUserStore();
   const appStore = useAppStore();
   const isMobile =
     initialState && initialState.isMobile ? initialState.isMobile : inject('isMobile', ref(false));
@@ -115,7 +115,7 @@ export default function useMenuState(
     return hasSideMenu.value ? (state.collapsed ? collapsedWidth : width) : undefined;
   });
   // 解决动态路由 打开页面 openKeys 错误问题
-  const allowRouters = computed(() => store.getters[`user/allowRouters`]); // genMenuInfo(filterMenu(routes)).menus;
+  const allowRouters = computed(() => userStore.allowRouters); // genMenuInfo(filterMenu(routes)).menus;
   const menuKeyMap = computed(() => genMenuInfo(allowRouters.value).menuKeyMap);
   const getOpenKeysBySelectKey = (key: string) => {
     return menuKeyMap.value[key]?.parentKeys;

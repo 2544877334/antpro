@@ -84,19 +84,19 @@ import { default as SettingDrawer } from '@/components/setting-drawer/index.vue'
 import { default as NoticeIcon } from '@/components/notice-icon/index.vue';
 
 import { MultiTab } from '@/components/multi-tab';
-import { useStore } from 'vuex';
 import { injectMenuState } from './use-menu-state';
 import { useAuth } from '@/utils/authority';
-import { Action } from '@/store/modules/user/typing';
+import { useUserStore } from '@/store/user';
+import { Action } from '@/api/user/login';
 
 export default defineComponent({
   name: 'BasicLayout',
   setup() {
-    const store = useStore();
+    const userStore = useUserStore();
     const { t } = useI18n();
     const menuState = injectMenuState();
     const isMobile = inject('isMobile', ref(false));
-    const currentUser = computed(() => store.getters['user/currentUser']);
+    const currentUser = computed(() => userStore.currentUser);
     const hasSideMenu = computed(
       () => menuState.layout.value === 'side' || menuState.layout.value === 'left',
     );
@@ -110,7 +110,7 @@ export default defineComponent({
       { immediate: true },
     );
     // gen menus
-    const allowRouters = computed(() => store.getters[`user/allowRouters`]); // genMenuInfo(filterMenu(routes)).menus;
+    const allowRouters = computed(() => userStore.allowRouters); // genMenuInfo(filterMenu(routes)).menus;
     const menus = computed(() => genMenuInfo(allowRouters.value).menus);
     return {
       t,

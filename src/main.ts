@@ -50,7 +50,6 @@ import { createPinia } from 'pinia';
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
 
 import router from './router';
-import store from './store';
 import locale from './locales';
 import App from './App.vue';
 
@@ -70,7 +69,6 @@ app.use(pinia);
 app
   .use(router)
   .use(locale as any)
-  .use(store)
   .use(STable)
   .use(Layout)
   .use(Menu)

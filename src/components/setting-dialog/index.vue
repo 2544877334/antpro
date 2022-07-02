@@ -88,7 +88,7 @@ import { SettingOutlined } from '@ant-design/icons-vue';
 
 import List from './list.vue';
 import ListItem from './list-item.vue';
-import type { RadioChangeEvent } from 'ant-design-vue';
+import type { RadioChangeEvent, SelectProps, SwitchProps } from 'ant-design-vue';
 import { useAppStore } from '@/store/app';
 import type { ContentWidth, LayoutType, MenuTheme } from '../base-layouts/typing';
 
@@ -118,7 +118,7 @@ export default defineComponent({
 
     const hasMix = computed(() => layout.value === 'mix');
 
-    const handleLayoutChange = (value: LayoutType) => {
+    const handleLayoutChange: SelectProps['onChange'] = value => {
       if (value !== 'mix') {
         // 强制停止使用分割菜单
         appStore.SET_SPLIT_MENUS(false);
@@ -126,7 +126,7 @@ export default defineComponent({
         // 如果是 mix 模式，则需要将主题色设置为 dark
         appStore.SET_NAV_THEME('dark');
       }
-      appStore.SET_LAYOUT(value);
+      appStore.SET_LAYOUT(value as LayoutType);
     };
     const handleContentWidthChange = (e: RadioChangeEvent) => {
       const value = (e.target as HTMLInputElement).value as ContentWidth;
@@ -136,11 +136,11 @@ export default defineComponent({
       const value = (e.target as HTMLInputElement).value as MenuTheme | 'realDark';
       appStore.SET_NAV_THEME(value);
     };
-    const handleSplitMenusChange = (checked: boolean) => {
-      appStore.SET_SPLIT_MENUS(checked);
+    const handleSplitMenusChange: SwitchProps['onChange'] = checked => {
+      appStore.SET_SPLIT_MENUS(checked as boolean);
     };
-    const handleChangeTransitionName = (value: string) => {
-      appStore.SET_TRANSITION_NAME(value === 'null' ? '' : value);
+    const handleChangeTransitionName: SelectProps['onChange'] = value => {
+      appStore.SET_TRANSITION_NAME(value === 'null' ? '' : (value as string));
     };
 
     return {

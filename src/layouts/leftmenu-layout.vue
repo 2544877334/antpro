@@ -109,17 +109,17 @@ import { default as SelectLang } from '@/components/select-lang/index.vue';
 import { default as AvatarDropdown } from '@/components/avatar-dropdown.vue';
 import { default as SettingDrawer } from '@/components/setting-drawer/index.vue';
 import { injectMenuState } from './use-menu-state';
-import { useStore } from 'vuex';
 import { default as NoticeIcon } from '@/components/notice-icon/index.vue';
+import { useUserStore } from '@/store/user';
 
 export default defineComponent({
   name: 'LeftMenuLayout',
   setup() {
-    const store = useStore();
-    const currentUser = computed(() => store.getters['user/currentUser']);
+    const userStore = useUserStore();
+    const currentUser = computed(() => userStore.currentUser);
 
     // gen menus
-    const allowRouters = computed(() => store.getters[`user/allowRouters`]); // genMenuInfo(filterMenu(routes)).menus;
+    const allowRouters = computed(() => userStore.allowRouters); // genMenuInfo(filterMenu(routes)).menus;
     const menus = computed(() => genMenuInfo(allowRouters.value).menus);
     const mainMenus = computed(() => getMenuFirstChildren(menus.value));
     const menuState = injectMenuState();
