@@ -126,7 +126,6 @@
 </template>
 
 <script lang="ts">
-import type { Dayjs } from 'dayjs';
 import dayjs from 'dayjs';
 import { defineComponent, reactive, toRaw } from 'vue';
 import { useI18n } from 'vue-i18n';
@@ -134,10 +133,8 @@ import { localStorage } from '@/utils/local-storage';
 import { InfoCircleOutlined } from '@ant-design/icons-vue';
 import { useRoute } from 'vue-router';
 import { Form, message } from 'ant-design-vue';
-import type { ResponseBody } from '@/api/typing';
-import type { BasicFormResponse } from '@/api/form/basic-form';
 import { saveBasicFormData } from '@/api/form/basic-form';
-import type { RangePickerProps } from 'ant-design-vue/lib/vc-picker/RangePicker';
+import type { RangePickerProps } from 'ant-design-vue/es/date-picker';
 
 const LOCAL_SAVE_BASIC_FORM_DATA_KEY = 'LOCAL_SAVE_BASIC_FORM_DATA';
 
@@ -160,7 +157,7 @@ export default defineComponent({
 
     const modelRef = reactive({
       title: undefined,
-      date: null as RangePickerProps<Dayjs>['value'],
+      date: null as RangePickerProps['value'],
       goal: undefined,
       standard: undefined,
       client: undefined,
@@ -191,7 +188,7 @@ export default defineComponent({
             ],
             goal: modelRef.goal,
             standard: modelRef.standard,
-          }).then((res: ResponseBody<BasicFormResponse>) => {
+          }).then(res => {
             state.submitting = false;
             message.success(t(res.message));
             // submit form succeed, remove save form data
