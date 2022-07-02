@@ -36,8 +36,7 @@ export default defineComponent({
     value: String,
     onChange: Function as PropType<(color: string) => void>,
   },
-  setup(props) {
-    console.log(props);
+  setup() {
     const { t } = useI18n();
     return {
       t,

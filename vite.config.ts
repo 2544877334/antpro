@@ -9,6 +9,10 @@ const mock = require('./build/mock/createMockServer');
 export default ({ mode }: ConfigEnv): UserConfig => {
   const root = process.cwd();
   const env = loadEnv(mode, root);
+  console.log(
+    'env.VITE_HTTP_MOCK && env.VITE_MOCK && process.env.NODE_ENV !== production',
+    env.VITE_HTTP_MOCK && env.VITE_MOCK && process.env.NODE_ENV !== 'production',
+  );
   return {
     base: env.VITE_APP_PUBLIC_PATH,
     // 兼容 Cli
@@ -26,6 +30,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         watch: true,
         mockUrlList: [/api/],
         cwd: process.cwd(),
+        enable: env.VITE_HTTP_MOCK && env.VITE_MOCK && process.env.NODE_ENV !== 'production',
       }),
     ],
     build: {
@@ -38,7 +43,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         },
         output: {
           manualChunks: {
-            vue: ['vue', 'vuex', 'vue-router'],
+            vue: ['vue', 'pinia', 'vue-router'],
             antdv: ['ant-design-vue', '@ant-design/icons-vue'],
             dayjs: ['dayjs'],
           },
@@ -81,15 +86,17 @@ export default ({ mode }: ConfigEnv): UserConfig => {
     },
     server: {
       host: true,
-      // proxy: {
-      //   '/api': {
-      //     // backend url
-      //     target:
-      //       env.VITE_HTTP_MOCK && env.VITE_MOCK ? createMockServer() : 'https://store.antdv.com',
-      //     ws: false,
-      //     changeOrigin: true,
-      //   },
-      // },
+      proxy:
+        env.VITE_HTTP_MOCK && env.VITE_MOCK && process.env.NODE_ENV !== 'production'
+          ? undefined
+          : {
+              '/api': {
+                // backend url
+                target: 'https://store.antdv.com',
+                ws: false,
+                changeOrigin: true,
+              },
+            },
     },
   };
 };

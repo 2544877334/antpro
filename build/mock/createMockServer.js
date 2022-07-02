@@ -41,53 +41,60 @@ const defaultOptions = {
   // 是否开启mock
   enable: true,
 };
+function initWatchMockFiles(paths) {
+  // chokidar 在 windows 下使用反斜杠组成的 glob 无法正确 watch 文件变动
+  // ref: https://github.com/paulmillr/chokidar/issues/777
+  const absPagesGlobPath = winPath(join('./mock', '**/*.[jt]s'));
+  watcher = chokidar.watch([...['./mock'], absPagesGlobPath], {
+    ignoreInitial: true,
+  });
+  watcher.on('all', (event, file) => {
+    signale.info(`[${event}] ${file}, reload mock data`);
+    cleanRequireCache(paths);
+  });
+  process.once('SIGINT', () => {
+    watcher.close();
+  });
+}
+function cleanRequireCache(paths) {
+  Object.keys(require.cache).forEach(file => {
+    if (
+      paths.some(path => {
+        return winPath(file).indexOf(path) > -1;
+      })
+    ) {
+      delete require.cache[file];
+    }
+  });
+}
 module.exports = function (opts) {
   const options = Object.assign({}, defaultOptions, opts);
   const { absMockPath } = getPaths(options.cwd);
   const paths = [absMockPath];
-  // vite热更新时关闭上一个进程
-  if (watcher) {
-    watcher.close();
-  }
-  configBabelRegister(paths, {
-    cwd: options.cwd,
-  });
-  initMock(options);
-  if (options.watch) {
-    initWatchMockFiles();
-  }
-  function initWatchMockFiles() {
-    // chokidar 在 windows 下使用反斜杠组成的 glob 无法正确 watch 文件变动
-    // ref: https://github.com/paulmillr/chokidar/issues/777
-    const absPagesGlobPath = winPath(join('./mock', '**/*.[jt]s'));
-    watcher = chokidar.watch([...['./mock'], absPagesGlobPath], {
-      ignoreInitial: true,
-    });
-    watcher.on('all', (event, file) => {
-      signale.info(`[${event}] ${file}, reload mock data`);
-      cleanRequireCache();
-    });
-    process.once('SIGINT', () => {
+  if (options.enable) {
+    // vite热更新时关闭上一个进程
+    if (watcher) {
       watcher.close();
+    }
+    configBabelRegister(paths, {
+      cwd: options.cwd,
     });
-  }
-  function cleanRequireCache() {
-    Object.keys(require.cache).forEach(file => {
-      if (
-        paths.some(path => {
-          return winPath(file).indexOf(path) > -1;
-        })
-      ) {
-        delete require.cache[file];
-      }
-    });
+    initMock(options);
+    if (options.watch) {
+      initWatchMockFiles(paths);
+    }
   }
 
   return {
+    name: 'vite:mock',
+    enforce: 'pre',
     configureServer({ middlewares }) {
+      if (!options.enable) {
+        return;
+      }
       const middleware = async (req, res, next) => {
         let matchMock = getMatchMock(req.url);
-        if (options.enable && matchMock) {
+        if (matchMock) {
           let queryParams = {};
 
           if (req.url) {
@@ -114,9 +121,8 @@ module.exports = function (opts) {
           res.json = opt => res.end(JSON.stringify(opt));
           matchMock.handler({ url: req.url, body, query, headers: req.headers }, res);
           return;
-        } else {
-          return next();
         }
+        next();
       };
       middlewares.use(middleware);
     },
