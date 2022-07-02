@@ -24,6 +24,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
       vueJsx(),
       mock({
         watch: true,
+        mockUrlList: [/api/],
         cwd: process.cwd(),
       }),
     ],

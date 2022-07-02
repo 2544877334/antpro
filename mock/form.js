@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 module.exports = {
   'POST /api/forms/basic-form': (req, res) => {
     const { title, goal } = req.body;

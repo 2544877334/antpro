@@ -4,17 +4,14 @@ const { join } = require('path');
 const chokidar = require('chokidar');
 const signale = require('signale');
 const { configBabelRegister } = require('./registerBabel');
-let mockconfig = require('./mockconfig');
 const url = require('url');
 const { match } = require('path-to-regexp');
 let watcher;
 function getPaths(cwd) {
   const winCwd = winPath(cwd);
   const absMockPath = winPath(join(winCwd, 'mock'));
-  const absMockConfigPath = winPath(join(winCwd, '/build/mock/mockconfig.js'));
   return {
     absMockPath,
-    absMockConfigPath,
   };
 }
 
@@ -36,9 +33,17 @@ function parseJson(req) {
     });
   });
 }
-module.exports = function (options = { watch: true, cwd: process.cwd() }) {
-  const { absMockPath, absMockConfigPath } = getPaths(options.cwd);
-  const paths = [absMockPath, absMockConfigPath];
+const defaultOptions = {
+  watch: true,
+  cwd: process.cwd(), //配置需要mock的url
+  mockUrlList: [],
+  // 是否开启mock
+  enable: true,
+};
+module.exports = function (opts) {
+  const options = Object.assign({}, defaultOptions, opts);
+  const { absMockPath } = getPaths(options.cwd);
+  const paths = [absMockPath];
   // vite热更新时关闭上一个进程
   if (watcher) {
     watcher.close();
@@ -46,7 +51,7 @@ module.exports = function (options = { watch: true, cwd: process.cwd() }) {
   configBabelRegister(paths, {
     cwd: options.cwd,
   });
-  initMock(mockconfig);
+  initMock(options);
   if (options.watch) {
     initWatchMockFiles();
   }
@@ -54,16 +59,12 @@ module.exports = function (options = { watch: true, cwd: process.cwd() }) {
     // chokidar 在 windows 下使用反斜杠组成的 glob 无法正确 watch 文件变动
     // ref: https://github.com/paulmillr/chokidar/issues/777
     const absPagesGlobPath = winPath(join('./mock', '**/*.[jt]s'));
-    watcher = chokidar.watch([...['./mock'], absMockConfigPath, absPagesGlobPath], {
+    watcher = chokidar.watch([...['./mock'], absPagesGlobPath], {
       ignoreInitial: true,
     });
     watcher.on('all', (event, file) => {
       signale.info(`[${event}] ${file}, reload mock data`);
       cleanRequireCache();
-      if (file.indexOf('mockconfig.js') != -1) {
-        mockconfig = require('./mockconfig');
-      }
-      initMock(mockconfig);
     });
     process.once('SIGINT', () => {
       watcher.close();
@@ -85,7 +86,7 @@ module.exports = function (options = { watch: true, cwd: process.cwd() }) {
     configureServer({ middlewares }) {
       const middleware = async (req, res, next) => {
         let matchMock = getMatchMock(req.url);
-        if (mockconfig.enable && matchMock) {
+        if (options.enable && matchMock) {
           let queryParams = {};
 
           if (req.url) {
