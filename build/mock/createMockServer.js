@@ -5,7 +5,8 @@ const chokidar = require('chokidar');
 const signale = require('signale');
 const { configBabelRegister } = require('./registerBabel');
 const url = require('url');
-const { match } = require('path-to-regexp');
+const pathToRegexp = require('path-to-regexp');
+const match = pathToRegexp.match;
 let watcher;
 function getPaths(cwd) {
   const winCwd = winPath(cwd);

@@ -1,6 +1,6 @@
 const glob = require('glob');
 const path = require('path');
-const { pathToRegexp } = require('path-to-regexp');
+const pathToRegexp = require('path-to-regexp');
 const signale = require('signale');
 
 const { winPath } = require('./utils');
