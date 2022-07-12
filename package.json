@@ -22,7 +22,7 @@
     "@surely-vue/table": "^2.4.0",
     "@types/lodash-es": "^4.17.6",
     "@umijs/ssr-darkreader": "^4.9.45",
-    "ant-design-vue": "^3.2.9",
+    "ant-design-vue": "^3.2.10",
     "axios": "^0.27.2",
     "core-js": "^3.21.1",
     "echarts": "^4.9.0",
