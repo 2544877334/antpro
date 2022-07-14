@@ -69,13 +69,13 @@ export default defineComponent({
   emits: ['ok', 'cancel'],
   setup(props, { emit }) {
     const loading = ref(false);
-    const initValues = {
+    const initValues = () => ({
       id: -1,
       name: '',
       label: '',
       actions: [] as Action[],
-    };
-    const modelRef = reactive<Permission>(initValues);
+    });
+    const modelRef = reactive<Permission>(initValues());
 
     const rulesRef = reactive({
       // 注意如果数据类型不相同，一定要指定数据类型 `type` 否则会校验失败
@@ -92,7 +92,7 @@ export default defineComponent({
         modelRef.label = raw.label;
         modelRef.actions = raw.actions;
       } else if (props.model === null) {
-        Object.assign(modelRef, initValues);
+        Object.assign(modelRef, initValues());
       }
     });
 
