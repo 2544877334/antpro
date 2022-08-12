@@ -77,19 +77,19 @@ export const actions: ActionTree<UserState, RootState> = {
         ...mainRoute,
         children: allowRoutes,
       };
-      router.addRoute(route);
+      router.addRoute(route as RouteRecordRaw);
       commit(SET_ROUTERS, allowRoutes);
-      resolve(allowRoutes);
+      resolve(allowRoutes as RouteRecordRaw[]);
     });
   },
   // 从后端获取路由表结构体，并构建前端路由
   [GENERATE_ROUTES_DYNAMIC]({ commit }) {
-    return new Promise<RouteRecordRaw>(resolve => {
+    return new Promise(resolve => {
       generatorDynamicRouter()
-        .then((routes: RouteRecordRaw) => {
+        .then(routes => {
           const allowRoutes = routes.children || [];
           // 添加到路由表
-          router.addRoute(routes);
+          router.addRoute(routes as RouteRecordRaw);
           commit(SET_ROUTERS, allowRoutes);
           resolve(routes);
         })

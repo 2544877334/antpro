@@ -76,7 +76,7 @@ export const generatorDynamicRouter = () => {
     getCurrentUserNav()
       .then(menuNav => {
         // root id = 0;
-        const routes = generator(menuNav, 0, undefined) as MenuDataItem[];
+        const routes = generator(menuNav, 0, undefined);
         // routes.push(notFoundRouter);
         rootRouter.children = routes;
         resolve(rootRouter);

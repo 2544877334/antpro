@@ -1,5 +1,6 @@
 import type { Component } from 'vue';
 import { defineAsyncComponent, h } from 'vue';
+import type { RouteRecordRaw } from 'vue-router';
 import { createRouter, createWebHistory } from 'vue-router';
 import type { MenuDataItem } from './typing';
 import Layout from '@/layouts/index.vue';
@@ -511,7 +512,7 @@ export const staticRoutes: MenuDataItem[] = [
 
 const router = createRouter({
   history: createWebHistory(process.env.VUE_APP_PUBLIC_PATH),
-  routes: staticRoutes,
+  routes: staticRoutes as RouteRecordRaw[],
   scrollBehavior: (to, from) => {
     if (to.path !== from.path) {
       setTimeout(() => {
