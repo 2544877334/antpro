@@ -145,19 +145,19 @@ export const useUserStore = defineStore('user', {
           ...mainRoute,
           children: allowRoutes,
         };
-        router.addRoute(route);
-        this.SET_ROUTERS(allowRoutes);
-        resolve(allowRoutes);
+        router.addRoute(route as RouteRecordRaw);
+        this.SET_ROUTERS(allowRoutes as RouteRecordRaw[]);
+        resolve(allowRoutes as RouteRecordRaw[]);
       });
     },
     // 从后端获取路由表结构体，并构建前端路由
     async [GENERATE_ROUTES_DYNAMIC]() {
-      return new Promise<RouteRecordRaw>(resolve => {
+      return new Promise(resolve => {
         generatorDynamicRouter()
-          .then((routes: RouteRecordRaw) => {
+          .then(routes => {
             const allowRoutes = routes.children || [];
             // 添加到路由表
-            router.addRoute(routes);
+            router.addRoute(routes as RouteRecordRaw);
             this.SET_ROUTERS(allowRoutes);
             resolve(routes);
           })
