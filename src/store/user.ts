@@ -27,7 +27,7 @@ export const LOGIN = 'LOGIN';
 export const LOGOUT = 'LOGOUT';
 export const GET_INFO = 'GET_INFO';
 export const GENERATE_ROUTES = 'GENERATE_ROUTES';
-export const GENERATE_ROUTES_DYNAMIC = '';
+export const GENERATE_ROUTES_DYNAMIC = 'GENERATE_ROUTES_DYNAMIC';
 
 export const SET_TOKEN = 'SET_TOKEN';
 export const SET_AVATAR = 'SET_AVATAR';
