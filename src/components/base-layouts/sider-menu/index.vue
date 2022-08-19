@@ -47,6 +47,7 @@
           @mouseleave="$emit('mouseleave', $event)"
           @itemHover="$emit('itemHover', $event)"
           :customItem="customItem"
+          under-sider
         />
       </div>
       <div :class="`${prefixCls}-links`">

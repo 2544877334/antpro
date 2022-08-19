@@ -91,6 +91,7 @@ export const BaseMenuProps = {
     type: Function,
     default: undefined,
   },
+  underSider: Boolean,
 };
 
 export default defineComponent({
@@ -101,7 +102,9 @@ export default defineComponent({
     const { t } = useI18n();
     const isInline = computed(() => props.mode === 'inline');
     const dynamicProps = computed(() => {
-      return isInline.value ? { inlineCollapsed: props.collapsed } : {};
+      return isInline.value
+        ? { [props.underSider ? 'collapsed' : 'inlineCollapsed']: props.collapsed }
+        : {};
     });
     const handleOpenChange = (openKeys: string[]): void => {
       // console.log('openKeys', openKeys);
