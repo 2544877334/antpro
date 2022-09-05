@@ -42,9 +42,9 @@
 import type { PropType } from 'vue';
 import { defineComponent, reactive, ref, watchEffect, watch } from 'vue';
 import { Form } from 'ant-design-vue';
-import type { Role, Permission, Action } from '@/store/modules/user/typing';
 import { getPermissions } from '@/api/user/role';
 import { cloneDeep } from 'lodash';
+import type { Role, Permission, Action } from '@/api/user/login';
 
 type Tag = {
   key: string;

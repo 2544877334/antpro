@@ -1,7 +1,8 @@
 export interface ResponseBody<T = any> {
-  message: string;
-  code: number;
-  data?: T | T[];
+  message?: string;
+  code?: number;
+  data?: T;
+  success: boolean;
 }
 
 /** 统一返回结构体 */
@@ -12,10 +13,4 @@ export interface PageResult<T = any> {
   pageSize?: number;
   total?: number;
   success: boolean;
-}
-
-export interface RequestResult<T = any> {
-  data: T;
-  success: boolean;
-  errorMessage: string;
 }

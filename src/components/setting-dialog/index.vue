@@ -83,27 +83,20 @@
 
 <script lang="ts">
 import { computed, defineComponent, reactive } from 'vue';
-import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import { SettingOutlined } from '@ant-design/icons-vue';
-import {
-  SET_CONTENT_WIDTH,
-  SET_LAYOUT,
-  SET_NAV_THEME,
-  SET_SPLIT_MENUS,
-  SET_TRANSITION_NAME,
-} from '@/store/modules/app/mutations';
 
 import List from './list.vue';
 import ListItem from './list-item.vue';
-import type { RadioChangeEvent } from 'ant-design-vue';
+import type { RadioChangeEvent, SelectProps, SwitchProps } from 'ant-design-vue';
+import { useAppStore } from '@/store/app';
+import type { ContentWidth, LayoutType, MenuTheme } from '../base-layouts/typing';
 
 export default defineComponent({
   name: 'SettingDialog',
   inheritAttrs: false,
   setup() {
     const { t } = useI18n();
-    const store = useStore();
     const state = reactive({
       visible: false,
       confirmLoading: false,
@@ -114,40 +107,40 @@ export default defineComponent({
     const handleSettingBtnClick = () => {
       state.visible = true;
     };
-
-    const layout = computed(() => store.getters['app/layout']);
-    const navTheme = computed(() => store.getters['app/navTheme']);
-    const contentWidth = computed(() => store.getters['app/contentWidth']);
-    const splitMenus = computed(() => store.getters['app/splitMenus']);
-    const fixedHeader = computed(() => store.getters['app/fixedHeader']);
-    const fixedSidebar = computed(() => store.getters['app/fixedSidebar']);
-    const transitionName = computed(() => store.getters['app/transitionName']);
+    const appStore = useAppStore();
+    const layout = computed(() => appStore.layout);
+    const navTheme = computed(() => appStore.navTheme);
+    const contentWidth = computed(() => appStore.contentWidth);
+    const splitMenus = computed(() => appStore.splitMenus);
+    const fixedHeader = computed(() => appStore.fixedHeader);
+    const fixedSidebar = computed(() => appStore.fixedSidebar);
+    const transitionName = computed(() => appStore.transitionName);
 
     const hasMix = computed(() => layout.value === 'mix');
 
-    const handleLayoutChange = (value: string) => {
+    const handleLayoutChange: SelectProps['onChange'] = value => {
       if (value !== 'mix') {
         // 强制停止使用分割菜单
-        store.commit(`app/${SET_SPLIT_MENUS}`, false);
+        appStore.SET_SPLIT_MENUS(false);
       } else {
         // 如果是 mix 模式，则需要将主题色设置为 dark
-        store.commit(`app/${SET_NAV_THEME}`, 'dark');
+        appStore.SET_NAV_THEME('dark');
       }
-      store.commit(`app/${SET_LAYOUT}`, value);
+      appStore.SET_LAYOUT(value as LayoutType);
     };
     const handleContentWidthChange = (e: RadioChangeEvent) => {
-      const value = (e.target as HTMLInputElement).value;
-      store.commit(`app/${SET_CONTENT_WIDTH}`, value);
+      const value = (e.target as HTMLInputElement).value as ContentWidth;
+      appStore.SET_CONTENT_WIDTH(value);
     };
     const handleNavThemeChange = (e: RadioChangeEvent) => {
-      const value = (e.target as HTMLInputElement).value;
-      store.commit(`app/${SET_NAV_THEME}`, value);
+      const value = (e.target as HTMLInputElement).value as MenuTheme | 'realDark';
+      appStore.SET_NAV_THEME(value);
     };
-    const handleSplitMenusChange = (checked: boolean) => {
-      store.commit(`app/${SET_SPLIT_MENUS}`, checked);
+    const handleSplitMenusChange: SwitchProps['onChange'] = checked => {
+      appStore.SET_SPLIT_MENUS(checked as boolean);
     };
-    const handleChangeTransitionName = (value: string) => {
-      store.commit(`app/${SET_TRANSITION_NAME}`, value === 'null' ? '' : value);
+    const handleChangeTransitionName: SelectProps['onChange'] = value => {
+      appStore.SET_TRANSITION_NAME(value === 'null' ? '' : (value as string));
     };
 
     return {

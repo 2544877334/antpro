@@ -1,5 +1,4 @@
 import request from '@/utils/request';
-import type { ResponseBody } from '../typing';
 
 export interface BasicFormData {
   title?: string;
@@ -16,10 +15,10 @@ export interface BasicFormResponse {
  * Save basic form data to backend
  *
  * @param formData
- * @return Promise<ResponseBody<BasicFormResponse>>
+ * @return Promise<{ message: string; code: number }>
  */
 export function saveBasicFormData(
   formData: BasicFormData,
-): Promise<ResponseBody<BasicFormResponse>> {
+): Promise<{ message: string; code: number }> {
   return request.post('forms/basic-form', formData);
 }

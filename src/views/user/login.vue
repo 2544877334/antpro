@@ -114,6 +114,7 @@
 <script lang="ts">
 import { defineComponent, reactive, toRefs } from 'vue';
 import { getSmsCaptcha } from '@/api/user/login';
+import type { TabsProps } from 'ant-design-vue';
 import { message, notification, Form } from 'ant-design-vue';
 import {
   UserOutlined,
@@ -126,16 +127,15 @@ import {
 } from '@ant-design/icons-vue';
 
 import { useRoute, useRouter } from 'vue-router';
-import { useStore } from 'vuex';
-import { LOGIN } from '@/store/modules/user/actions';
 import type { RequestError } from '@/utils/request';
+import { useUserStore } from '@/store/user';
 
 export default defineComponent({
   name: 'Login',
   setup() {
     const router = useRouter();
     const route = useRoute();
-    const store = useStore();
+    const userStore = useUserStore();
     const state = reactive({
       customActiveKey: 'tab1',
       loginBtn: false,
@@ -188,8 +188,8 @@ export default defineComponent({
     });
     const { validateInfos, validate, resetFields } = Form.useForm(modelRef, rulesRef);
 
-    const handleTabClick = (key: string) => {
-      state.customActiveKey = key;
+    const handleTabClick: TabsProps['onChange'] = key => {
+      state.customActiveKey = key as string;
       resetFields();
     };
 
@@ -260,8 +260,8 @@ export default defineComponent({
       validate(validateNames)
         .then(values => {
           console.log('values', values);
-          store
-            .dispatch(`user/${LOGIN}`, {
+          userStore
+            .LOGIN({
               ...values,
               type: state.customActiveKey === 'tab1',
             })

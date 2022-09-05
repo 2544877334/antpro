@@ -46,8 +46,10 @@ import {
 } from 'ant-design-vue';
 import STable from '@surely-vue/table';
 import { createApp } from 'vue';
+import { createPinia } from 'pinia';
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate';
+
 import router from './router';
-import store from './store';
 import locale from './locales';
 import App from './App.vue';
 
@@ -58,13 +60,15 @@ import './app.less';
 import './router/router-guards';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+
 dayjs.extend(relativeTime);
 const app = createApp(App);
-
+const pinia = createPinia();
+pinia.use(piniaPluginPersistedstate);
+app.use(pinia);
 app
   .use(router)
   .use(locale as any)
-  .use(store)
   .use(STable)
   .use(Layout)
   .use(Menu)

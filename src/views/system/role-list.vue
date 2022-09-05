@@ -202,7 +202,7 @@ import { useFullscreen } from '@/utils/hooks/useFullscreen';
 import { useTableDynamicColumns } from '@/utils/hooks/useTableColumn';
 import DragIcon from '@/components/table/drag-icon.vue';
 import RoleModal from './role-modal.vue';
-import type { Role } from '@/store/modules/user/typing';
+import type { Role } from '@/api/user/login';
 
 const baseColumns: TableColumn[] = [
   {

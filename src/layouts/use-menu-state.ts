@@ -2,13 +2,14 @@ import type { ComputedRef, Ref, UnwrapRef } from 'vue';
 import { computed, inject, onMounted, reactive, ref, toRefs, watch } from 'vue';
 import type { RouteLocationNormalized } from 'vue-router';
 import { useRoute, useRouter } from 'vue-router';
-import { useStore } from 'vuex';
 import { useI18n } from 'vue-i18n';
 import type { LayoutType, MenuTheme } from '@/components/base-layouts/typing';
 import { xor } from 'lodash-es';
 import { genMenuInfo } from '@/utils/menu-util';
 import type { MultiTabStore } from '@/components/multi-tab';
 import { loginRoutePath } from '@/router/define-meta';
+import { useAppStore } from '@/store/app';
+import { useUserStore } from '@/store/user';
 
 export interface MenuState {
   collapsed: boolean;
@@ -80,26 +81,27 @@ export default function useMenuState(
   const { t, locale } = useI18n();
   const route = useRoute();
   const router = useRouter();
-  const store = useStore();
+  const userStore = useUserStore();
+  const appStore = useAppStore();
   const isMobile =
     initialState && initialState.isMobile ? initialState.isMobile : inject('isMobile', ref(false));
   Object.assign(state, res ? {} : initialState);
   // define layoutSettings
   const layoutState = reactive({
-    layout: computed(() => (isMobile.value ? 'side' : store.getters['app/layout'])),
+    layout: computed(() => (isMobile.value ? 'side' : appStore.layout)),
     theme: computed(() => {
-      const navTheme = store.getters['app/navTheme'];
+      const navTheme = appStore.navTheme;
       return navTheme === 'realDark' ? 'dark' : navTheme;
     }),
-    primaryColor: computed(() => store.getters['app/primaryColor']),
-    fixedSidebar: computed(() => store.getters['app/fixedSidebar']),
-    fixedHeader: computed(() => store.getters['app/fixedHeader']),
-    contentWidth: computed(() => store.getters['app/contentWidth']),
+    primaryColor: computed(() => appStore.primaryColor),
+    fixedSidebar: computed(() => appStore.fixedSidebar),
+    fixedHeader: computed(() => appStore.fixedHeader),
+    contentWidth: computed(() => appStore.contentWidth),
     // only work layout `mix` `side`
-    splitMenus: computed(() => !isMobile.value && store.getters['app/splitMenus']),
-    transitionName: computed(() => store.getters['app/transitionName']),
-    multiTab: computed(() => store.getters['app/multiTab']),
-    multiTabFixed: computed(() => store.getters['app/multiTabFixed']),
+    splitMenus: computed(() => !isMobile.value && appStore.splitMenus),
+    transitionName: computed(() => appStore.transitionName),
+    multiTab: computed(() => appStore.multiTab),
+    multiTabFixed: computed(() => appStore.multiTabFixed),
   } as LayoutState);
   const hasSideMenu = computed(() => {
     return layoutState.layout !== 'top';
@@ -113,7 +115,7 @@ export default function useMenuState(
     return hasSideMenu.value ? (state.collapsed ? collapsedWidth : width) : undefined;
   });
   // 解决动态路由 打开页面 openKeys 错误问题
-  const allowRouters = computed(() => store.getters[`user/allowRouters`]); // genMenuInfo(filterMenu(routes)).menus;
+  const allowRouters = computed(() => userStore.allowRouters); // genMenuInfo(filterMenu(routes)).menus;
   const menuKeyMap = computed(() => genMenuInfo(allowRouters.value).menuKeyMap);
   const getOpenKeysBySelectKey = (key: string) => {
     return menuKeyMap.value[key]?.parentKeys;

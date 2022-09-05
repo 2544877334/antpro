@@ -51,18 +51,15 @@
 <script lang="ts">
 import { defineComponent, reactive, toRaw } from 'vue';
 import { Form } from 'ant-design-vue';
-import { useStore } from 'vuex';
 import type { ReceiverAccountType } from '../receiver-account.vue';
 import ReceiverAccount from '../receiver-account.vue';
-import type { FormState } from '../../model';
+import { useStepFormStore } from '../../store';
 
 export default defineComponent({
   emits: ['next-step'],
   setup(_, { emit }) {
-    const store = useStore();
-
-    const savedStepForm: FormState = toRaw(store.getters['stepForm/step']);
-
+    const stepFormStore = useStepFormStore();
+    const savedStepForm = toRaw(stepFormStore.step);
     const modelRef = reactive({
       payAccount: savedStepForm.payAccount,
       receiverAccount: {
@@ -111,14 +108,8 @@ export default defineComponent({
 
       validate()
         .then(() => {
-          store.dispatch('stepForm/saveStepFormData', toRaw(modelRef)).then(() => {
-            emit('next-step');
-          });
-
-          // store.commit({
-          //   type: 'stepForm/saveStepFormData',
-          //   payload: toRaw(modelRef),
-          // });
+          stepFormStore.saveStepFormData(toRaw(modelRef));
+          emit('next-step');
         })
         .catch(err => {
           console.error('err', err);

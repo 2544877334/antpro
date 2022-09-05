@@ -48,7 +48,7 @@
 <script lang="ts">
 import type { MenuProps, MenuTheme } from 'ant-design-vue';
 import type { ComputedRef, PropType } from 'vue';
-import { defineComponent, computed, ref } from 'vue';
+import { defineComponent, computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import type { RouteProps } from '../typing';
 import SubMenu from './sub-menu.vue';
@@ -91,6 +91,7 @@ export const BaseMenuProps = {
     type: Function,
     default: undefined,
   },
+  underSider: Boolean,
 };
 
 export default defineComponent({
@@ -99,9 +100,11 @@ export default defineComponent({
   emits: ['update:openKeys', 'update:selectedKeys', 'mouseenter', 'mouseleave', 'itemHover'],
   setup(props, { emit }) {
     const { t } = useI18n();
-    const isInline = props.mode === 'inline';
-    const dynamicProps = ref({
-      inlineCollapsed: isInline ? props.collapsed : undefined,
+    const isInline = computed(() => props.mode === 'inline');
+    const dynamicProps = computed(() => {
+      return isInline.value
+        ? { [props.underSider ? 'collapsed' : 'inlineCollapsed']: props.collapsed }
+        : {};
     });
     const handleOpenChange = (openKeys: string[]): void => {
       // console.log('openKeys', openKeys);

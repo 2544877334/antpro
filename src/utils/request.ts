@@ -1,9 +1,8 @@
 import type { AxiosRequestConfig, AxiosError } from 'axios';
 import axios, { AxiosResponse } from 'axios';
-import type { ResponseBody } from '@/api/typing';
 import { localStorage } from '@/utils/local-storage';
-import { STORAGE_TOKEN_KEY } from '@/store/mutation-type';
 import { notification } from 'ant-design-vue';
+import { STORAGE_TOKEN_KEY } from '@/store/app';
 // import { loginRoutePath } from '@/router/define-meta';
 
 // 这里是用于设定请求后端时，所用的 Token KEY
@@ -66,9 +65,7 @@ const requestHandler = (
 request.interceptors.request.use(requestHandler, errorHandler);
 
 // 响应拦截器
-const responseHandler = (
-  response: AxiosResponse,
-): ResponseBody<any> | AxiosResponse<any> | Promise<any> | any => {
+const responseHandler = (response: AxiosResponse<any>) => {
   return response.data;
 };
 

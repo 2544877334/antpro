@@ -98,13 +98,13 @@
 import { defineComponent, ref, reactive, computed, toRefs, nextTick } from 'vue';
 import { PlusOutlined } from '@ant-design/icons-vue';
 import { GridContent } from '@/components';
-import { useStore } from 'vuex';
 import { useFetchData } from '@/utils/hooks/useFetchData';
 import { queryProjectNotice } from '@/api/dashboard/workplace';
 
 import Applications from './components/applications.vue';
 import Articles from './components/articles.vue';
 import Projects from './components/projects.vue';
+import { useUserStore } from '@/store/user';
 
 interface TagType {
   key: string;
@@ -114,7 +114,7 @@ interface TagType {
 export default defineComponent({
   name: 'AccountCenter',
   setup() {
-    const store = useStore();
+    const userStore = useUserStore();
     const tagInput = ref();
     const state = reactive({
       newTags: [] as TagType[],
@@ -182,7 +182,7 @@ export default defineComponent({
     };
 
     return {
-      currentUser: computed(() => store.getters['user/currentUser']),
+      currentUser: computed(() => userStore.currentUser),
       tagInput,
       projects,
       ...toRefs(state),

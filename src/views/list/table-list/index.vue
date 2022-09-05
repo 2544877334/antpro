@@ -207,7 +207,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, reactive, ref, watch } from 'vue';
+import { defineComponent, reactive, ref, watch, watchEffect } from 'vue';
 import {
   PlusOutlined,
   ReloadOutlined,
@@ -259,9 +259,10 @@ export default defineComponent({
       },
       { immediate: true },
     );
-    const baseColumns = computed<TableColumn[]>(() => {
+    const mergedColumns = ref<TableColumn[]>([]);
+    watchEffect(() => {
       const filtered = filteredInfoMap.value || {};
-      return [
+      mergedColumns.value = [
         {
           title: '规则名称',
           dataIndex: 'name',
@@ -320,7 +321,7 @@ export default defineComponent({
       handleColumnChange,
       reset,
       move,
-    } = useTableDynamicColumns(baseColumns, { needRowIndex });
+    } = useTableDynamicColumns(mergedColumns, { needRowIndex });
 
     const [elRef, screenState, { setFull, exitFull }] = useFullscreen();
 

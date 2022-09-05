@@ -37,8 +37,7 @@ import { defineComponent } from 'vue';
 import { UserOutlined, SettingOutlined, LogoutOutlined } from '@ant-design/icons-vue';
 import { useRouter } from 'vue-router';
 import { useI18n } from 'vue-i18n';
-import { useStore } from 'vuex';
-import { LOGOUT } from '@/store/modules/user/actions';
+import { useUserStore } from '@/store/user';
 
 export default defineComponent({
   name: 'AvatarDropdown',
@@ -54,7 +53,7 @@ export default defineComponent({
   },
   setup() {
     const router = useRouter();
-    const store = useStore();
+    const userStore = useUserStore();
     const { t } = useI18n();
     const handleToCenter = () => {
       router.push({ path: '/account/center' });
@@ -63,7 +62,7 @@ export default defineComponent({
       router.push({ path: '/account/settings' });
     };
     const handleLogout = () => {
-      store.dispatch(`user/${LOGOUT}`).then(() => {
+      userStore.LOGOUT().then(() => {
         router.push({ path: '/user/login' });
       });
     };

@@ -117,28 +117,15 @@ import type { PropType } from 'vue';
 import { defineComponent, computed, ref, watch } from 'vue';
 import { useProProvider } from '../base-layouts/pro-provider';
 import { CloseOutlined, SettingOutlined } from '@ant-design/icons-vue';
-import type { ContentWidth } from '../base-layouts/typing';
-import { useStore } from 'vuex';
-import {
-  SET_CONTENT_WIDTH,
-  SET_LAYOUT,
-  SET_NAV_THEME,
-  SET_SPLIT_MENUS,
-  SET_TRANSITION_NAME,
-  SET_FIXED_HEADER,
-  SET_FIXED_SIDEBAR,
-  SET_MULTI_TAB,
-  SET_FIXED_MULTI_TAB,
-  SET_PRIMARY_COLOR,
-} from '@/store/modules/app/mutations';
+import type { ContentWidth, LayoutType } from '../base-layouts/typing';
 import BodyWrapper from './body-wrapper.vue';
 import BlockCheckbox from './block-checkbox.vue';
 import LayoutChange from './layout-change.vue';
 import { useI18n } from 'vue-i18n';
 import type { LayoutBlockTheme } from './layout-block.vue';
-import type { SelectProps } from 'ant-design-vue';
 import { genStringToTheme, updateTheme } from './util';
 import ThemeColor from './theme-color.vue';
+import { useAppStore } from '@/store/app';
 
 const iconStyle = {
   color: '#fff',
@@ -216,29 +203,17 @@ export default defineComponent({
     const visible = ref(false);
     const { t } = useI18n();
     const themeList = getThemeList(t);
-    const store = useStore();
-    const layout = computed<SettingState['layout']>(() => store.getters['app/layout']);
-    const navTheme = computed<SettingState['theme']>(() => store.getters['app/navTheme']);
-    const primaryColor = computed<SettingState['primaryColor']>(
-      () => store.getters['app/primaryColor'],
-    );
-    const contentWidth = computed<SettingState['contentWidth']>(
-      () => store.getters['app/contentWidth'],
-    );
-    const splitMenus = computed<SettingState['splitMenus']>(() => store.getters['app/splitMenus']);
-    const fixedHeader = computed<SettingState['fixedHeader']>(
-      () => store.getters['app/fixedHeader'],
-    );
-    const fixSidebar = computed<SettingState['fixSiderbar']>(
-      () => store.getters['app/fixedSidebar'],
-    );
-    const transitionName = computed<SettingState['transitionName']>(
-      () => store.getters['app/transitionName'],
-    );
-    const multiTab = computed<SettingState['multiTab']>(() => store.getters['app/multiTab']);
-    const multiTabFixed = computed<SettingState['multiTabFixed']>(
-      () => store.getters['app/multiTabFixed'],
-    );
+    const appStore = useAppStore();
+    const layout = computed(() => appStore.layout);
+    const navTheme = computed(() => appStore.navTheme);
+    const primaryColor = computed(() => appStore.primaryColor);
+    const contentWidth = computed(() => appStore.contentWidth);
+    const splitMenus = computed(() => appStore.splitMenus);
+    const fixedHeader = computed(() => appStore.fixedHeader);
+    const fixSidebar = computed(() => appStore.fixedSidebar);
+    const transitionName = computed(() => appStore.transitionName);
+    const multiTab = computed(() => appStore.multiTab);
+    const multiTabFixed = computed(() => appStore.multiTabFixed);
     watch(
       [navTheme, primaryColor],
       () => {
@@ -256,49 +231,46 @@ export default defineComponent({
         visible.value = !visible.value;
       }
     };
-    const updateLayoutSetting = (val: string) => {
+    const updateLayoutSetting = (val: LayoutType) => {
       if (val !== 'mix') {
         // 强制停止使用分割菜单
-        store.commit(`app/${SET_SPLIT_MENUS}`, false);
+        appStore.SET_SPLIT_MENUS(false);
       } else {
         // Mix 模式下，header 必须被锁定
-        store.commit(`app/${SET_FIXED_HEADER}`, true);
+        appStore.SET_FIXED_HEADER(true);
       }
-      store.commit(`app/${SET_LAYOUT}`, val);
+      appStore.SET_LAYOUT(val);
     };
 
-    const handleChange = (type: string, val: string | boolean | SelectProps['value']) => {
-      console.log('change', type, val);
+    const handleChange = (type: string, val: any) => {
       if (type === 'layout') {
-        updateLayoutSetting(val as string);
+        updateLayoutSetting(val as LayoutType);
       } else if (type === 'theme') {
-        store.commit(`app/${SET_NAV_THEME}`, val);
+        appStore.SET_NAV_THEME(val);
       } else if (type === 'primaryColor') {
-        store.commit(`app/${SET_PRIMARY_COLOR}`, val);
+        appStore.SET_PRIMARY_COLOR(val);
       } else if (type === 'splitmenus') {
-        store.commit(`app/${SET_SPLIT_MENUS}`, val);
+        appStore.SET_SPLIT_MENUS(val);
       } else if (type === 'fixSiderbar') {
-        store.commit(`app/${SET_FIXED_SIDEBAR}`, val);
+        appStore.SET_FIXED_SIDEBAR(val);
       } else if (type === 'fixedHeader') {
         // 关闭 header 固定时，取消 multi-tab 固定
         if (!val) {
-          store.commit(`app/${SET_FIXED_MULTI_TAB}`, false);
+          appStore.SET_FIXED_MULTI_TAB(false);
         }
-        store.commit(`app/${SET_FIXED_HEADER}`, val);
+        appStore.SET_FIXED_HEADER(val);
       } else if (type === 'contentWidth') {
-        store.commit(`app/${SET_CONTENT_WIDTH}`, val);
+        appStore.SET_CONTENT_WIDTH(val);
       } else if (type === 'transition') {
-        store.commit(`app/${SET_TRANSITION_NAME}`, val === 'null' ? '' : val);
+        appStore.SET_TRANSITION_NAME(val === 'null' ? '' : val);
       } else if (type === 'multiTab') {
-        store.commit(`app/${SET_MULTI_TAB}`, val);
+        appStore.SET_MULTI_TAB(val);
       } else if (type === 'multiTabFixed') {
         if (!fixedHeader.value) {
-          store.commit(`app/${SET_FIXED_HEADER}`, true);
+          appStore.SET_FIXED_HEADER(true);
         }
-        store.commit(`app/${SET_FIXED_MULTI_TAB}`, val);
+        appStore.SET_FIXED_MULTI_TAB(val);
       }
-
-      // emit('change', { type, value });
     };
 
     return {

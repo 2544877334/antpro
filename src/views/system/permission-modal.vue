@@ -41,7 +41,7 @@ import { Form, message } from 'ant-design-vue';
 import type { PropType } from 'vue';
 import { defineComponent, ref, reactive, toRaw, watchEffect } from 'vue';
 import { addPermission, updatePermission } from '@/api/user/role';
-import type { Action, Permission } from '@/store/modules/user/typing';
+import type { Action, Permission } from '@/api/user/login';
 
 const formLayout = {
   labelCol: {

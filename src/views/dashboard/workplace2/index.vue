@@ -91,15 +91,15 @@
 <script lang="ts">
 import { computed, defineComponent, reactive, toRefs } from 'vue';
 import { GridContent } from '@/components';
-import { useStore } from 'vuex';
 import Info from '@/views/list/basic-list/info.vue';
 import { useFetchData } from '@/utils/hooks/useFetchData';
 import { queryActivities, queryProjectNotice } from '@/api/dashboard/workplace';
+import { useUserStore } from '@/store/user';
 
 export default defineComponent({
   name: 'Workplace2',
   setup() {
-    const store = useStore();
+    const userStore = useUserStore();
     const state = reactive({
       tabList: [
         { key: 'my', tab: '我的' },
@@ -123,7 +123,7 @@ export default defineComponent({
       });
     });
     return {
-      currentUser: computed(() => store.getters[`user/currentUser`]),
+      currentUser: computed(() => userStore.currentUser),
       activities,
       projects,
 

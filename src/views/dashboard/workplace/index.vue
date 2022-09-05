@@ -161,13 +161,12 @@ import { PlusOutlined } from '@ant-design/icons-vue';
 import { useFetchData } from '@/utils/hooks/useFetchData';
 import { fakeChartData, queryActivities, queryProjectNotice } from '@/api/dashboard/workplace';
 import Radar from './components/radar/index.vue';
-import { useStore } from 'vuex';
+import { useUserStore } from '@/store/user';
 
 export default defineComponent({
   setup() {
     const { t } = useI18n();
-    const store = useStore();
-
+    const userStore = useUserStore();
     const state = reactive({
       loading: true,
       radarLoading: true,
@@ -241,7 +240,7 @@ export default defineComponent({
     return {
       t,
       state,
-      currentUser: computed(() => store.getters[`user/currentUser`]),
+      currentUser: computed(() => userStore.currentUser),
       projects,
       activities,
       radar,

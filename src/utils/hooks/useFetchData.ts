@@ -133,7 +133,7 @@ export const useFetchData = <T extends ReponseData<any>>(
         state.dataSource = data as UnwrapRef<T['data']>;
         state.total = dataTotal;
       }
-    } catch (e) {
+    } catch (e: any) {
       state.loading = false;
       // 如果没有传递这个方法的话，需要把错误抛出去，以免吞掉错误
       if (options?.onRequestError === undefined) {

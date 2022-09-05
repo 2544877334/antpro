@@ -16,7 +16,7 @@ import { useRouter, useRoute } from 'vue-router';
 import { message } from 'ant-design-vue';
 import { flattenChildren } from '@/utils/vnode-util';
 import { findLast, omit } from 'lodash-es';
-import { useStore } from 'vuex';
+import { useAppStore } from '@/store/app';
 
 export type CacheKey = string;
 
@@ -94,8 +94,8 @@ export const MultiTabStoreConsumer = defineComponent({
   setup(_props, { slots = {} }) {
     const route = useRoute();
     const state = inject(MULTI_TAB_STORE_KEY)!;
-    const store = useStore();
-    const multiTab = computed(() => store.getters['app/multiTab']);
+    const appStore = useAppStore();
+    const multiTab = computed(() => appStore.multiTab);
     const hasCache = (path: CacheKey) => {
       return state.cacheList.find(item => item.tabPath === path);
     };

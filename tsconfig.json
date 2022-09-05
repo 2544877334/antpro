@@ -14,6 +14,8 @@
     "paths": {
       "@/*": ["src/*"]
     },
+    "strict": true,
+    "strictFunctionTypes": false,
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
     "strictNullChecks": false,
     "experimentalDecorators": true,

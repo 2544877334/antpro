@@ -23,18 +23,16 @@
 
 <script lang="ts">
 import { computed, defineComponent, onUnmounted } from 'vue';
-import { useStore } from 'vuex';
-import type { FormState } from '@/views/form/step-form/model';
+import { useStepFormStore } from '../../store';
 
 export default defineComponent({
   emits: ['finish'],
   setup(_, { emit }) {
-    const store = useStore();
-
-    const stepFormData = computed<FormState>(() => store.getters['stepForm/step']);
+    const stepFormStore = useStepFormStore();
+    const stepFormData = computed(() => stepFormStore.step);
 
     const clearAllFormData = () => {
-      return store.dispatch('stepForm/clear');
+      stepFormStore.clear();
     };
 
     const handleFinish = (e: Event) => {

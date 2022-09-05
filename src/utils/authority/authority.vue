@@ -4,11 +4,11 @@
 </template>
 
 <script lang="ts">
-import type { Permission, Role } from '@/store/modules/user/typing';
+import type { Permission } from '@/api/user/login';
+import { useUserStore } from '@/store/user';
 import { isArray } from 'lodash-es';
 import type { PropType, VNodeChild } from 'vue';
 import { watchEffect, computed, ref, defineComponent } from 'vue';
-import { useStore } from 'vuex';
 
 export type AuthorityType = string | string[] | ((authority: Permission[]) => boolean);
 
@@ -25,8 +25,8 @@ export default defineComponent({
     },
   },
   setup(props) {
-    const store = useStore();
-    const role = computed<Role>(() => store.getters['user/role']);
+    const userStore = useUserStore();
+    const role = computed(() => userStore.role);
     const auth = ref(false);
     watchEffect(() => {
       if (role.value.permissions) {

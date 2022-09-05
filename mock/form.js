@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 module.exports = {
   'POST /api/forms/basic-form': (req, res) => {
     const { title, goal } = req.body;
@@ -22,7 +23,7 @@ module.exports = {
     }).then(() => {
       res.send({
         message: 'transfer.success',
-        code: 0,
+        code: 200,
       });
     });
   },

@@ -1,13 +1,13 @@
 import router from '@/router';
-import store from '@/store';
 import localStorage from '@/utils/local-storage';
 import { allowList, loginRoutePath } from '../define-meta';
-import { STORAGE_TOKEN_KEY } from '@/store/mutation-type';
 // eslint-disable-next-line
-import { GENERATE_ROUTES, GET_INFO } from '@/store/modules/user/actions';
+import { useUserStore } from '@/store/user';
+import { STORAGE_TOKEN_KEY } from '@/store/app';
 
 router.beforeEach(async to => {
   const userToken = localStorage.get(STORAGE_TOKEN_KEY);
+  const userStore = useUserStore();
   // token check
   if (!userToken) {
     // 白名单路由列表检查
@@ -27,7 +27,7 @@ router.beforeEach(async to => {
   }
 
   // check login user.role is null
-  if (store.getters['user/allowRouters'] && store.getters['user/allowRouters'].length > 0) {
+  if (userStore.allowRouters && userStore.allowRouters.length > 0) {
     return true;
   } else {
     // 从服务端获取用户的 [基础信息] 和 [权限信息]
@@ -46,9 +46,9 @@ router.beforeEach(async to => {
     // 问题4：access token 不是也不能保障安全吗？
     //   - 用户在此进行登录，代表认同该设备。保存用户的 token 可以进行快速身份认证，
     //     并且当用户认为 token 发生泄露或不安全时，可以根据相关服务端 token 设计规则，让 token 失效。
-    const info = await store.dispatch(`user/${GET_INFO}`);
+    const info = await userStore.GET_INFO();
     // 使用当前用户的 权限信息 生成 对应权限的路由表
-    const allowRouters = await store.dispatch(`user/${GENERATE_ROUTES}`, info);
+    const allowRouters = await userStore.GENERATE_ROUTES(info);
     if (allowRouters) {
       return { ...to, replace: true };
     }

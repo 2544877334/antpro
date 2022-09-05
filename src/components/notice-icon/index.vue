@@ -44,8 +44,7 @@ import { groupBy } from 'lodash-es';
 import NoticeDropdown from './notice-dropdown.vue';
 import NoticeList from './notice-list.vue';
 import { message } from 'ant-design-vue';
-import { useStore } from 'vuex';
-import { SET_INFO } from '@/store/modules/user/mutations';
+import { useUserStore } from '@/store/user';
 
 // 如需要实时更新提醒通知，可以配置 realtime 为 true 打开该轮询，或者自行尝试配置 websocket 功能
 // 注意：目前未读数量是通过 currentUSer 接口取回的，如果更改成实时，未读数量也建议更改成独立接口 或者 合并到 getNoticeData 中
@@ -74,8 +73,8 @@ export default defineComponent({
   },
   emits: [],
   setup() {
-    const store = useStore();
-    const userInfo = computed(() => store.getters['user/info']);
+    const userStore = useUserStore();
+    const userInfo = computed(() => userStore.info);
     const list = ref<NoticeItem[]>([]);
     const loading = ref(true);
     const activeKey = ref('notification');
@@ -152,7 +151,7 @@ export default defineComponent({
       const index = list.value.findIndex(item => item.id === id);
       list.value[index].read = true;
       list.value = [...list.value];
-      store.commit(`user/${SET_INFO}`, {
+      userStore.SET_INFO({
         totalCount: list.value.length,
         unreadCount: list.value.filter(item => !item.read).length,
       });
@@ -164,7 +163,7 @@ export default defineComponent({
     const handleNoticeClear = (title: string, key: string) => {
       message.success(`Emptied ${title}`);
       list.value = list.value.filter(item => item.type !== key);
-      store.commit(`user/${SET_INFO}`, {
+      userStore.SET_INFO({
         totalCount: list.value.length,
         unreadCount: list.value.filter(item => !item.read).length,
       });
