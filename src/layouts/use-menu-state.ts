@@ -173,7 +173,8 @@ export default function useMenuState(
         router.isReady().then(() => {
           const routeInfo = getRouteInfoFromMultiTab(path) || ({ path } as RouteLocationNormalized);
           if (routeInfo.fullPath !== route.fullPath) {
-            router.push(routeInfo);
+            // 优先级 routeInfo.fullPath >  route.fullPath > routeInfo
+            router.push(route.path === path ? routeInfo.fullPath || route.fullPath : routeInfo);
           }
         });
       }
