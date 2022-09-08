@@ -56,6 +56,7 @@ export default ({ mode }: ConfigEnv): UserConfig => {
         '@': path.join(__dirname, './src'),
         '~': path.join(__dirname, './src/assets'),
         vue: 'vue/dist/vue.esm-bundler.js',
+        dayjs: resolve(__dirname, 'node_modules', 'dayjs/esm'),
       },
     },
     optimizeDeps: {
